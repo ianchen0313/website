@@ -1,0 +1,76 @@
+project:
+  type: website
+  output-dir: _site
+
+website:
+  title: "Ian Chen"
+  description: "量化研究與 AI 應用 — 個人作品集"
+  navbar:
+    background: light
+    foreground: dark
+    pinned: true
+    collapse-below: lg
+    left:
+      - text: "文章"
+        href: blog.qmd
+      - text: "專案"
+        href: projects.qmd
+      - text: "資料"
+        href: data.qmd
+    right:
+      - icon: person
+        href: about.qmd
+  search: false
+  page-navigation: true
+  
+  sidebar:
+    - title: "Quarto 測試系列"
+      style: "docked"
+      contents:
+        - posts/quarto-syntax-test/index.qmd
+        - posts/quarto-syntax-test/page2.qmd
+
+format:
+  html:
+    theme:
+      light: [cosmo, custom.scss]
+    css: []
+    fig-align: center
+    toc: true
+    toc-depth: 3
+    code-copy: true
+    code-overflow: wrap
+    highlight-style: github-light.theme
+    link-external-newwindow: true
+    include-after-body:
+      - scripts/copy-page.html
+      - scripts/code-lang-icons.html
+      - scripts/code-fold.html
+      - scripts/toc-scrollspy.html
+    include-in-header:
+      - text: |
+          <link rel="preconnect" href="https://fonts.googleapis.com">
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+          <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+          <script>
+            document.addEventListener("DOMContentLoaded", function() {
+              let lastScrollTop = 0;
+              const navbar = document.querySelector(".navbar");
+              
+              if (!navbar) return;
+
+              window.addEventListener("scroll", function() {
+                let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+                
+                if (currentScroll > lastScrollTop && currentScroll > 64) {
+                  // Scrolling down & past the header height
+                  navbar.classList.add("navbar-hidden");
+                } else {
+                  // Scrolling up
+                  navbar.classList.remove("navbar-hidden");
+                }
+                lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // For Mobile or negative scrolling
+              }, false);
+            });
+          </script>
+

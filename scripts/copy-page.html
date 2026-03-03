@@ -1,0 +1,70 @@
+<!-- Load Turndown.js for HTML to Markdown conversion -->
+<script src="https://unpkg.com/turndown/dist/turndown.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Attempt to locate the main title block and the article content
+        const titleBlock = document.querySelector('#title-block-header');
+        // Find the main article content container
+        const content = document.querySelector('main.content') || document.querySelector('.quarto-document-content') || document.querySelector('main');
+
+        if (titleBlock && content) {
+            // Create wrapper so we can position it nicely
+            const btnContainer = document.createElement('div');
+            btnContainer.className = 'copy-page-wrapper';
+
+            const btn = document.createElement('button');
+            btn.id = 'copy-page-btn';
+            btn.title = '以 Markdown 格式複製全文';
+
+            const copyIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>`;
+            const checkIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+
+            btn.innerHTML = `
+                <span class="icon-container">${copyIcon}</span>
+                <span>Copy page</span>
+            `;
+
+            btnContainer.appendChild(btn);
+            titleBlock.appendChild(btnContainer);
+
+            // Initialize Turndown
+            const turndownService = new TurndownService({
+                headingStyle: 'atx',      // Uses ### instead of underscores
+                codeBlockStyle: 'fenced'  // Uses ``` for code blocks
+            });
+
+            btn.addEventListener('click', function (e) {
+                e.preventDefault();
+                try {
+                    // Clone the content so we don't modify the actual page
+                    const clone = content.cloneNode(true);
+
+                    // Convert to Markdown
+                    const markdown = turndownService.turndown(clone);
+
+                    // Construct the final text: Add the Title to the top
+                    const titleElement = titleBlock.querySelector('.title, h1');
+                    const titleText = titleElement ? `# ${titleElement.innerText}\n\n` : '';
+                    const finalMarkdown = titleText + markdown;
+
+                    // Copy to clipboard
+                    navigator.clipboard.writeText(finalMarkdown).then(() => {
+                        const iconSpan = btn.querySelector('.icon-container');
+                        iconSpan.innerHTML = checkIcon;
+                        btn.classList.add('copied');
+
+                        setTimeout(() => {
+                            iconSpan.innerHTML = copyIcon;
+                            btn.classList.remove('copied');
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy text: ', err);
+                    });
+                } catch (error) {
+                    console.error('Error generating markdown', error);
+                }
+            });
+        }
+    });
+</script>

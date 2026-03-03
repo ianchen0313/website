@@ -1,0 +1,177 @@
+---
+title: "Project"
+page-layout: custom
+toc: false
+---
+
+```{=html}
+<div class="projects-page-container">
+
+    <!-- ── Header ── -->
+    <div class="projects-header">
+        <div class="projects-header-title">Project</div>
+        <p class="projects-header-subtitle">以下是我的核心專案，涵蓋交易策略回測與全端產品開發。</p>
+    </div>
+
+    <!-- ── Pill Filter Tabs ── -->
+    <div class="projects-filter-tabs">
+        <button class="projects-filter-btn active" onclick="showProject('trading', event)">Trading Dashboard</button>
+        <button class="projects-filter-btn" onclick="showProject('gift', event)">股東紀念品系統</button>
+        <button class="projects-filter-btn" onclick="showProject('pipeline', event)">資料管線</button>
+        <button class="projects-filter-btn" onclick="showProject('ai', event)">AI 工具套件</button>
+    </div>
+
+    <!-- ── Full Screen Project Views ── -->
+    <div class="project-view-container">
+        
+        <!-- Project 1: Trading -->
+        <div id="project-trading" class="project-fullscreen active">
+            <div class="project-hero-image">
+                <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1600&h=900&fit=crop" alt="Trading Dashboard">
+                
+                <button class="info-toggle-btn" onclick="openProjectInfo(this)" onmouseenter="openProjectInfo(this)" aria-label="Show Info">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                    <span class="info-tooltip">查看更多</span>
+                </button>
+
+                <div class="glass-overlay-canvas" onmouseleave="closeProjectInfo(this)">
+                    <div class="overlay-content-wrapper">
+                        <div class="project-fullscreen-desc">
+                            <h3>交易回測 Dashboard</h3>
+                            <p>使用 Python + Backtrader 建構的多策略回測系統，包含動能因子、均值回歸與統計套利策略。Dashboard 即時展示績效指標、回撤分析與風險控管。</p>
+                        </div>
+                        <div class="project-tech-large">
+                            <span>Python</span>
+                            <span>Backtrader</span>
+                            <span>Pandas</span>
+                            <span>Plotly</span>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="#" class="view-live-btn" target="_blank">View Live <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></a>
+            </div>
+        </div>
+
+        <!-- Project 2: Gift -->
+        <div id="project-gift" class="project-fullscreen">
+            <div class="project-hero-image">
+                <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1600&h=900&fit=crop" alt="Shareholder Gift System">
+                
+                <button class="info-toggle-btn" onclick="openProjectInfo(this)" onmouseenter="openProjectInfo(this)" aria-label="Show Info">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                    <span class="info-tooltip">查看更多</span>
+                </button>
+
+                <div class="glass-overlay-canvas" onmouseleave="closeProjectInfo(this)">
+                    <div class="overlay-content-wrapper">
+                        <div class="project-fullscreen-desc">
+                            <h3>股東紀念品查詢系統</h3>
+                            <p>從零到一的全端專案：後端爬蟲自動蒐集公開資訊，API 提供結構化查詢，前端給予友善的搜尋與篩選介面。</p>
+                        </div>
+                        <div class="project-tech-large">
+                            <span>FastAPI</span>
+                            <span>React</span>
+                            <span>Scrapy</span>
+                            <span>PostgreSQL</span>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="#" class="view-live-btn" target="_blank">View Live <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></a>
+            </div>
+        </div>
+
+        <!-- Project 3: Pipeline -->
+        <div id="project-pipeline" class="project-fullscreen">
+            <div class="project-hero-image">
+                <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1600&h=900&fit=crop" alt="Data Pipeline">
+                
+                <button class="info-toggle-btn" onclick="openProjectInfo(this)" onmouseenter="openProjectInfo(this)" aria-label="Show Info">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                    <span class="info-tooltip">查看更多</span>
+                </button>
+
+                <div class="glass-overlay-canvas" onmouseleave="closeProjectInfo(this)">
+                    <div class="overlay-content-wrapper">
+                        <div class="project-fullscreen-desc">
+                            <h3>自動化資料管線 (Data Pipeline)</h3>
+                            <p>基於 Docker 的排程爬蟲系統，自動蒐集台股歷史資料、法人買賣超、與營收資訊，並以結構化格式儲存於資料庫中。</p>
+                        </div>
+                        <div class="project-tech-large">
+                            <span>Docker</span>
+                            <span>Airflow</span>
+                            <span>Python</span>
+                            <span>MongoDB</span>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="#" class="view-live-btn" target="_blank">View Live <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></a>
+            </div>
+        </div>
+
+        <!-- Project 4: AI Tools -->
+        <div id="project-ai" class="project-fullscreen">
+            <div class="project-hero-image">
+                <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1600&h=900&fit=crop" alt="AI Tools">
+                
+                <button class="info-toggle-btn" onclick="openProjectInfo(this)" onmouseenter="openProjectInfo(this)" aria-label="Show Info">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                    <span class="info-tooltip">查看更多</span>
+                </button>
+
+                <div class="glass-overlay-canvas" onmouseleave="closeProjectInfo(this)">
+                    <div class="overlay-content-wrapper">
+                        <div class="project-fullscreen-desc">
+                            <h3>AI 輔助工具套件</h3>
+                            <p>開發多項 AI 驅動的工作流工具，包含自動摘要、文件分段索引、以及基於 RAG 的知識庫問答系統。</p>
+                        </div>
+                        <div class="project-tech-large">
+                            <span>LangChain</span>
+                            <span>OpenAI API</span>
+                            <span>ChromaDB</span>
+                            <span>Quarto</span>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="#" class="view-live-btn" target="_blank">View Live <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+function showProject(projectId, event) {
+    document.querySelectorAll('.projects-filter-btn').forEach(btn => btn.classList.remove('active'));
+    event.currentTarget.classList.add('active');
+
+    document.querySelectorAll('.project-fullscreen').forEach(el => {
+        el.classList.remove('active');
+        el.style.display = 'none';
+        // Hide info overlays when switching projects
+        const overlay = el.querySelector('.glass-overlay-canvas');
+        if(overlay) overlay.classList.remove('active');
+    });
+
+    const target = document.getElementById('project-' + projectId);
+    target.style.display = 'flex';
+    target.classList.add('active');
+}
+
+function openProjectInfo(btn) {
+    const heroImage = btn.closest('.project-hero-image');
+    const overlay = heroImage.querySelector('.glass-overlay-canvas');
+    if(overlay && !overlay.classList.contains('active')) {
+        overlay.classList.add('active');
+    }
+}
+
+function closeProjectInfo(btn) {
+    const overlay = btn.closest('.glass-overlay-canvas');
+    if(overlay) overlay.classList.remove('active');
+}
+</script>
+```

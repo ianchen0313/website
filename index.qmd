@@ -1,0 +1,104 @@
+---
+title: "Ian Chen Blog"
+page-layout: custom
+section-divs: false
+toc: false
+title-block-style: none
+---
+
+<div class="landing-page">
+
+<div class="landing-intro">
+<div class="landing-title">Ian Chen</div>
+<div class="landing-subtitle">
+這個網站記錄了我的學習與研究，並將學到的知識進一步提煉並轉化為文章，除了讓自己看見一路走來的足跡。同時也希望這個網站對路過這裡的你們來說，能有些許收穫。
+</div>
+</div>
+
+```{=html}
+<div class="landing-tabs">
+    <button class="tab-btn active" onclick="showTab('articles', event)">文章精選</button>
+    <button class="tab-btn" onclick="showTab('projects', event)">近期專案</button>
+    <button class="tab-btn" onclick="showTab('data', event)">開源資料</button>
+</div>
+
+<div id="tab-articles" class="tab-pane active">
+    <div class="tab-cards">
+        <a href="blog.html" class="tab-card">
+            <div class="tab-card-meta">量化研究</div>
+            <div class="tab-card-title">台股動能策略實證回測</div>
+            <div class="tab-card-desc">以 Jegadeesh-Titman 框架，回測台股近十年的動能策略表現。</div>
+            <svg class="tab-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+        </a>
+        <a href="blog.html" class="tab-card">
+            <div class="tab-card-meta">程式教學</div>
+            <div class="tab-card-title">Python 多因子選股模型</div>
+            <div class="tab-card-desc">結合價值、動能、品質因子，從零建構可回測的選股框架。</div>
+            <svg class="tab-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+        </a>
+        <a href="blog.html" class="tab-card">
+            <div class="tab-card-meta">市場分析</div>
+            <div class="tab-card-title">財報空窗期的策略探討</div>
+            <div class="tab-card-desc">探討財報公布前後的市場異常行為與對應的投資策略。</div>
+            <svg class="tab-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+        </a>
+    </div>
+</div>
+
+<div id="tab-projects" class="tab-pane">
+    <div class="tab-cards">
+        <a href="projects.html" class="tab-card">
+            <div class="tab-card-meta">React + FastAPI</div>
+            <div class="tab-card-title">QuantTracker</div>
+            <div class="tab-card-desc">投資組合追蹤與績效歸因分析的全端應用。</div>
+            <svg class="tab-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+        </a>
+        <a href="projects.html" class="tab-card">
+            <div class="tab-card-meta">Python + GitHub Actions</div>
+            <div class="tab-card-title">AutoCrawler</div>
+            <div class="tab-card-desc">自動化抓取上市櫃公司財報與營收數據的排程爬蟲。</div>
+            <svg class="tab-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+        </a>
+        <a href="projects.html" class="tab-card">
+            <div class="tab-card-meta">Quarto + SCSS</div>
+            <div class="tab-card-title">個人網站</div>
+            <div class="tab-card-desc">使用 Quarto 打造的靜態研究筆記與作品集網站。</div>
+            <svg class="tab-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+        </a>
+    </div>
+</div>
+
+<div id="tab-data" class="tab-pane">
+    <div class="tab-cards">
+        <a href="data.html" class="tab-card">
+            <div class="tab-card-meta">CSV · 250MB</div>
+            <div class="tab-card-title">台股日頻交易數據</div>
+            <div class="tab-card-desc">涵蓋近十年上市櫃個股的 OHLCV 與籌碼資料。</div>
+            <svg class="tab-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+        </a>
+        <a href="data.html" class="tab-card">
+            <div class="tab-card-meta">Parquet · 更新至 2025 Q3</div>
+            <div class="tab-card-title">基本面財務季報</div>
+            <div class="tab-card-desc">上市櫃公司季度財務指標彙整，含 ROE、EPS 等關鍵欄位。</div>
+            <svg class="tab-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+        </a>
+        <a href="data.html" class="tab-card">
+            <div class="tab-card-meta">CSV · 每日更新</div>
+            <div class="tab-card-title">法人買賣超統計</div>
+            <div class="tab-card-desc">三大法人每日買賣超金額與張數，支援歷史回溯查詢。</div>
+            <svg class="tab-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+        </a>
+    </div>
+</div>
+
+<script>
+function showTab(tabId, event) {
+    document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+    document.getElementById('tab-' + tabId).classList.add('active');
+    event.currentTarget.classList.add('active');
+}
+</script>
+```
+
+</div>

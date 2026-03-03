@@ -1,0 +1,97 @@
+<!-- Code Block Language Icons: subtle outline icon next to copy button -->
+<style>
+    /* Container for lang icon + divider, positioned next to copy button */
+    .code-lang-icon {
+        position: absolute;
+        top: 4px;
+        right: 42px;
+        /* copy btn (36px) + margin-right (4px) + 2px gap */
+        z-index: 3;
+        display: flex;
+        align-items: center;
+        gap: 0;
+        height: 36px;
+        /* same as copy button */
+        pointer-events: auto;
+        cursor: default;
+    }
+
+    .code-lang-icon span.lang-text {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        color: #8c959f;
+    }
+
+    /* Vertical divider bar */
+    .code-lang-divider {
+        width: 1px;
+        height: 18px;
+        background-color: #d0d7de;
+        margin-left: 8px;
+        opacity: 0.7;
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const LANG_MAP = {
+            python: 'Python',
+            sql: 'SQL',
+            dockerfile: 'Docker',
+            json: 'JSON',
+            csv: 'CSV',
+            yaml: 'YAML',
+            r: 'R',
+            cpp: 'C++',
+            javascript: 'JavaScript',
+            js: 'JavaScript',
+            html: 'HTML',
+            css: 'CSS',
+            bash: 'Bash',
+            shell: 'Shell',
+            powershell: 'PowerShell'
+        };
+
+        const ALIASES = {
+            'py': 'python', 'python3': 'python',
+            'yml': 'yaml',
+            'c++': 'cpp', 'cplusplus': 'cpp',
+            'docker': 'dockerfile'
+        };
+
+        document.querySelectorAll('div.sourceCode').forEach(function (container) {
+            const pre = container.querySelector('pre');
+            if (!pre) return;
+
+            let detectedLang = null;
+            const classes = Array.from(pre.classList);
+            for (const cls of classes) {
+                if (cls === 'sourceCode' || cls === 'code-with-copy') continue;
+                const key = ALIASES[cls] || cls;
+                if (LANG_MAP[key]) { detectedLang = key; break; }
+            }
+            if (!detectedLang) return;
+
+            const langName = LANG_MAP[detectedLang];
+
+            // Create container
+            const wrapper = document.createElement('span');
+            wrapper.className = 'code-lang-icon';
+
+            // Text label
+            const textSpan = document.createElement('span');
+            textSpan.className = 'lang-text';
+            textSpan.innerText = langName;
+
+            // Divider
+            const divider = document.createElement('span');
+            divider.className = 'code-lang-divider';
+
+            wrapper.appendChild(textSpan);
+            wrapper.appendChild(divider);
+            container.appendChild(wrapper);
+        });
+    });
+</script>

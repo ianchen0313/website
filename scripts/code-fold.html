@@ -1,0 +1,191 @@
+<!-- Code Block Folding: GitHub-style gradient truncation for long code -->
+<style>
+    /* ── Collapsed wrapper ── */
+    .code-fold-wrapper {
+        position: relative;
+        overflow: hidden;
+        transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ── Gradient overlay ── */
+    .code-fold-gradient {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 64px;
+        background: linear-gradient(to bottom,
+                rgba(246, 248, 250, 0) 0%,
+                rgba(246, 248, 250, 0.85) 60%,
+                rgba(246, 248, 250, 1) 100%);
+        pointer-events: none;
+        z-index: 5;
+        transition: opacity 0.25s ease;
+    }
+
+    /* ── Expand / Collapse button ── */
+    .code-fold-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        width: 100%;
+        padding: 5px 0;
+        border: none;
+        background-color: #f6f8fa;
+        color: #57606a;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+        font-size: 12px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.15s ease, color 0.15s ease;
+        border-radius: 0 0 6px 6px;
+    }
+
+    .code-fold-btn:hover {
+        background-color: #eaeef2;
+        color: #24292f;
+    }
+
+    .code-fold-btn svg {
+        transition: transform 0.25s ease;
+    }
+
+    .code-fold-btn.expanded svg {
+        transform: rotate(180deg);
+    }
+
+    /* ── When expanded: hide gradient ── */
+    .code-fold-wrapper.expanded .code-fold-gradient {
+        opacity: 0;
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const LINE_THRESHOLD = 10;
+        const CHEVRON_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+         fill="none" stroke="currentColor" stroke-width="2"
+         stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 12 15 18 9"></polyline>
+    </svg>`;
+
+        // ── Reusable function to set up code-fold on a single container ──
+        function setupCodeFold(container) {
+            // Guard: already processed
+            if (container.dataset.codeFoldReady) return;
+            container.dataset.codeFoldReady = 'true';
+
+            const pre = container.querySelector('pre');
+            const code = pre ? pre.querySelector('code') : null;
+            if (!pre || !code) return;
+
+            // Count actual code lines
+            const lineSpans = code.querySelectorAll(':scope > span[id]');
+            const totalLines = lineSpans.length;
+            if (totalLines <= LINE_THRESHOLD) return;
+
+            // ── Measure collapsed height from first N lines ──
+            const codeRect = code.getBoundingClientRect();
+            const fifthLineRect = lineSpans[LINE_THRESHOLD - 1].getBoundingClientRect();
+            const preStyle = window.getComputedStyle(pre);
+            const paddingTop = parseFloat(preStyle.paddingTop) || 16;
+            const collapsedHeight = (fifthLineRect.bottom - codeRect.top) + paddingTop + 8;
+
+            // ── Wrap the <pre> ──
+            const wrapper = document.createElement('div');
+            wrapper.className = 'code-fold-wrapper';
+            wrapper.style.maxHeight = collapsedHeight + 'px';
+            pre.parentNode.insertBefore(wrapper, pre);
+            wrapper.appendChild(pre);
+
+            // ── Gradient ──
+            const gradient = document.createElement('div');
+            gradient.className = 'code-fold-gradient';
+            wrapper.appendChild(gradient);
+
+            // ── Expand button (View all N lines) ──
+            const btn = document.createElement('button');
+            btn.className = 'code-fold-btn';
+            btn.setAttribute('aria-expanded', 'false');
+            btn.innerHTML = `${CHEVRON_SVG}<span>View all ${totalLines} lines</span>`;
+            wrapper.parentNode.appendChild(btn);
+
+            // ── Toggle ──
+            let isCollapsed = true;
+
+            btn.addEventListener('click', function () {
+                if (isCollapsed) {
+                    const fullHeight = pre.scrollHeight;
+                    wrapper.style.maxHeight = fullHeight + 'px';
+                    wrapper.classList.add('expanded');
+                    btn.classList.add('expanded');
+                    btn.setAttribute('aria-expanded', 'true');
+                    btn.querySelector('span').textContent = 'Collapse';
+                    isCollapsed = false;
+                } else {
+                    const wrapperRect = wrapper.getBoundingClientRect();
+                    const viewportTop = window.scrollY;
+
+                    wrapper.style.maxHeight = collapsedHeight + 'px';
+                    wrapper.classList.remove('expanded');
+                    btn.classList.remove('expanded');
+                    btn.setAttribute('aria-expanded', 'false');
+                    btn.querySelector('span').textContent = `View all ${totalLines} lines`;
+                    isCollapsed = true;
+
+                    requestAnimationFrame(function () {
+                        const newRect = wrapper.getBoundingClientRect();
+                        if (newRect.top < 0) {
+                            window.scrollTo({
+                                top: viewportTop + newRect.top - 80,
+                                behavior: 'smooth'
+                            });
+                        }
+                    });
+                }
+            });
+        }
+
+        // ── Process all code containers ──
+        const codeContainers = document.querySelectorAll('div.sourceCode');
+
+        codeContainers.forEach(function (container) {
+            // Check if this container is inside a hidden tab pane
+            const tabPane = container.closest('.tab-pane:not(.active)');
+
+            if (tabPane) {
+                // Defer: set up code-fold when this tab becomes visible
+                // We listen on the parent .nav-tabs for Bootstrap tab events
+                const panelTabset = tabPane.closest('.panel-tabset');
+                if (panelTabset) {
+                    const navTabs = panelTabset.querySelector('.nav-tabs');
+                    if (navTabs) {
+                        navTabs.addEventListener('shown.bs.tab', function handler() {
+                            // When any tab is shown, try to set up code-fold
+                            // for newly-visible containers
+                            if (tabPane.classList.contains('active')) {
+                                tabPane.querySelectorAll('div.sourceCode').forEach(setupCodeFold);
+                            }
+                        });
+                    }
+                    // Fallback: also listen for plain click on nav-links
+                    // (in case Bootstrap events aren't firing)
+                    panelTabset.querySelectorAll('.nav-link').forEach(function (link) {
+                        link.addEventListener('click', function () {
+                            // Small delay to let the tab switch happen
+                            setTimeout(function () {
+                                if (tabPane.classList.contains('active')) {
+                                    tabPane.querySelectorAll('div.sourceCode').forEach(setupCodeFold);
+                                }
+                            }, 50);
+                        });
+                    });
+                }
+            } else {
+                // Visible: set up immediately
+                setupCodeFold(container);
+            }
+        });
+    });
+</script>

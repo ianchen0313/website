@@ -1,0 +1,175 @@
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const tocNav = document.getElementById("TOC");
+        if (!tocNav) return;
+
+        // Replace "On this page" with clickable "TOC" that scrolls to top
+        const tocTitle = tocNav.querySelector("h2");
+        if (tocTitle) {
+            const tocAnchor = document.createElement("a");
+            tocAnchor.textContent = "Table of Contents";
+            tocAnchor.href = "#";
+            tocAnchor.style.textDecoration = "none";
+            tocAnchor.style.color = "inherit";
+            tocAnchor.style.cursor = "pointer";
+            tocAnchor.title = "返回頁面頂端";
+            tocAnchor.addEventListener("click", function (e) {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: "auto" });
+            });
+            tocTitle.textContent = "";
+            tocTitle.appendChild(tocAnchor);
+        }
+
+        // Gather all TOC links and their target heading elements
+        const tocLinks = Array.from(tocNav.querySelectorAll("a.nav-link"));
+        const headingMap = []; // { link, heading, parentLink }
+
+        tocLinks.forEach(function (link) {
+            // Extract the hash fragment from the URL (works for both "#id" and "http://.../#id")
+            const hash = link.hash;
+            if (!hash) return;
+            const id = decodeURIComponent(hash.slice(1));
+            const heading = document.getElementById(id);
+            if (!heading) return;
+
+            // Find the parent h2 TOC link (if this link is inside a nested <ul>)
+            let parentLink = null;
+            const parentLi = link.closest("ul")?.closest("li");
+            if (parentLi) {
+                const pLink = parentLi.querySelector(":scope > a.nav-link");
+                // Only count it as parent if pLink is different from current link
+                if (pLink && pLink !== link) {
+                    parentLink = pLink;
+                }
+            }
+
+            headingMap.push({ link: link, heading: heading, parentLink: parentLink });
+        });
+
+        if (headingMap.length === 0) return;
+
+        // Create the Google Antigravity style Magic Line
+        const magicLine = document.createElement("div");
+        magicLine.className = "toc-magic-line";
+        magicLine.style.opacity = "0"; // Hide initially until first scroll
+        tocNav.appendChild(magicLine);
+        let isLineInitialized = false;
+
+        // Scroll offset to account for fixed navbar
+        const SCROLL_OFFSET = 80;
+
+        function updateActive() {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+
+            // Find the last heading whose top has scrolled past the viewport top
+            let activeEntry = null;
+            for (let i = headingMap.length - 1; i >= 0; i--) {
+                const rect = headingMap[i].heading.getBoundingClientRect();
+                if (rect.top <= SCROLL_OFFSET + 1) {
+                    activeEntry = headingMap[i];
+                    break;
+                }
+            }
+
+            // If nothing has scrolled past yet, use the first heading
+            if (!activeEntry && headingMap.length > 0) {
+                activeEntry = headingMap[0];
+            }
+
+            // Clear all active states
+            tocLinks.forEach(function (link) {
+                link.classList.remove("active");
+                link.classList.remove("parent-active");
+            });
+
+            if (activeEntry) {
+                // Activate the current heading's TOC link
+                activeEntry.link.classList.add("active");
+
+                // If h3 is active, mark the parent h2 as parent-active
+                if (activeEntry.parentLink) {
+                    activeEntry.parentLink.classList.add("parent-active");
+                }
+
+                // Move and stretch the Magic Line
+                const tocRect = tocNav.getBoundingClientRect();
+                const linkRect = activeEntry.link.getBoundingClientRect();
+                // offset relative to the TOC container bounds
+                const relativeTop = linkRect.top - tocRect.top + tocNav.scrollTop;
+
+                magicLine.style.transform = `translateY(${relativeTop}px)`;
+                magicLine.style.height = `${linkRect.height}px`;
+
+                if (!isLineInitialized) {
+                    magicLine.style.opacity = "1";
+                    isLineInitialized = true;
+                }
+            } else {
+                magicLine.style.opacity = "0";
+                isLineInitialized = false;
+            }
+        }
+
+        // Disable Quarto's default scrollspy by removing Bootstrap's data attribute
+        const scrollSpyTarget = document.querySelector("[data-bs-spy='scroll']");
+        if (scrollSpyTarget) {
+            scrollSpyTarget.removeAttribute("data-bs-spy");
+            scrollSpyTarget.removeAttribute("data-bs-target");
+        }
+
+        // Run on scroll with throttle for performance
+        let ticking = false;
+        window.addEventListener("scroll", function () {
+            if (!ticking) {
+                requestAnimationFrame(function () {
+                    updateActive();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+
+        // Initial run
+        updateActive();
+
+        // Also update on resize to ensure Magic Line stays aligned if text wraps differently
+        window.addEventListener("resize", function () {
+            if (!ticking) {
+                requestAnimationFrame(function () {
+                    updateActive();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+
+        // Add title tooltips for navigation text so hovered items show full text
+        // Use a function to apply to elements
+        function applyTooltips() {
+            const navElements = document.querySelectorAll('.sidebar-item-text, #TOC .nav-link, .nav-page-text');
+            navElements.forEach(el => {
+                if (!el.hasAttribute('title') && el.textContent.trim()) {
+                    el.setAttribute('title', el.textContent.trim());
+                }
+            });
+        }
+
+        // Apply immediately
+        applyTooltips();
+
+        // Also observe the document for dynamically added elements (Quarto sometimes renders things late)
+        const observer = new MutationObserver((mutations) => {
+            let shouldApply = false;
+            for (let mutation of mutations) {
+                if (mutation.addedNodes.length > 0) {
+                    shouldApply = true;
+                    break;
+                }
+            }
+            if (shouldApply) applyTooltips();
+        });
+
+        observer.observe(document.body, { childList: true, subtree: true });
+    });
+</script>

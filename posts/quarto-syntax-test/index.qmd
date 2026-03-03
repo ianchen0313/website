@@ -1,0 +1,258 @@
+---
+title: "Quarto Markdown 語法全集測試"
+description: "這篇文章包含了 Quarto 支援的所有特殊 Markdown 語法，包含 Callouts, 程式碼區塊, 數學方程式, 腳註, 側邊欄與交叉引用等，用來確保我們套用的 CSS 在各種元素上都能完美呈現。"
+date: "2026-03-20"
+categories: [系列文章]
+#image: 
+order: 1
+---
+
+## 提示區塊
+
+這是在技術文件中非常常用的呼叫區塊[^2]：
+
+### 提示三 縮排
+#### 提示四 縮排
+
+::: {.callout-note}
+## Information
+Quarto 支援五種內建的 callout 類型，我們將其簡化為四種統一灰色的風格。
+:::
+
+::: {.callout-tip}
+## Best Practice
+使用 `virtualenv` 或 `conda` 來管理每個專案的相依套件，避免全域安裝造成版本衝突。
+:::
+
+
+::: {.callout-warning}
+## Warning
+此 API 將在 v3.0 版本後棄用，請儘早遷移至新版端點。
+:::
+
+::: {.callout-important}
+## Danger
+請勿在正式環境中使用 `DEBUG=True`，這會暴露敏感的錯誤資訊與堆疊追蹤。
+:::
+
+::: {.callout-warning collapse="true"}
+## Warning
+這是一個預設摺疊的警告區塊，適合放置較長的除錯資訊或輔助說明。
+:::
+
+## FAQ Toggle (常見問題摺疊)
+
+以下示範使用原生 `<details>` 標籤搭配自訂 CSS 實作的 FAQ Toggle 組件：
+
+<details class="faq-toggle">
+<summary>Quarto 是什麼？</summary>
+<div class="faq-answer">
+
+Quarto 是一套開源的科學暨技術出版系統，支援 R、Python、Julia 等多種語言，可以將 Markdown 和程式碼產出為文件、簡報、網站和書籍。
+
+</div>
+</details>
+
+<details class="faq-toggle">
+<summary>需要會寫程式嗎？</summary>
+<div class="faq-answer">
+
+不需要。Quarto 本身使用 Markdown 語法撰寫，即使不會程式設計也能輕鬆產出精美的文件。當然，如果您熟悉 Python 或 R，可以直接嵌入互動式程式碼區塊。
+
+</div>
+</details>
+
+<details class="faq-toggle">
+<summary>支援哪些輸出格式？</summary>
+<div class="faq-answer">
+
+Quarto 支援 HTML 網頁、PDF 文件、Word 文件、EPUB 電子書、Revealjs 簡報、Beamer 簡報等多種格式，一份原始碼就能產出不同的目標格式。
+
+</div>
+</details>
+
+<details class="faq-toggle">
+<summary>可以用來架設個人部落格嗎？</summary>
+<div class="faq-answer">
+
+當然可以！Quarto 提供完整的部落格（Blog）與網站（Website）專案模板。您只要撰寫 `.qmd` 檔案，Quarto 就能自動產生靜態站點，並支援部署到 GitHub Pages、Netlify 等平台。
+
+</div>
+</details>
+
+## 2. Tabsets (分頁標籤)
+
+當你需要並排顯示兩種語言的程式碼時，Tabset 是一個好工具：
+
+::: {.panel-tabset}
+## Python 範例
+
+``` {.python}
+def main():
+    print("Hello from Python!")
+
+if __name__ == "__main__":
+    main()
+```
+
+## R 範例
+
+``` {.r}
+main <- function() {
+    print("Hello from R!")
+}
+
+main()
+```
+
+## 文字說明
+``` {.yaml}
+title: "Quarto Markdown 語法全集測試"
+date: "2026-03-20"
+categories: [系列文章]
+image: "https://picsum.photos/seed/quarto/400/400"
+```
+
+
+## Python 範例_II
+```python
+#| filename: "example.py"
+#| eval: false
+import json
+from dataclasses import dataclass
+from typing import List, Dict, Optional
+
+@dataclass
+class DatasetAnalyzer:
+    """A tool for analyzing and processing tabular datasets."""
+    dataset_name: str
+    target_variable: str
+
+    def process_data(self, df: pd.DataFrame, threshold: float = 0.5) -> Dict[str, any]:
+        # Filter rows based on the magic threshold value
+        if df.empty:
+            raise ValueError("Dataset cannot be empty")
+            
+        filtered = df[df['score'] > threshold]
+        
+        results = {
+            "status": "success",
+            "processed_count": len(filtered),
+            "is_valid": True,
+            "metadata": None
+        }
+```
+
+## SQL 範例
+``` {.sql}
+select 
+    col1, col2, col3
+from table
+where id = 1;
+```
+
+
+:::
+
+## 3. Code Blocks (程式碼區塊附加功能)
+
+這是帶有檔名以及行號亮點的程式碼區塊：
+
+```python
+#| filename: "example.py"
+#| eval: false
+import json
+from dataclasses import dataclass
+from typing import List, Dict, Optional
+
+@dataclass
+class DatasetAnalyzer:
+    """A tool for analyzing and processing tabular datasets."""
+    dataset_name: str
+    target_variable: str
+
+    def process_data(self, df: pd.DataFrame, threshold: float = 0.5) -> Dict[str, any]:
+        # Filter rows based on the magic threshold value
+        if df.empty:
+            raise ValueError("Dataset cannot be empty")
+            
+        filtered = df[df['score'] > threshold]
+        
+        results = {
+            "status": "success",
+            "processed_count": len(filtered),
+            "is_valid": True,
+            "metadata": None
+        }
+        
+        return results
+```
+
+## 4. Figures with layout-ncol (多欄位圖片佈局)
+
+我們可以將兩張圖片並排顯示在同一個區塊中：
+
+::: {layout-ncol=2}
+![圖片 A (左邊的範例圖)](TheEconomist-2025-01-04_P224_img_01_pymupdf.jpg)
+
+![圖片 B (右邊的範例圖)](https://placehold.co/600x400/f6f8fa/57606a?text=Image+B)
+:::
+
+![](TheEconomist-2025-01-04_P224_img_01_pymupdf.jpg){width="80%"}
+
+
+## 5. Tables (表格)
+
+Quarto 支援標準與進階的 Markdown 表格對齊：
+
+| 欄位 1 (置右) | 欄位 2 (置左) | 欄位 3 (置中) |
+|------:|:-----|:------:|
+|   12  |  Apple  |    X  |
+|  123  |  Banana |   Y  |
+
+## 6. Blockquotes (引用區塊)
+
+如果你要引用名言或段落，可以使用 Blockquote：
+
+> 這裡是一段引用的文字。
+>
+> 這是引用的第二段，可以用來強調引述他人的話語或是重要文獻。這樣我們就可以測試引用區塊的右側留白與左側邊框。
+
+## 7. Equations (方程式)
+
+行內方程式（Inline Math）測試：這是愛因斯坦著名的質能守恆定律 $E = mc^2$ 寫在句子中。
+
+這是一個獨立置中的數學方程式（Display Math）：
+
+$$
+f(x) = \int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}
+$$ {#eq-gauss}
+
+這是一個我們幫它加上標籤，並準備在下面進行交叉引用的「樣本標準差」方程式：
+
+$$
+s = \sqrt{\frac{1}{N-1} \sum_{i=1}^N (x_i - \overline{x})^2}
+$$ {#eq-stddev}
+
+## 8. Footnotes (註腳)
+
+這是一段帶有註腳的文字[^1]。你可以把參考資料放在頁面最底部的註腳清單裡。如果在游標停留在上方時會彈出小視窗更是加分。
+
+[^1]: 這是註腳 1 的詳細說明文字，通常會出現在文章的最底部。
+[^2]: 這是註腳 2 的詳細說明文字，通常會出現在文章的最底部。
+
+## 10. Cross-references (交叉引用)
+
+透過 Quarto 強大的 Reference 系統，我們可以動態產生連結：
+
+- 請參考上方定義的 @eq-gauss (高斯積分方程式)。
+- 請參考 @eq-stddev (樣本標準差方程式)。
+- 想要跳回第一節了解如何使用提示區塊嗎？請點擊 @sec-callouts。
+
+## （測試用標籤） {#sec-callouts}
+（因為前面第 1 節我沒有加 ID 標籤，所以我把 Section Reference 導向到這裡作為測試。）
+
+
+
+## （測試用標籤） {#sec-callouts}
+（因為前面第 1 節我沒有加 ID 標籤，所以我把 Section Reference 導向到這裡作為測試。）

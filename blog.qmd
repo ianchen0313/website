@@ -1,0 +1,77 @@
+---
+title: "Blog"
+listing:
+  contents: posts
+  sort: "date desc"
+  type: default
+  categories: false
+  feed: true
+  fields: [image, title, date, categories]
+page-layout: full
+toc: false
+title-block-style: none
+---
+
+```{=html}
+<div class="blog-header">
+    <div class="blog-header-row">
+        <div class="blog-header-title">Blog</div>
+    </div>
+    <div class="blog-filter-tabs">
+        <button class="blog-filter-btn active" onclick="filterPosts('all', event)">全部文章</button>
+        <button class="blog-filter-btn" onclick="filterPosts('單篇文章', event)">單篇文章</button>
+        <button class="blog-filter-btn" onclick="filterPosts('系列文章', event)">系列文章</button>
+    </div>
+    <div class="blog-header-divider"></div>
+</div>
+
+<script>
+// Move category tags from .body into .metadata (after the date)
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.quarto-post').forEach(function(post) {
+        var cats = post.querySelector('.body .listing-categories');
+        var meta = post.querySelector('.metadata');
+        if (cats && meta) {
+            // Append after the date link so order is: date -> tag
+            meta.appendChild(cats);
+            // Ensure the date link comes first visually via flex order
+            var dateLink = meta.querySelector('a');
+            if (dateLink) dateLink.style.order = '-1';
+        }
+    });
+});
+
+function filterPosts(category, event) {
+    // Update active tab (pill highlight)
+    document.querySelectorAll('.blog-filter-btn').forEach(btn => btn.classList.remove('active'));
+    event.currentTarget.classList.add('active');
+
+    // Filter listing items by reading Quarto's data-categories attribute
+    // Quarto encodes categories as: base64( encodeURIComponent(category) )
+    // So atob() gives us "%E7%B3%BB%E5%88..." which we then decodeURIComponent()
+    const items = document.querySelectorAll('.quarto-post');
+    items.forEach(item => {
+        if (category === 'all') {
+            item.style.removeProperty('display');
+        } else {
+            const encodedCats = item.getAttribute('data-categories') || '';
+            let match = false;
+            if (encodedCats) {
+                try {
+                    const decoded = decodeURIComponent(window.atob(encodedCats));
+                    match = decoded === category;
+                } catch (e) {
+                    console.error("Category decode failed:", e);
+                }
+            }
+            if (match) {
+                item.style.removeProperty('display');
+            } else {
+                item.style.setProperty('display', 'none', 'important');
+            }
+        }
+    });
+}
+</script>
+
+```
