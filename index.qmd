@@ -4,6 +4,7 @@ page-layout: custom
 section-divs: false
 toc: false
 title-block-style: none
+body-classes: landing-page-body
 ---
 
 <div class="landing-page">
