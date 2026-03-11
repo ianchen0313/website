@@ -29,6 +29,11 @@ website:
       contents:
         - posts/quarto-syntax-test/index.qmd
         - posts/quarto-syntax-test/page2.qmd
+    - title: "台股動能策略實證"
+      style: "docked"
+      contents:
+        - posts/台股動能策略實證 — 框架設定/index.qmd
+        - posts/台股動能策略實證 — 價格動能/index.qmd
 
 format:
   html:

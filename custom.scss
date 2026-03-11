@@ -1198,6 +1198,14 @@ nav[aria-label="breadcrumb"] {
         margin-bottom: 1.5rem;
     }
 
+    caption,
+    .table-caption {
+        color: $gray-700 !important;
+        font-weight: normal !important;
+        font-size: 1rem !important;
+        text-align: center !important;
+    }
+
     hr {
         border: none;
         border-top: 1px solid $gray-200;
