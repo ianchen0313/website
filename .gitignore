@@ -28,3 +28,7 @@ ehthumbs.db
 Thumbs.db
 
 **/*.quarto_ipynb
+.agent
+.github
+.gitignore
+

@@ -52,6 +52,7 @@ format:
       - scripts/code-lang-icons.html
       - scripts/code-fold.html
       - scripts/toc-scrollspy.html
+      - scripts/finlab-report.html
     include-in-header:
       - text: |
           <link rel="preconnect" href="https://fonts.googleapis.com">

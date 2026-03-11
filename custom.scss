@@ -3400,3 +3400,17 @@ img.img-fluid {
         }
     }
 }
+
+// ============================================================
+// FINLAB REPORT IFRAME — edge-to-edge, auto-height
+// ============================================================
+iframe.finlab-report {
+    display: block;
+    width: 100%;
+    min-height: 900px;
+    border: none;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #f3f4f6;   // match DaisyUI bg-base-200
+    margin: 1.5rem 0;
+}
