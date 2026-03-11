@@ -1,0 +1,2624 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Quartile">
+<meta name="dcterms.date" content="2026-03-10">
+<meta name="description" content="價格動能策略在台股">
+
+<title>台股動能策略實證 — 價格動能 – Ian Chen</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<link href="../../posts/台股動能策略實證 — 框架設定/index.html" rel="prev">
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-862890c363ac206592faaea3555ffe9d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-419e1e3decac3724e2b95a8015b25bfa.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&amp;family=Outfit:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    let lastScrollTop = 0;
+    const navbar = document.querySelector(".navbar");
+    
+    if (!navbar) return;
+
+    window.addEventListener("scroll", function() {
+      let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+      
+      if (currentScroll > lastScrollTop && currentScroll > 64) {
+        // Scrolling down & past the header height
+        navbar.classList.add("navbar-hidden");
+      } else {
+        // Scrolling up
+        navbar.classList.remove("navbar-hidden");
+      }
+      lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // For Mobile or negative scrolling
+    }, false);
+  });
+</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Ian Chen</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog.html"> 
+<span class="menu-text">文章</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../projects.html"> 
+<span class="menu-text">專案</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../data.html"> 
+<span class="menu-text">資料</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> <i class="bi bi-person" role="img">
+</i> 
+<span class="menu-text">關於我</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/台股動能策略實證 — 價格動能/index.html">台股動能策略實證 — 價格動能</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../posts/台股動能策略實證 — 框架設定/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">台股動能策略實證 — 框架設定</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../posts/台股動能策略實證 — 價格動能/index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">台股動能策略實證 — 價格動能</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#何謂價格動能" id="toc-何謂價格動能" class="nav-link active" data-scroll-target="#何謂價格動能">何謂價格動能</a>
+  <ul class="collapse">
+  <li><a href="#短期反轉" id="toc-短期反轉" class="nav-link" data-scroll-target="#短期反轉">短期反轉</a></li>
+  <li><a href="#中期動能" id="toc-中期動能" class="nav-link" data-scroll-target="#中期動能">中期動能</a></li>
+  <li><a href="#長期反轉" id="toc-長期反轉" class="nav-link" data-scroll-target="#長期反轉">長期反轉</a></li>
+  </ul></li>
+  <li><a href="#價格動能的計算方式" id="toc-價格動能的計算方式" class="nav-link" data-scroll-target="#價格動能的計算方式">價格動能的計算方式</a></li>
+  <li><a href="#台股實證結果" id="toc-台股實證結果" class="nav-link" data-scroll-target="#台股實證結果">台股實證結果</a>
+  <ul class="collapse">
+  <li><a href="#jk-參數分析" id="toc-jk-參數分析" class="nav-link" data-scroll-target="#jk-參數分析">JK 參數分析</a></li>
+  <li><a href="#報酬單調性分析" id="toc-報酬單調性分析" class="nav-link" data-scroll-target="#報酬單調性分析">報酬單調性分析</a></li>
+  <li><a href="#條件排序分析" id="toc-條件排序分析" class="nav-link" data-scroll-target="#條件排序分析">條件排序分析</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">台股動能策略實證 — 價格動能</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">系列文章</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    價格動能策略在台股
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Quartile </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">March 10, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="何謂價格動能" class="level2">
+<h2 class="anchored" data-anchor-id="何謂價格動能">何謂價格動能</h2>
+<p>價格動能策略源自於 Jegadeesh 與 Titman (1993) 的研究<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>，他們針對 1965 至 1989 年的<strong>美股市場</strong>進行動能策略的實證研究。</p>
+<p>作者利用過去 <span class="math inline">\(J\)</span> 個月的歷史資料計算每隻股票的報酬率作為價格動能訊號，據此買進過去贏家 (動能最強的 10%) 賣出過去輸家 (動能最弱的 10%) 建構多空投資組合，持有 <span class="math inline">\(K\)</span> 個月。</p>
+<p><strong>論文的主要論點在於：短期反轉、中期動能、長期反轉</strong></p>
+<section id="短期反轉" class="level3">
+<h3 class="anchored" data-anchor-id="短期反轉">短期反轉</h3>
+<p>當包含最近的股價資料時，會有短期反轉的現象。也就是近期的強勢股反而接下來短期走弱。因此作者在計算動能訊號時分為兩種版本，分別是跳過最近一周的股價資料與包含最新的股價資料，結果顯示跳過版本的表現較佳。</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>補充說明
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>儘管 Jegadeesh 與 Titman (1993) 是跳過最近一周來排除短期反轉，後續的文獻為了避免短期反轉則都是以跳過最近一個月的資料為主，如 Gong et al.&nbsp;(2015)<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> 。</p>
+</div>
+</div>
+</section>
+<section id="中期動能" class="level3">
+<h3 class="anchored" data-anchor-id="中期動能">中期動能</h3>
+<p>作者發現多空投資組合持有期介於 3 到 12 個月時，具有正的超額報酬。也就是說持有期為一年內時，過去的贏家也會是接下來的贏家、過去的輸家則會繼續是輸家。</p>
+<p>作者認為這樣的報酬差異可以用反應不足來解釋，也就是說投資人對於股票基本面變化的反應不足，當前價格並未完全反映價值。</p>
+<p>同時文章也提到動能策略最佳的參數組合為：<span class="math inline">\(J=12, K=3\)</span> 並且跳過最近一周；而最差的參數組合為：<span class="math inline">\(J=3, K=3\)</span> 並且不跳過最近一周。</p>
+<p>也就是說價格動能策略在<strong>較長的形成期 + 較短的持有期 + 避免短期反轉</strong>的狀況下表現最好。</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>補充說明
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>由於論文的參數選擇僅包含 <span class="math inline">\(\{3,6,9,12\}\)</span>，因此後續台股實證分析時，我會將參數選擇擴大為 <span class="math inline">\(\{1, 3,6,9,12, 18, 24\}\)</span>。</p>
+<p>目的是為了確認在其他條件不變下，超過一年的形成期對於報酬率有何影響，以及更短的持有期是否能進一步提高報酬率。</p>
+</div>
+</div>
+</section>
+<section id="長期反轉" class="level3">
+<h3 class="anchored" data-anchor-id="長期反轉">長期反轉</h3>
+<p>與中期動能不同，作者觀察到當多空投資組合的持有期超過 12 個月時，報酬率反而由正轉負，過去的贏家反而是接下來的輸家、過去的輸家則變成贏家。</p>
+</section>
+</section>
+<section id="價格動能的計算方式" class="level2">
+<h2 class="anchored" data-anchor-id="價格動能的計算方式">價格動能的計算方式</h2>
+<p>價格動能本質上就是去計算每隻股票過去 <span class="math inline">\(J\)</span> 個月的總報酬，報酬率越高表示訊號越強。由於有配股配息的問題，因此不能使用一般的收盤價計算價格動能，而是要使用<strong>調整後收盤價</strong>計算，計算方式也非常簡單：</p>
+<p><span class="math display">\[
+MOM_{t,J} = \dfrac{P_t}{P_{t-J}} - 1
+\]</span></p>
+<p>這裡的 <span class="math inline">\(P_t\)</span> 表示的是第 <span class="math inline">\(t\)</span> 月底的調整後收盤價，同理 <span class="math inline">\(P_{t-J}\)</span> 是 <span class="math inline">\(J\)</span> 個月前的月底調整後收盤價。若在計算上要忽略最近一個月的資料也非常容易，只要取上個月的動能訊號 <span class="math inline">\(MOM_{t-1,J}\)</span> 即可。</p>
+<p>實際回測時的價格動能函數如下：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_factor(j: <span class="bu">int</span>, </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                   skip_current_month: <span class="bu">bool</span>) <span class="op">-&gt;</span> pd.DataFrame:</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">    價格動能因子：過去 j 個月的總報酬率</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">    skip_current_month=True 時跳過最近一個月</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> skip_current_month:</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> 調整後收盤價.pct_change(j).shift(<span class="dv">1</span>).where(股票池濾網)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> 調整後收盤價.pct_change(j).where(股票池濾網)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="台股實證結果" class="level2">
+<h2 class="anchored" data-anchor-id="台股實證結果">台股實證結果</h2>
+<p>由於考量放空在實務中的難度與成本，因此以投資來說我們更加在意的是做多動能投資組合能否擊敗大盤，而非論文中的多空投資組合是否可以帶來超額報酬。</p>
+<p>在我們設定的回測樣本期間內 (2011-2025)，大盤 (含息) 的年化月均報酬率為 <strong>0.1257</strong>，也就是說動能策略的年化月均報酬率至少要大於 0.1257 ，才能在後續考慮手續費與報酬波動度下，和大盤有一拚的機會，否則長期買進並持有大盤會是更好的選擇。</p>
+<p>因此在接下來的分析中，我主要會以價格動能策略中的多頭部位為主，也就是做多動能最強的 10% 贏家股票，並且進行以下分析：</p>
+<ul>
+<li>JK 參數分析</li>
+<li>報酬單調性分析</li>
+<li>條件排序分析</li>
+<li>策略績效分析</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>分析框架
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>所有的分析框架都與 <a href="../../posts/台股動能策略實證 — 框架設定/index.html">框架設定</a> 這篇文章相同，故這裡不再複述。</p>
+</div>
+</div>
+<section id="jk-參數分析" class="level3">
+<h3 class="anchored" data-anchor-id="jk-參數分析">JK 參數分析</h3>
+<p>參數分析的目的在於探討在不同參數之下，策略的表現是否存在差異，且我們預期這個差異是有規則可循。以動能策略來說，隨持有期越長，因投資人反應不足造成的潛在獲利逐漸消失，因此預期報酬率也會逐漸降低。</p>
+<p>此外，一個穩定的策略不應該出現孤立的報酬率峰值，也就是說最佳參數附近的表現也應該都還不錯，而不是只有單一組合特別好、其他都很差，避免過度擬合的疑慮。</p>
+<p>本章節會分成三個部分：</p>
+<p><strong>第一部分：全樣本分析</strong><br>
+在全樣本下，檢視三種投資組合在不同參數的報酬表現，分別是贏家組合、輸家組合、以及多空組合，同時也會比較是否忽略最近一個月資料的差異，因此總共會有 6 張表。</p>
+<p><strong>第二部分：滾動性參數分析</strong><br>
+將樣本期間 2011-2025 以 5 年為一個單位建構滾動樣本區間，查看每個區間的最佳參數為何，因此一共有 11 個滾動樣本區間 (2011-2015, 2012-2016, …, 2021-2025)。</p>
+<p><strong>第三部分：考慮交易成本後的贏家組合</strong><br>
+在全樣本下，檢視兩種贏家組合在考慮交易成本後的實際月均報酬為何以及是否贏過大盤。</p>
+<section id="全樣本分析" class="level4">
+<h4 class="anchored" data-anchor-id="全樣本分析">全樣本分析</h4>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">贏家組合 (no-skip)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">贏家組合 (skip)</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">J / K</th>
+<th style="text-align: center;">1</th>
+<th style="text-align: center;">3</th>
+<th style="text-align: center;">6</th>
+<th style="text-align: center;">9</th>
+<th style="text-align: center;">12</th>
+<th style="text-align: center;">18</th>
+<th style="text-align: center;">24</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><strong>1</strong></td>
+<td style="text-align: center;">0.1285</td>
+<td style="text-align: center;">0.1336</td>
+<td style="text-align: center;">0.1272</td>
+<td style="text-align: center;">0.1206</td>
+<td style="text-align: center;">0.1143</td>
+<td style="text-align: center;">0.1026</td>
+<td style="text-align: center;">0.1026</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>3</strong></td>
+<td style="text-align: center;">0.1740</td>
+<td style="text-align: center;">0.1583</td>
+<td style="text-align: center;">0.1519</td>
+<td style="text-align: center;">0.1397</td>
+<td style="text-align: center;">0.1236</td>
+<td style="text-align: center;">0.1052</td>
+<td style="text-align: center;">0.1048</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>6</strong></td>
+<td style="text-align: center;">0.1901</td>
+<td style="text-align: center;">0.1736</td>
+<td style="text-align: center;">0.1600</td>
+<td style="text-align: center;">0.1345</td>
+<td style="text-align: center;">0.1167</td>
+<td style="text-align: center;">0.0980</td>
+<td style="text-align: center;">0.1005</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>9</strong></td>
+<td style="text-align: center;">0.1850</td>
+<td style="text-align: center;">0.1652</td>
+<td style="text-align: center;">0.1364</td>
+<td style="text-align: center;">0.1137</td>
+<td style="text-align: center;">0.0980</td>
+<td style="text-align: center;">0.0864</td>
+<td style="text-align: center;">0.0887</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>12</strong></td>
+<td style="text-align: center;">0.1347</td>
+<td style="text-align: center;">0.1136</td>
+<td style="text-align: center;">0.0992</td>
+<td style="text-align: center;">0.0846</td>
+<td style="text-align: center;">0.0773</td>
+<td style="text-align: center;">0.0755</td>
+<td style="text-align: center;">0.0800</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>18</strong></td>
+<td style="text-align: center;">0.1038</td>
+<td style="text-align: center;">0.0916</td>
+<td style="text-align: center;">0.0790</td>
+<td style="text-align: center;">0.0729</td>
+<td style="text-align: center;">0.0682</td>
+<td style="text-align: center;">0.0683</td>
+<td style="text-align: center;">0.0773</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>24</strong></td>
+<td style="text-align: center;">0.0866</td>
+<td style="text-align: center;">0.0801</td>
+<td style="text-align: center;">0.0731</td>
+<td style="text-align: center;">0.0663</td>
+<td style="text-align: center;">0.0653</td>
+<td style="text-align: center;">0.0678</td>
+<td style="text-align: center;">0.0772</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">J / K</th>
+<th style="text-align: center;">1</th>
+<th style="text-align: center;">3</th>
+<th style="text-align: center;">6</th>
+<th style="text-align: center;">9</th>
+<th style="text-align: center;">12</th>
+<th style="text-align: center;">18</th>
+<th style="text-align: center;">24</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><strong>1</strong></td>
+<td style="text-align: center;">0.1477</td>
+<td style="text-align: center;">0.1336</td>
+<td style="text-align: center;">0.1248</td>
+<td style="text-align: center;">0.1189</td>
+<td style="text-align: center;">0.1099</td>
+<td style="text-align: center;">0.1001</td>
+<td style="text-align: center;">0.1013</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>3</strong></td>
+<td style="text-align: center;">0.1616</td>
+<td style="text-align: center;">0.1497</td>
+<td style="text-align: center;">0.1434</td>
+<td style="text-align: center;">0.1279</td>
+<td style="text-align: center;">0.1146</td>
+<td style="text-align: center;">0.0990</td>
+<td style="text-align: center;">0.1014</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>6</strong></td>
+<td style="text-align: center;">0.1649</td>
+<td style="text-align: center;">0.1596</td>
+<td style="text-align: center;">0.1416</td>
+<td style="text-align: center;">0.1161</td>
+<td style="text-align: center;">0.1023</td>
+<td style="text-align: center;">0.0898</td>
+<td style="text-align: center;">0.0943</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>9</strong></td>
+<td style="text-align: center;">0.1633</td>
+<td style="text-align: center;">0.1416</td>
+<td style="text-align: center;">0.1122</td>
+<td style="text-align: center;">0.0936</td>
+<td style="text-align: center;">0.0817</td>
+<td style="text-align: center;">0.0771</td>
+<td style="text-align: center;">0.0815</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>12</strong></td>
+<td style="text-align: center;">0.1094</td>
+<td style="text-align: center;">0.0975</td>
+<td style="text-align: center;">0.0825</td>
+<td style="text-align: center;">0.0706</td>
+<td style="text-align: center;">0.0677</td>
+<td style="text-align: center;">0.0696</td>
+<td style="text-align: center;">0.0768</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>18</strong></td>
+<td style="text-align: center;">0.0861</td>
+<td style="text-align: center;">0.0739</td>
+<td style="text-align: center;">0.0677</td>
+<td style="text-align: center;">0.0631</td>
+<td style="text-align: center;">0.0613</td>
+<td style="text-align: center;">0.0641</td>
+<td style="text-align: center;">0.0751</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>24</strong></td>
+<td style="text-align: center;">0.0781</td>
+<td style="text-align: center;">0.0724</td>
+<td style="text-align: center;">0.0657</td>
+<td style="text-align: center;">0.0611</td>
+<td style="text-align: center;">0.0621</td>
+<td style="text-align: center;">0.0669</td>
+<td style="text-align: center;">0.0766</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p><br> 從贏家組合的兩張參數表可以獲得以下發現：</p>
+<ul>
+<li><strong>持有期越長，報酬率越低</strong><br>
+除了 <span class="math inline">\(J,K = 1,1\)</span> 外，觀察每個 row 可以發現，隨著持有期的增加，報酬率大致上逐漸降低，符合動能策略的假設。</li>
+<li><strong>形成期並非越長越好</strong><br>
+隨者形成期逐漸增加，報酬率也逐漸提高，在 6 個月、9 個月時達到相對高峰，隨後下降。Jegadeesh 與 Titman (1993) 針對美股的研究發現最佳的形成期為 12 個月，而在台股反而是更短的形成期 (6 或 9 個月) 策略表現更佳。</li>
+<li><strong>排除最近一個月有好有壞</strong><br>
+若排除最近一個月的資料，可以觀察到 <span class="math inline">\(J,K = 1,1\)</span> 的投資組合報酬率明顯提升 (0.1285 vs 0.1477)，但其他投資組合的報酬率卻都一致性的下降，顯示排除最近一個月的資料確實可以避免短期反轉效應，但也使動能訊號的時效性減少，降低整體報酬。</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>以濾網取代排除近期資料
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Jegadeesh 與 Titman (2001) <a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> 針對價格動能策略的樣本外研究時，放棄使用跳過最近資料的方式，改採選股池濾網來處理短期反轉效應。他們發現實際上造成反轉效應的原因絕大部分是因為<strong>低價股</strong>造成的，因此建構投資組合時剔除 5 美元以下低價股。</p>
+</div>
+</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">輸家組合 (no-skip)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">輸家組合 (skip)</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">J / K</th>
+<th style="text-align: center;">1</th>
+<th style="text-align: center;">3</th>
+<th style="text-align: center;">6</th>
+<th style="text-align: center;">9</th>
+<th style="text-align: center;">12</th>
+<th style="text-align: center;">18</th>
+<th style="text-align: center;">24</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><strong>1</strong></td>
+<td style="text-align: center;">0.0743</td>
+<td style="text-align: center;">0.0661</td>
+<td style="text-align: center;">0.0639</td>
+<td style="text-align: center;">0.0613</td>
+<td style="text-align: center;">0.0665</td>
+<td style="text-align: center;">0.0788</td>
+<td style="text-align: center;">0.0837</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>3</strong></td>
+<td style="text-align: center;">0.0708</td>
+<td style="text-align: center;">0.0467</td>
+<td style="text-align: center;">0.0496</td>
+<td style="text-align: center;">0.0491</td>
+<td style="text-align: center;">0.0596</td>
+<td style="text-align: center;">0.0746</td>
+<td style="text-align: center;">0.0799</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>6</strong></td>
+<td style="text-align: center;">0.0560</td>
+<td style="text-align: center;">0.0342</td>
+<td style="text-align: center;">0.0366</td>
+<td style="text-align: center;">0.0497</td>
+<td style="text-align: center;">0.0634</td>
+<td style="text-align: center;">0.0826</td>
+<td style="text-align: center;">0.0842</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>9</strong></td>
+<td style="text-align: center;">0.0464</td>
+<td style="text-align: center;">0.0269</td>
+<td style="text-align: center;">0.0470</td>
+<td style="text-align: center;">0.0621</td>
+<td style="text-align: center;">0.0759</td>
+<td style="text-align: center;">0.0888</td>
+<td style="text-align: center;">0.0907</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>12</strong></td>
+<td style="text-align: center;">0.0409</td>
+<td style="text-align: center;">0.0466</td>
+<td style="text-align: center;">0.0669</td>
+<td style="text-align: center;">0.0821</td>
+<td style="text-align: center;">0.0925</td>
+<td style="text-align: center;">0.0962</td>
+<td style="text-align: center;">0.0968</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>18</strong></td>
+<td style="text-align: center;">0.0851</td>
+<td style="text-align: center;">0.0850</td>
+<td style="text-align: center;">0.0988</td>
+<td style="text-align: center;">0.0999</td>
+<td style="text-align: center;">0.1030</td>
+<td style="text-align: center;">0.1067</td>
+<td style="text-align: center;">0.1030</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>24</strong></td>
+<td style="text-align: center;">0.0912</td>
+<td style="text-align: center;">0.0898</td>
+<td style="text-align: center;">0.1006</td>
+<td style="text-align: center;">0.1038</td>
+<td style="text-align: center;">0.1070</td>
+<td style="text-align: center;">0.1064</td>
+<td style="text-align: center;">0.1030</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">J / K</th>
+<th style="text-align: center;">1</th>
+<th style="text-align: center;">3</th>
+<th style="text-align: center;">6</th>
+<th style="text-align: center;">9</th>
+<th style="text-align: center;">12</th>
+<th style="text-align: center;">18</th>
+<th style="text-align: center;">24</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><strong>1</strong></td>
+<td style="text-align: center;">0.0592</td>
+<td style="text-align: center;">0.0562</td>
+<td style="text-align: center;">0.0621</td>
+<td style="text-align: center;">0.0609</td>
+<td style="text-align: center;">0.0658</td>
+<td style="text-align: center;">0.0768</td>
+<td style="text-align: center;">0.0814</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>3</strong></td>
+<td style="text-align: center;">0.0281</td>
+<td style="text-align: center;">0.0384</td>
+<td style="text-align: center;">0.0455</td>
+<td style="text-align: center;">0.0491</td>
+<td style="text-align: center;">0.0616</td>
+<td style="text-align: center;">0.0773</td>
+<td style="text-align: center;">0.0810</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>6</strong></td>
+<td style="text-align: center;">0.0318</td>
+<td style="text-align: center;">0.0272</td>
+<td style="text-align: center;">0.0388</td>
+<td style="text-align: center;">0.0559</td>
+<td style="text-align: center;">0.0709</td>
+<td style="text-align: center;">0.0851</td>
+<td style="text-align: center;">0.0870</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>9</strong></td>
+<td style="text-align: center;">0.0250</td>
+<td style="text-align: center;">0.0260</td>
+<td style="text-align: center;">0.0538</td>
+<td style="text-align: center;">0.0697</td>
+<td style="text-align: center;">0.0830</td>
+<td style="text-align: center;">0.0910</td>
+<td style="text-align: center;">0.0922</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>12</strong></td>
+<td style="text-align: center;">0.0443</td>
+<td style="text-align: center;">0.0579</td>
+<td style="text-align: center;">0.0793</td>
+<td style="text-align: center;">0.0932</td>
+<td style="text-align: center;">0.0997</td>
+<td style="text-align: center;">0.1013</td>
+<td style="text-align: center;">0.0997</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>18</strong></td>
+<td style="text-align: center;">0.0795</td>
+<td style="text-align: center;">0.0890</td>
+<td style="text-align: center;">0.1008</td>
+<td style="text-align: center;">0.1041</td>
+<td style="text-align: center;">0.1063</td>
+<td style="text-align: center;">0.1085</td>
+<td style="text-align: center;">0.1043</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>24</strong></td>
+<td style="text-align: center;">0.0887</td>
+<td style="text-align: center;">0.0941</td>
+<td style="text-align: center;">0.1024</td>
+<td style="text-align: center;">0.1081</td>
+<td style="text-align: center;">0.1091</td>
+<td style="text-align: center;">0.1074</td>
+<td style="text-align: center;">0.1030</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p><br> 輸家組合的報酬呈現的是動能策略的另一個視角，它的整體報酬分布呈現了一個驚人事實：</p>
+<ul>
+<li><strong>不論任何 J、K 組合，有無排除最近資料，做多輸家組合的報酬率均無法超越大盤</strong><br>
+以形成期而言，即使短期 (1-3 個月)、長期輸家 (18-24 個月) 看起來較中期輸家 (6-12 個月) 更有反轉的現象，報酬率較高，但整體而言仍低於大盤。以持有期而言，即使較長的持有期也會有反轉的現象使輸家組合報酬提高，但仍低於大盤。</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>順勢而為、不逆市操作
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>散戶往往有較強的處置效應，也就是股票漲了就趕快賣出實現獲利，跌了卻不願賣出實現損失。而不願賣出手上的輸家股票，本質上就是<strong>做多輸家組合</strong>。從實證結果來看，這樣的策略報酬是低於大盤的。</p>
+</div>
+</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">多空組合 (no-skip)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">多空組合 (skip)</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">J / K</th>
+<th style="text-align: center;">1</th>
+<th style="text-align: center;">3</th>
+<th style="text-align: center;">6</th>
+<th style="text-align: center;">9</th>
+<th style="text-align: center;">12</th>
+<th style="text-align: center;">18</th>
+<th style="text-align: center;">24</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><strong>1</strong></td>
+<td style="text-align: center;">0.0542</td>
+<td style="text-align: center;">0.0674</td>
+<td style="text-align: center;">0.0633</td>
+<td style="text-align: center;">0.0593</td>
+<td style="text-align: center;">0.0478</td>
+<td style="text-align: center;">0.0239</td>
+<td style="text-align: center;">0.0189</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>3</strong></td>
+<td style="text-align: center;">0.1032</td>
+<td style="text-align: center;">0.1116</td>
+<td style="text-align: center;">0.1023</td>
+<td style="text-align: center;">0.0907</td>
+<td style="text-align: center;">0.0640</td>
+<td style="text-align: center;">0.0306</td>
+<td style="text-align: center;">0.0249</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>6</strong></td>
+<td style="text-align: center;">0.1341</td>
+<td style="text-align: center;">0.1394</td>
+<td style="text-align: center;">0.1234</td>
+<td style="text-align: center;">0.0848</td>
+<td style="text-align: center;">0.0533</td>
+<td style="text-align: center;">0.0153</td>
+<td style="text-align: center;">0.0163</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>9</strong></td>
+<td style="text-align: center;">0.1386</td>
+<td style="text-align: center;">0.1383</td>
+<td style="text-align: center;">0.0894</td>
+<td style="text-align: center;">0.0516</td>
+<td style="text-align: center;">0.0221</td>
+<td style="text-align: center;">-0.0024</td>
+<td style="text-align: center;">-0.0020</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>12</strong></td>
+<td style="text-align: center;">0.0938</td>
+<td style="text-align: center;">0.0669</td>
+<td style="text-align: center;">0.0323</td>
+<td style="text-align: center;">0.0025</td>
+<td style="text-align: center;">-0.0153</td>
+<td style="text-align: center;">-0.0207</td>
+<td style="text-align: center;">-0.0169</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>18</strong></td>
+<td style="text-align: center;">0.0187</td>
+<td style="text-align: center;">0.0066</td>
+<td style="text-align: center;">-0.0198</td>
+<td style="text-align: center;">-0.0270</td>
+<td style="text-align: center;">-0.0347</td>
+<td style="text-align: center;">-0.0383</td>
+<td style="text-align: center;">-0.0257</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>24</strong></td>
+<td style="text-align: center;">-0.0045</td>
+<td style="text-align: center;">-0.0096</td>
+<td style="text-align: center;">-0.0275</td>
+<td style="text-align: center;">-0.0376</td>
+<td style="text-align: center;">-0.0417</td>
+<td style="text-align: center;">-0.0387</td>
+<td style="text-align: center;">-0.0259</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">J / K</th>
+<th style="text-align: center;">1</th>
+<th style="text-align: center;">3</th>
+<th style="text-align: center;">6</th>
+<th style="text-align: center;">9</th>
+<th style="text-align: center;">12</th>
+<th style="text-align: center;">18</th>
+<th style="text-align: center;">24</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><strong>1</strong></td>
+<td style="text-align: center;">0.0885</td>
+<td style="text-align: center;">0.0775</td>
+<td style="text-align: center;">0.0627</td>
+<td style="text-align: center;">0.0580</td>
+<td style="text-align: center;">0.0441</td>
+<td style="text-align: center;">0.0233</td>
+<td style="text-align: center;">0.0199</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>3</strong></td>
+<td style="text-align: center;">0.1335</td>
+<td style="text-align: center;">0.1113</td>
+<td style="text-align: center;">0.0980</td>
+<td style="text-align: center;">0.0788</td>
+<td style="text-align: center;">0.0530</td>
+<td style="text-align: center;">0.0217</td>
+<td style="text-align: center;">0.0203</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>6</strong></td>
+<td style="text-align: center;">0.1331</td>
+<td style="text-align: center;">0.1323</td>
+<td style="text-align: center;">0.1028</td>
+<td style="text-align: center;">0.0602</td>
+<td style="text-align: center;">0.0315</td>
+<td style="text-align: center;">0.0047</td>
+<td style="text-align: center;">0.0072</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>9</strong></td>
+<td style="text-align: center;">0.1383</td>
+<td style="text-align: center;">0.1156</td>
+<td style="text-align: center;">0.0584</td>
+<td style="text-align: center;">0.0239</td>
+<td style="text-align: center;">-0.0013</td>
+<td style="text-align: center;">-0.0138</td>
+<td style="text-align: center;">-0.0107</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>12</strong></td>
+<td style="text-align: center;">0.0651</td>
+<td style="text-align: center;">0.0396</td>
+<td style="text-align: center;">0.0031</td>
+<td style="text-align: center;">-0.0226</td>
+<td style="text-align: center;">-0.0320</td>
+<td style="text-align: center;">-0.0317</td>
+<td style="text-align: center;">-0.0229</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>18</strong></td>
+<td style="text-align: center;">0.0066</td>
+<td style="text-align: center;">-0.0150</td>
+<td style="text-align: center;">-0.0331</td>
+<td style="text-align: center;">-0.0410</td>
+<td style="text-align: center;">-0.0450</td>
+<td style="text-align: center;">-0.0443</td>
+<td style="text-align: center;">-0.0293</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>24</strong></td>
+<td style="text-align: center;">-0.0106</td>
+<td style="text-align: center;">-0.0217</td>
+<td style="text-align: center;">-0.0367</td>
+<td style="text-align: center;">-0.0470</td>
+<td style="text-align: center;">-0.0470</td>
+<td style="text-align: center;">-0.0405</td>
+<td style="text-align: center;">-0.0264</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p><br> 多空投資組合的報酬為<strong>贏家組合 - 輸家組合</strong>而得，符合文獻提到：<strong>短期反轉、中期動能、長期反轉</strong>的結論，但就像在贏家組合所討論的，跳過最近資料有好有壞。</p>
+<p>值得注意的是考慮最近資料的多空組合報酬僅在 <span class="math inline">\(J=6, 9\)</span> 且 <span class="math inline">\(K=1, 3\)</span> 時可以擊敗大盤，但差異也不明顯，這也是為何在學術文獻研究台股動能溢酬時，得出動能溢酬在台股較弱的原因。但就投資人來說，我們更加關心做多動能贏家股票能否帶來超越大盤的報酬。</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>更短的持有期間
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>由於實證結果贏家股票的持有期間越短，年化月均報酬率越高。或許大家會好奇持有期如果更短，如：1 周、2 周則報酬率是否更高？</p>
+<p>從周頻率資料的實證結果而言<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>，在不考慮交易費用的狀況下，持有期 2-3 周的報酬率最高，但與持有期 1 個月的報酬率差異不大 (年化不到 1%)，且在考慮交易費用後，反而不如持有期 1 個月。</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>包含最新資料的 no-skip 版本
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>從全樣本的實證結果中，我們發現在形成期超過 1 個月後，跳過最新資料反而對整體報酬率有負向影響，因此接下來的分析都是<strong>包含最新資料的 no-skip 版本</strong>。</p>
+</div>
+</div>
+</section>
+<section id="滾動性參數分析" class="level4">
+<h4 class="anchored" data-anchor-id="滾動性參數分析">滾動性參數分析</h4>
+<p>滾動參數分析的目的在於分析不同時間窗口下的最佳參數 <span class="math inline">\(J, K\)</span> 是否存在不穩定的狀況，同時也比較不同時段的動能策略與大盤表現差異。</p>
+<p>滾動性參數分析 1 是比較所有的 <span class="math inline">\(J, K\)</span> 組合，一共有 49 種，並找出在每個區間的最佳 <span class="math inline">\(J, K\)</span> 組合，以及組合最佳報酬率與同期大盤報酬率。而滾動性參數分析 2 則是近一步比較 <span class="math inline">\(K = 1\)</span> 的狀況下，<span class="math inline">\(J=6, 9\)</span> 時的報酬率差異。</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true" href="">滾動性參數分析 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false" href="">滾動性參數分析 2</a></li></ul>
+<div class="tab-content">
+<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">區間</th>
+<th style="text-align: center;">最佳 <span class="math inline">\(J\)</span></th>
+<th style="text-align: center;">最佳 <span class="math inline">\(K\)</span></th>
+<th style="text-align: center;">最佳報酬</th>
+<th style="text-align: center;">同期大盤</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">2011-2015</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0.1173</td>
+<td style="text-align: center;">0.0284</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2012-2016</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0.1945</td>
+<td style="text-align: center;">0.0947</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">2013-2017</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0.2335</td>
+<td style="text-align: center;">0.1041</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2014-2018</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0.1247</td>
+<td style="text-align: center;">0.0675</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">2015-2019</td>
+<td style="text-align: center;">9</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0.1665</td>
+<td style="text-align: center;">0.0972</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2016-2020</td>
+<td style="text-align: center;">9</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0.2259</td>
+<td style="text-align: center;">0.1652</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">2017-2021</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0.2793</td>
+<td style="text-align: center;">0.1848</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2018-2022</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0.1976</td>
+<td style="text-align: center;">0.1125</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">2019-2023</td>
+<td style="text-align: center;">9</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0.2916</td>
+<td style="text-align: center;">0.1776</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2020-2024</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0.2836</td>
+<td style="text-align: center;">0.1827</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">2021-2025</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0.2388</td>
+<td style="text-align: center;">0.1834</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">區間</th>
+<th style="text-align: center;"><span class="math inline">\(J=6\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(J=9\)</span></th>
+<th style="text-align: center;">同期大盤</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">2011-2015</td>
+<td style="text-align: center;">0.1173</td>
+<td style="text-align: center;">0.1029</td>
+<td style="text-align: center;">0.0284</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2012-2016</td>
+<td style="text-align: center;">0.1945</td>
+<td style="text-align: center;">0.1860</td>
+<td style="text-align: center;">0.0947</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">2013-2017</td>
+<td style="text-align: center;">0.2335</td>
+<td style="text-align: center;">0.2207</td>
+<td style="text-align: center;">0.1041</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2014-2018</td>
+<td style="text-align: center;">0.1247</td>
+<td style="text-align: center;">0.1090</td>
+<td style="text-align: center;">0.0675</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">2015-2019</td>
+<td style="text-align: center;">0.1596</td>
+<td style="text-align: center;">0.1665</td>
+<td style="text-align: center;">0.0972</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2016-2020</td>
+<td style="text-align: center;">0.2141</td>
+<td style="text-align: center;">0.2259</td>
+<td style="text-align: center;">0.1652</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">2017-2021</td>
+<td style="text-align: center;">0.2793</td>
+<td style="text-align: center;">0.2740</td>
+<td style="text-align: center;">0.1848</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2018-2022</td>
+<td style="text-align: center;">0.1976</td>
+<td style="text-align: center;">0.1862</td>
+<td style="text-align: center;">0.1125</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">2019-2023</td>
+<td style="text-align: center;">0.2913</td>
+<td style="text-align: center;">0.2916</td>
+<td style="text-align: center;">0.1776</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2020-2024</td>
+<td style="text-align: center;">0.2836</td>
+<td style="text-align: center;">0.2714</td>
+<td style="text-align: center;">0.1827</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">2021-2025</td>
+<td style="text-align: center;">0.2388</td>
+<td style="text-align: center;">0.2262</td>
+<td style="text-align: center;">0.1834</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">平均</td>
+<td style="text-align: center;">0.2122</td>
+<td style="text-align: center;">0.2055</td>
+<td style="text-align: center;">0.1271</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p><br> 從上述兩張分析表我們可以獲得以下觀察：</p>
+<ul>
+<li><strong>最佳形成期參數略有差異</strong><br>
+從分析 1 可以發現，不同區間下的最佳形成期不同，但不是 6 個月 (獲勝 8 次) 就是 9 個月 (獲勝 3 次)，因此整體來說仍比文獻上提到的美股最佳形成期 (12 個月) 還要短。</li>
+<li><strong>持有期最佳為 1 個月</strong><br>
+從分析 1 可以發現，不論在任何區間下最佳持有期為 1 個月，這與文獻當中提到的短持有期報酬較高相符。</li>
+<li><strong>形成期 6 或 9 個月，報酬率接近</strong><br>
+從分析 2 可以發現，兩者的報酬率在不同區間下儘管互有領先，但整體接近，且以平均而言年化差異不到 1%。這也表示價格動能策略在台股是較具穩定性的策略，因為不存在報酬率峰值，最佳參數附近的其他參數表現也都不錯。</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>後續分析的參數選擇
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(K=1\)</span> 的設定較無異議，而 <span class="math inline">\(J\)</span> 的選擇由於平均來說 6 個月的報酬率較高，且在不同區間的獲勝次數較多。後續分析，除非另有說明，否則會以 <span class="math inline">\(J=6\)</span>、<span class="math inline">\(K=1\)</span> 進行探討。</p>
+</div>
+</div>
+</section>
+<section id="考慮交易成本後的贏家組合" class="level4">
+<h4 class="anchored" data-anchor-id="考慮交易成本後的贏家組合">考慮交易成本後的贏家組合</h4>
+<p>下表是考慮交易成本後的贏家組合報酬率以及對應的年化交易成本，其中年化交易成本就是考慮交易成本前後報酬率的差值。為了方便觀察，我將超過大盤報酬率 (0.1257) 的投資組合加粗。</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true" href="">考慮交易成本的贏家組合</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false" href="">年化交易成本</a></li></ul>
+<div class="tab-content">
+<div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;"></th>
+<th style="text-align: center;">1</th>
+<th style="text-align: center;">3</th>
+<th style="text-align: center;">6</th>
+<th style="text-align: center;">9</th>
+<th style="text-align: center;">12</th>
+<th style="text-align: center;">18</th>
+<th style="text-align: center;">24</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><strong>1</strong></td>
+<td style="text-align: center;">0.0665</td>
+<td style="text-align: center;">0.1119</td>
+<td style="text-align: center;">0.1156</td>
+<td style="text-align: center;">0.1124</td>
+<td style="text-align: center;">0.1078</td>
+<td style="text-align: center;">0.0978</td>
+<td style="text-align: center;">0.0986</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>3</strong></td>
+<td style="text-align: center;"><strong>0.1325</strong></td>
+<td style="text-align: center;"><strong>0.1371</strong></td>
+<td style="text-align: center;"><strong>0.1402</strong></td>
+<td style="text-align: center;"><strong>0.1313</strong></td>
+<td style="text-align: center;">0.1168</td>
+<td style="text-align: center;">0.1001</td>
+<td style="text-align: center;">0.1005</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>6</strong></td>
+<td style="text-align: center;"><strong>0.1579</strong></td>
+<td style="text-align: center;"><strong>0.1563</strong></td>
+<td style="text-align: center;"><strong>0.1487</strong></td>
+<td style="text-align: center;"><strong>0.1262</strong></td>
+<td style="text-align: center;">0.1099</td>
+<td style="text-align: center;">0.0928</td>
+<td style="text-align: center;">0.0961</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>9</strong></td>
+<td style="text-align: center;"><strong>0.1580</strong></td>
+<td style="text-align: center;"><strong>0.1501</strong></td>
+<td style="text-align: center;"><strong>0.1261</strong></td>
+<td style="text-align: center;">0.1056</td>
+<td style="text-align: center;">0.0914</td>
+<td style="text-align: center;">0.0813</td>
+<td style="text-align: center;">0.0843</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>12</strong></td>
+<td style="text-align: center;">0.1101</td>
+<td style="text-align: center;">0.0998</td>
+<td style="text-align: center;">0.0897</td>
+<td style="text-align: center;">0.0770</td>
+<td style="text-align: center;">0.0707</td>
+<td style="text-align: center;">0.0704</td>
+<td style="text-align: center;">0.0756</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>18</strong></td>
+<td style="text-align: center;">0.0826</td>
+<td style="text-align: center;">0.0796</td>
+<td style="text-align: center;">0.0706</td>
+<td style="text-align: center;">0.0661</td>
+<td style="text-align: center;">0.0622</td>
+<td style="text-align: center;">0.0634</td>
+<td style="text-align: center;">0.0731</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>24</strong></td>
+<td style="text-align: center;">0.0673</td>
+<td style="text-align: center;">0.0693</td>
+<td style="text-align: center;">0.0654</td>
+<td style="text-align: center;">0.0599</td>
+<td style="text-align: center;">0.0597</td>
+<td style="text-align: center;">0.0631</td>
+<td style="text-align: center;">0.0730</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;"></th>
+<th style="text-align: center;">1</th>
+<th style="text-align: center;">3</th>
+<th style="text-align: center;">6</th>
+<th style="text-align: center;">9</th>
+<th style="text-align: center;">12</th>
+<th style="text-align: center;">18</th>
+<th style="text-align: center;">24</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><strong>1</strong></td>
+<td style="text-align: center;">0.0620</td>
+<td style="text-align: center;">0.0217</td>
+<td style="text-align: center;">0.0116</td>
+<td style="text-align: center;">0.0082</td>
+<td style="text-align: center;">0.0065</td>
+<td style="text-align: center;">0.0048</td>
+<td style="text-align: center;">0.0040</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>3</strong></td>
+<td style="text-align: center;"><strong>0.0415</strong></td>
+<td style="text-align: center;"><strong>0.0213</strong></td>
+<td style="text-align: center;"><strong>0.0117</strong></td>
+<td style="text-align: center;"><strong>0.0084</strong></td>
+<td style="text-align: center;">0.0068</td>
+<td style="text-align: center;">0.0051</td>
+<td style="text-align: center;">0.0043</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>6</strong></td>
+<td style="text-align: center;"><strong>0.0322</strong></td>
+<td style="text-align: center;"><strong>0.0173</strong></td>
+<td style="text-align: center;"><strong>0.0113</strong></td>
+<td style="text-align: center;"><strong>0.0083</strong></td>
+<td style="text-align: center;">0.0068</td>
+<td style="text-align: center;">0.0052</td>
+<td style="text-align: center;">0.0044</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>9</strong></td>
+<td style="text-align: center;"><strong>0.0271</strong></td>
+<td style="text-align: center;"><strong>0.0151</strong></td>
+<td style="text-align: center;"><strong>0.0103</strong></td>
+<td style="text-align: center;">0.0081</td>
+<td style="text-align: center;">0.0066</td>
+<td style="text-align: center;">0.0051</td>
+<td style="text-align: center;">0.0044</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>12</strong></td>
+<td style="text-align: center;">0.0246</td>
+<td style="text-align: center;">0.0138</td>
+<td style="text-align: center;">0.0095</td>
+<td style="text-align: center;">0.0076</td>
+<td style="text-align: center;">0.0065</td>
+<td style="text-align: center;">0.0051</td>
+<td style="text-align: center;">0.0044</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>18</strong></td>
+<td style="text-align: center;">0.0212</td>
+<td style="text-align: center;">0.0119</td>
+<td style="text-align: center;">0.0084</td>
+<td style="text-align: center;">0.0069</td>
+<td style="text-align: center;">0.0060</td>
+<td style="text-align: center;">0.0049</td>
+<td style="text-align: center;">0.0043</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>24</strong></td>
+<td style="text-align: center;">0.0193</td>
+<td style="text-align: center;">0.0109</td>
+<td style="text-align: center;">0.0077</td>
+<td style="text-align: center;">0.0063</td>
+<td style="text-align: center;">0.0056</td>
+<td style="text-align: center;">0.0047</td>
+<td style="text-align: center;">0.0041</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p><br> 比較有趣的結果是在持有期 1 個月的狀況下，形成期 9 個月的動能策略在考慮交易費用後和形成期 6 個月的策略報酬率相當，而原本不考慮交易費用時是 6 個月的策略領先 0.5%，而造成差異的原因就是交易成本。</p>
+<p>若觀察年化交易成本，可以發現價格動能策略的形成期越長，通常訊號越穩定，因此投資組合每次需要換倉的比例越低，使交易成本下降；而持有期越長也因為換倉的頻率降低使交易成本下降。</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>訊號穩定 ≠ 訊號有效
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>即使形成期越長訊號越穩定，但我們也發現一年以上的形成期，動能策略並無法帶來勝過大盤的報酬。</p>
+</div>
+</div>
+</section>
+</section>
+<section id="報酬單調性分析" class="level3">
+<h3 class="anchored" data-anchor-id="報酬單調性分析">報酬單調性分析</h3>
+<p>上一節主要是分析策略在不同參數下的報酬表現，並分析參數穩定性。而在這節主要是檢查策略訊號是否在整個分布上都有預測力，而不只在極端值有效 (動能最強的 10% 與最弱的 10%)。</p>
+<p>具體來說，就是把股票依據訊號強弱分成 10 組 (第 1 組最弱稱為 M1，第 10 組最強稱為 M10)，並檢視從最弱組到最強組，平均報酬率是否呈現單調遞增的關係，這回答了幾個問題：</p>
+<ul>
+<li><strong>訊號是否整體有效</strong><br>
+若只有最強組表現好、其他組差不多，說明策略很可能只是在挑異常個股，而非系統性有效。</li>
+<li><strong>排除過擬合疑慮</strong><br>
+孤立的報酬峰值（如只有第 10 組特別好、第 9 組跟第 5 組差不多）是過擬合的警訊。</li>
+<li><strong>量化多空擴散程度</strong><br>
+從最弱組到最強組的報酬差距，反映策略訊號的鑑別能力有多強。</li>
+</ul>
+<table class="caption-top table">
+<caption><span class="math inline">\(K=1\)</span> 時，各持有期 (<span class="math inline">\(J\)</span>) 的報酬單調性分析</caption>
+<colgroup>
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">M / J</th>
+<th style="text-align: center;">1</th>
+<th style="text-align: center;">3</th>
+<th style="text-align: center;">6</th>
+<th style="text-align: center;">9</th>
+<th style="text-align: center;">12</th>
+<th style="text-align: center;">18</th>
+<th style="text-align: center;">24</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><strong>1</strong></td>
+<td style="text-align: center;">0.0743</td>
+<td style="text-align: center;">0.0708</td>
+<td style="text-align: center;">0.0560</td>
+<td style="text-align: center;">0.0464</td>
+<td style="text-align: center;">0.0409</td>
+<td style="text-align: center;">0.0851</td>
+<td style="text-align: center;">0.0912</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>2</strong></td>
+<td style="text-align: center;">0.0817</td>
+<td style="text-align: center;"><strong>0.0415</strong></td>
+<td style="text-align: center;"><strong>0.0330</strong></td>
+<td style="text-align: center;"><strong>0.0416</strong></td>
+<td style="text-align: center;"><strong>0.0536</strong></td>
+<td style="text-align: center;"><strong>0.0835</strong></td>
+<td style="text-align: center;"><strong>0.0871</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>3</strong></td>
+<td style="text-align: center;">0.0972</td>
+<td style="text-align: center;">0.0718</td>
+<td style="text-align: center;">0.0756</td>
+<td style="text-align: center;">0.0593</td>
+<td style="text-align: center;">0.0656</td>
+<td style="text-align: center;">0.0973</td>
+<td style="text-align: center;">0.1004</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>4</strong></td>
+<td style="text-align: center;">0.0988</td>
+<td style="text-align: center;">0.0728</td>
+<td style="text-align: center;"><strong>0.0755</strong></td>
+<td style="text-align: center;">0.0739</td>
+<td style="text-align: center;">0.0860</td>
+<td style="text-align: center;">0.0928</td>
+<td style="text-align: center;">0.1007</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>5</strong></td>
+<td style="text-align: center;">0.1103</td>
+<td style="text-align: center;">0.0951</td>
+<td style="text-align: center;">0.0872</td>
+<td style="text-align: center;">0.0838</td>
+<td style="text-align: center;">0.0995</td>
+<td style="text-align: center;">0.1100</td>
+<td style="text-align: center;">0.1066</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>6</strong></td>
+<td style="text-align: center;"><strong>0.1058</strong></td>
+<td style="text-align: center;">0.1241</td>
+<td style="text-align: center;">0.1176</td>
+<td style="text-align: center;">0.1169</td>
+<td style="text-align: center;">0.1283</td>
+<td style="text-align: center;">0.1057</td>
+<td style="text-align: center;">0.1176</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>7</strong></td>
+<td style="text-align: center;">0.1173</td>
+<td style="text-align: center;"><strong>0.1214</strong></td>
+<td style="text-align: center;">0.1268</td>
+<td style="text-align: center;">0.1426</td>
+<td style="text-align: center;">0.1336</td>
+<td style="text-align: center;">0.1177</td>
+<td style="text-align: center;">0.1214</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>8</strong></td>
+<td style="text-align: center;">0.1183</td>
+<td style="text-align: center;">0.1361</td>
+<td style="text-align: center;">0.1298</td>
+<td style="text-align: center;">0.1483</td>
+<td style="text-align: center;">0.1483</td>
+<td style="text-align: center;">0.1405</td>
+<td style="text-align: center;">0.1259</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>9</strong></td>
+<td style="text-align: center;">0.1199</td>
+<td style="text-align: center;">0.1439</td>
+<td style="text-align: center;">0.1605</td>
+<td style="text-align: center;">0.1535</td>
+<td style="text-align: center;">0.1607</td>
+<td style="text-align: center;"><strong>0.1232</strong></td>
+<td style="text-align: center;"><strong>0.1254</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>10</strong></td>
+<td style="text-align: center;">0.1285</td>
+<td style="text-align: center;">0.1740</td>
+<td style="text-align: center;">0.1901</td>
+<td style="text-align: center;">0.1850</td>
+<td style="text-align: center;"><strong>0.1347</strong></td>
+<td style="text-align: center;"><strong>0.1038</strong></td>
+<td style="text-align: center;"><strong>0.0867</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>M10-M1</strong></td>
+<td style="text-align: center;">0.0542</td>
+<td style="text-align: center;">0.1032</td>
+<td style="text-align: center;">0.1341</td>
+<td style="text-align: center;">0.1386</td>
+<td style="text-align: center;">0.0938</td>
+<td style="text-align: center;">0.0187</td>
+<td style="text-align: center;">-0.0045</td>
+</tr>
+</tbody>
+</table>
+<p><br> 上表中的 M10 就是上一節分析時的贏家投資組合，而 M1 就是輸家投資組合，在這節中我們把訊號維度展開，觀察所有組別 (M1 至 M10) 的報酬分布。為了方便觀察單調性，我將每組不符合單調性之處加粗。</p>
+<p>首先可以觀察到的是除了 <span class="math inline">\(J=1\)</span> 外，其他組別都存在 M1 &gt; M2 的狀況，這表示過去表現最差的輸家 M1 未來一個月會有報酬反轉，儘管不多但仍高於表現次差的輸家 M2。而這樣的跌深反彈或許也能解釋為何台股的多空組合報酬不如美股。</p>
+<p>以報酬單調性而言，在 <span class="math inline">\(J \leq 9\)</span> 個月時，可以觀察到報酬大致呈現單調性，儘管中間組別偶有例外但差距不大，表示策略確實捕捉到了投資人反應不足的潛在獲利。但當 <span class="math inline">\(J \geq 12\)</span> 時，可以發現最強的 M10 甚至 M9 會有報酬反轉且差異明顯，這表示當形成期超過一定程度時，策略訊號的預測力會下降，捕捉到更多長期大漲而開始均值回歸的標的。</p>
+<p>以多空擴散程度來說 (M10-M1)，<span class="math inline">\(J=6\)</span> 和 <span class="math inline">\(J=9\)</span> 的擴散程度最大，資訊鑑別度最好。</p>
+</section>
+<section id="條件排序分析" class="level3">
+<h3 class="anchored" data-anchor-id="條件排序分析">條件排序分析</h3>
+<p>條件排序分析的目的是去檢視<strong>在控制另一因子後，主要策略的表現是否仍然有效</strong>。如果不控制，我們會擔心所謂的動能贏家會不會只是捕捉到其他因子所帶來的溢酬，而非動能訊號本身具有預測能力。</p>
+<section id="小型股-vs-動能贏家" class="level4">
+<h4 class="anchored" data-anchor-id="小型股-vs-動能贏家">小型股 vs 動能贏家</h4>
+<p>一種可能的說法是：動能贏家之所以表現好，只是因為小型股在贏家組合中的比例偏高。由於小型股的股價波動大，通常不是大漲就是大跌，更容易被選入動能策略中的贏家組合和輸家組合，又因為小型股存在所謂的<strong>小型股溢酬</strong>，所以本質上動能策略只是一種選擇小型股的手段，而非動能訊號本身具有預測能力。</p>
+</section>
+<section id="高-beta-股-vs-動能贏家" class="level4">
+<h4 class="anchored" data-anchor-id="高-beta-股-vs-動能贏家">高 Beta 股 vs 動能贏家</h4>
+<p>另一種可能的說法是：在多頭市場中，高 Beta 股本來就因為放大市場漲幅而持續表現好，動能策略在多頭環境下自然把這些股票挑為贏家，所以動能報酬可能只是<strong>系統性市場風險的報酬</strong>，而非動能本身。</p>
+</section>
+<section id="建構條件排序" class="level4">
+<h4 class="anchored" data-anchor-id="建構條件排序">建構條件排序</h4>
+<p>我們採用 5x5 的分組方式進行條件排序，步驟如下：</p>
+<ul>
+<li>針對需控制的因子 (市值、Beta) 由小到大分成 5 組</li>
+<li>再針對上述每組的股票池，依照動能由弱到強再分成 5 組</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>為何不用 10x10
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>由於通過股票池濾網的標的數量約為 1 千多檔，因此我們選擇 5x5 的分組方式，以確保每個組別的樣本數量足夠。若使用 10x10 的分組方式，則每組僅會有 10 多檔股票，無法有效平衡投資組合內的個股風險。</p>
+</div>
+</div>
+</section>
+<section id="解讀結果" class="level4">
+<h4 class="anchored" data-anchor-id="解讀結果">解讀結果</h4>
+<p>在控制因子的每一組內，動能最強的 M5 都要持續優於 M1，而且這個差距要在 5 組之間都成立，才能說動能訊號有獨立的預測力。如果 M5-M1 差距在某些控制組消失，則表示動能溢酬與該因子存在交互作用；如果M5-M1 差距在所有控制組都消失，則動能溢酬大部分被該因子解釋，訊號本身沒有獨立預測力。</p>
+<p>此外我們也能近一步觀察各組的報酬單調性如何，檢視動能訊號的鑑別度，但這屬於輔助觀察，主要還是看 M5-M1 差距。</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true" href="">控制小型股</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false" href="">控制高 Beta 股</a></li></ul>
+<div class="tab-content">
+<div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
+
+</div>
+<div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
+
+
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>Jegadeesh, N., &amp; Titman, S. (1993). Returns to buying winners and selling losers: Implications for stock market efficiency. The Journal of Finance, 48(1), 65-91.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Gong, Q., Liu, M., &amp; Liu, Q. (2015). Momentum is really short-term momentum. Journal of Banking &amp; Finance, 50, 169-182.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Jegadeesh, N., &amp; Titman, S. (2001). Profitability of momentum strategies: An evaluation of alternative explanations. The Journal of Finance, 56(2), 699-720.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>文章版面有限，詳見策略程式碼，裡面包含所有分析結果與實作細節。<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<!-- Load Turndown.js for HTML to Markdown conversion -->
+<script src="https://unpkg.com/turndown/dist/turndown.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Attempt to locate the main title block and the article content
+        const titleBlock = document.querySelector('#title-block-header');
+        // Find the main article content container
+        const content = document.querySelector('main.content') || document.querySelector('.quarto-document-content') || document.querySelector('main');
+
+        if (titleBlock && content) {
+            // Create wrapper so we can position it nicely
+            const btnContainer = document.createElement('div');
+            btnContainer.className = 'copy-page-wrapper';
+
+            const btn = document.createElement('button');
+            btn.id = 'copy-page-btn';
+            btn.title = '以 Markdown 格式複製全文';
+
+            const copyIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>`;
+            const checkIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+
+            btn.innerHTML = `
+                <span class="icon-container">${copyIcon}</span>
+                <span>Copy page</span>
+            `;
+
+            btnContainer.appendChild(btn);
+            titleBlock.appendChild(btnContainer);
+
+            // Initialize Turndown
+            const turndownService = new TurndownService({
+                headingStyle: 'atx',      // Uses ### instead of underscores
+                codeBlockStyle: 'fenced'  // Uses ``` for code blocks
+            });
+
+            btn.addEventListener('click', function (e) {
+                e.preventDefault();
+                try {
+                    // Clone the content so we don't modify the actual page
+                    const clone = content.cloneNode(true);
+
+                    // Convert to Markdown
+                    const markdown = turndownService.turndown(clone);
+
+                    // Construct the final text: Add the Title to the top
+                    const titleElement = titleBlock.querySelector('.title, h1');
+                    const titleText = titleElement ? `# ${titleElement.innerText}\n\n` : '';
+                    const finalMarkdown = titleText + markdown;
+
+                    // Copy to clipboard
+                    navigator.clipboard.writeText(finalMarkdown).then(() => {
+                        const iconSpan = btn.querySelector('.icon-container');
+                        iconSpan.innerHTML = checkIcon;
+                        btn.classList.add('copied');
+
+                        setTimeout(() => {
+                            iconSpan.innerHTML = copyIcon;
+                            btn.classList.remove('copied');
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy text: ', err);
+                    });
+                } catch (error) {
+                    console.error('Error generating markdown', error);
+                }
+            });
+        }
+    });
+</script>
+<!-- Code Block Language Icons: subtle outline icon next to copy button -->
+<style>
+    /* Container for lang icon + divider, positioned next to copy button */
+    .code-lang-icon {
+        position: absolute;
+        top: 4px;
+        right: 42px;
+        /* copy btn (36px) + margin-right (4px) + 2px gap */
+        z-index: 3;
+        display: flex;
+        align-items: center;
+        gap: 0;
+        height: 36px;
+        /* same as copy button */
+        pointer-events: auto;
+        cursor: default;
+    }
+
+    .code-lang-icon span.lang-text {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        color: #8c959f;
+    }
+
+    /* Vertical divider bar */
+    .code-lang-divider {
+        width: 1px;
+        height: 18px;
+        background-color: #d0d7de;
+        margin-left: 8px;
+        opacity: 0.7;
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const LANG_MAP = {
+            python: 'Python',
+            sql: 'SQL',
+            dockerfile: 'Docker',
+            json: 'JSON',
+            csv: 'CSV',
+            yaml: 'YAML',
+            r: 'R',
+            cpp: 'C++',
+            javascript: 'JavaScript',
+            js: 'JavaScript',
+            html: 'HTML',
+            css: 'CSS',
+            bash: 'Bash',
+            shell: 'Shell',
+            powershell: 'PowerShell'
+        };
+
+        const ALIASES = {
+            'py': 'python', 'python3': 'python',
+            'yml': 'yaml',
+            'c++': 'cpp', 'cplusplus': 'cpp',
+            'docker': 'dockerfile'
+        };
+
+        document.querySelectorAll('div.sourceCode').forEach(function (container) {
+            const pre = container.querySelector('pre');
+            if (!pre) return;
+
+            let detectedLang = null;
+            const classes = Array.from(pre.classList);
+            for (const cls of classes) {
+                if (cls === 'sourceCode' || cls === 'code-with-copy') continue;
+                const key = ALIASES[cls] || cls;
+                if (LANG_MAP[key]) { detectedLang = key; break; }
+            }
+            if (!detectedLang) return;
+
+            const langName = LANG_MAP[detectedLang];
+
+            // Create container
+            const wrapper = document.createElement('span');
+            wrapper.className = 'code-lang-icon';
+
+            // Text label
+            const textSpan = document.createElement('span');
+            textSpan.className = 'lang-text';
+            textSpan.innerText = langName;
+
+            // Divider
+            const divider = document.createElement('span');
+            divider.className = 'code-lang-divider';
+
+            wrapper.appendChild(textSpan);
+            wrapper.appendChild(divider);
+            container.appendChild(wrapper);
+        });
+    });
+</script>
+<!-- Code Block Folding: GitHub-style gradient truncation for long code -->
+<style>
+    /* ── Collapsed wrapper ── */
+    .code-fold-wrapper {
+        position: relative;
+        overflow: hidden;
+        transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ── Gradient overlay ── */
+    .code-fold-gradient {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 64px;
+        background: linear-gradient(to bottom,
+                rgba(246, 248, 250, 0) 0%,
+                rgba(246, 248, 250, 0.85) 60%,
+                rgba(246, 248, 250, 1) 100%);
+        pointer-events: none;
+        z-index: 5;
+        transition: opacity 0.25s ease;
+    }
+
+    /* ── Expand / Collapse button ── */
+    .code-fold-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        width: 100%;
+        padding: 5px 0;
+        border: none;
+        background-color: #f6f8fa;
+        color: #57606a;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+        font-size: 12px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.15s ease, color 0.15s ease;
+        border-radius: 0 0 6px 6px;
+    }
+
+    .code-fold-btn:hover {
+        background-color: #eaeef2;
+        color: #24292f;
+    }
+
+    .code-fold-btn svg {
+        transition: transform 0.25s ease;
+    }
+
+    .code-fold-btn.expanded svg {
+        transform: rotate(180deg);
+    }
+
+    /* ── When expanded: hide gradient ── */
+    .code-fold-wrapper.expanded .code-fold-gradient {
+        opacity: 0;
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const LINE_THRESHOLD = 10;
+        const CHEVRON_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+         fill="none" stroke="currentColor" stroke-width="2"
+         stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 12 15 18 9"></polyline>
+    </svg>`;
+
+        // ── Reusable function to set up code-fold on a single container ──
+        function setupCodeFold(container) {
+            // Guard: already processed
+            if (container.dataset.codeFoldReady) return;
+            container.dataset.codeFoldReady = 'true';
+
+            const pre = container.querySelector('pre');
+            const code = pre ? pre.querySelector('code') : null;
+            if (!pre || !code) return;
+
+            // Count actual code lines
+            const lineSpans = code.querySelectorAll(':scope > span[id]');
+            const totalLines = lineSpans.length;
+            if (totalLines <= LINE_THRESHOLD) return;
+
+            // ── Measure collapsed height from first N lines ──
+            const codeRect = code.getBoundingClientRect();
+            const fifthLineRect = lineSpans[LINE_THRESHOLD - 1].getBoundingClientRect();
+            const preStyle = window.getComputedStyle(pre);
+            const paddingTop = parseFloat(preStyle.paddingTop) || 16;
+            const collapsedHeight = (fifthLineRect.bottom - codeRect.top) + paddingTop + 8;
+
+            // ── Wrap the <pre> ──
+            const wrapper = document.createElement('div');
+            wrapper.className = 'code-fold-wrapper';
+            wrapper.style.maxHeight = collapsedHeight + 'px';
+            pre.parentNode.insertBefore(wrapper, pre);
+            wrapper.appendChild(pre);
+
+            // ── Gradient ──
+            const gradient = document.createElement('div');
+            gradient.className = 'code-fold-gradient';
+            wrapper.appendChild(gradient);
+
+            // ── Expand button (View all N lines) ──
+            const btn = document.createElement('button');
+            btn.className = 'code-fold-btn';
+            btn.setAttribute('aria-expanded', 'false');
+            btn.innerHTML = `${CHEVRON_SVG}<span>View all ${totalLines} lines</span>`;
+            wrapper.parentNode.appendChild(btn);
+
+            // ── Toggle ──
+            let isCollapsed = true;
+
+            btn.addEventListener('click', function () {
+                if (isCollapsed) {
+                    const fullHeight = pre.scrollHeight;
+                    wrapper.style.maxHeight = fullHeight + 'px';
+                    wrapper.classList.add('expanded');
+                    btn.classList.add('expanded');
+                    btn.setAttribute('aria-expanded', 'true');
+                    btn.querySelector('span').textContent = 'Collapse';
+                    isCollapsed = false;
+                } else {
+                    const wrapperRect = wrapper.getBoundingClientRect();
+                    const viewportTop = window.scrollY;
+
+                    wrapper.style.maxHeight = collapsedHeight + 'px';
+                    wrapper.classList.remove('expanded');
+                    btn.classList.remove('expanded');
+                    btn.setAttribute('aria-expanded', 'false');
+                    btn.querySelector('span').textContent = `View all ${totalLines} lines`;
+                    isCollapsed = true;
+
+                    requestAnimationFrame(function () {
+                        const newRect = wrapper.getBoundingClientRect();
+                        if (newRect.top < 0) {
+                            window.scrollTo({
+                                top: viewportTop + newRect.top - 80,
+                                behavior: 'smooth'
+                            });
+                        }
+                    });
+                }
+            });
+        }
+
+        // ── Process all code containers ──
+        const codeContainers = document.querySelectorAll('div.sourceCode');
+
+        codeContainers.forEach(function (container) {
+            // Check if this container is inside a hidden tab pane
+            const tabPane = container.closest('.tab-pane:not(.active)');
+
+            if (tabPane) {
+                // Defer: set up code-fold when this tab becomes visible
+                // We listen on the parent .nav-tabs for Bootstrap tab events
+                const panelTabset = tabPane.closest('.panel-tabset');
+                if (panelTabset) {
+                    const navTabs = panelTabset.querySelector('.nav-tabs');
+                    if (navTabs) {
+                        navTabs.addEventListener('shown.bs.tab', function handler() {
+                            // When any tab is shown, try to set up code-fold
+                            // for newly-visible containers
+                            if (tabPane.classList.contains('active')) {
+                                tabPane.querySelectorAll('div.sourceCode').forEach(setupCodeFold);
+                            }
+                        });
+                    }
+                    // Fallback: also listen for plain click on nav-links
+                    // (in case Bootstrap events aren't firing)
+                    panelTabset.querySelectorAll('.nav-link').forEach(function (link) {
+                        link.addEventListener('click', function () {
+                            // Small delay to let the tab switch happen
+                            setTimeout(function () {
+                                if (tabPane.classList.contains('active')) {
+                                    tabPane.querySelectorAll('div.sourceCode').forEach(setupCodeFold);
+                                }
+                            }, 50);
+                        });
+                    });
+                }
+            } else {
+                // Visible: set up immediately
+                setupCodeFold(container);
+            }
+        });
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const tocNav = document.getElementById("TOC");
+        if (!tocNav) return;
+
+        // Replace "On this page" with clickable "TOC" that scrolls to top
+        const tocTitle = tocNav.querySelector("h2");
+        if (tocTitle) {
+            const tocAnchor = document.createElement("a");
+            tocAnchor.textContent = "Table of Contents";
+            tocAnchor.href = "#";
+            tocAnchor.style.textDecoration = "none";
+            tocAnchor.style.color = "inherit";
+            tocAnchor.style.cursor = "pointer";
+            tocAnchor.title = "返回頁面頂端";
+            tocAnchor.addEventListener("click", function (e) {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: "auto" });
+            });
+            tocTitle.textContent = "";
+            tocTitle.appendChild(tocAnchor);
+        }
+
+        // Gather all TOC links and their target heading elements
+        const tocLinks = Array.from(tocNav.querySelectorAll("a.nav-link"));
+        const headingMap = []; // { link, heading, parentLink }
+
+        tocLinks.forEach(function (link) {
+            // Extract the hash fragment from the URL (works for both "#id" and "http://.../#id")
+            const hash = link.hash;
+            if (!hash) return;
+            const id = decodeURIComponent(hash.slice(1));
+            const heading = document.getElementById(id);
+            if (!heading) return;
+
+            // Find the parent h2 TOC link (if this link is inside a nested <ul>)
+            let parentLink = null;
+            const parentLi = link.closest("ul")?.closest("li");
+            if (parentLi) {
+                const pLink = parentLi.querySelector(":scope > a.nav-link");
+                // Only count it as parent if pLink is different from current link
+                if (pLink && pLink !== link) {
+                    parentLink = pLink;
+                }
+            }
+
+            headingMap.push({ link: link, heading: heading, parentLink: parentLink });
+        });
+
+        if (headingMap.length === 0) return;
+
+        // Create the Google Antigravity style Magic Line
+        const magicLine = document.createElement("div");
+        magicLine.className = "toc-magic-line";
+        magicLine.style.opacity = "0"; // Hide initially until first scroll
+        tocNav.appendChild(magicLine);
+        let isLineInitialized = false;
+
+        // Scroll offset to account for fixed navbar
+        const SCROLL_OFFSET = 80;
+
+        function updateActive() {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+
+            // Find the last heading whose top has scrolled past the viewport top
+            let activeEntry = null;
+            for (let i = headingMap.length - 1; i >= 0; i--) {
+                const rect = headingMap[i].heading.getBoundingClientRect();
+                if (rect.top <= SCROLL_OFFSET + 1) {
+                    activeEntry = headingMap[i];
+                    break;
+                }
+            }
+
+            // If nothing has scrolled past yet, use the first heading
+            if (!activeEntry && headingMap.length > 0) {
+                activeEntry = headingMap[0];
+            }
+
+            // Clear all active states
+            tocLinks.forEach(function (link) {
+                link.classList.remove("active");
+                link.classList.remove("parent-active");
+            });
+
+            if (activeEntry) {
+                // Activate the current heading's TOC link
+                activeEntry.link.classList.add("active");
+
+                // If h3 is active, mark the parent h2 as parent-active
+                if (activeEntry.parentLink) {
+                    activeEntry.parentLink.classList.add("parent-active");
+                }
+
+                // Move and stretch the Magic Line
+                const tocRect = tocNav.getBoundingClientRect();
+                const linkRect = activeEntry.link.getBoundingClientRect();
+                // offset relative to the TOC container bounds
+                const relativeTop = linkRect.top - tocRect.top + tocNav.scrollTop;
+
+                magicLine.style.transform = `translateY(${relativeTop}px)`;
+                magicLine.style.height = `${linkRect.height}px`;
+
+                if (!isLineInitialized) {
+                    magicLine.style.opacity = "1";
+                    isLineInitialized = true;
+                }
+            } else {
+                magicLine.style.opacity = "0";
+                isLineInitialized = false;
+            }
+        }
+
+        // Disable Quarto's default scrollspy by removing Bootstrap's data attribute
+        const scrollSpyTarget = document.querySelector("[data-bs-spy='scroll']");
+        if (scrollSpyTarget) {
+            scrollSpyTarget.removeAttribute("data-bs-spy");
+            scrollSpyTarget.removeAttribute("data-bs-target");
+        }
+
+        // Run on scroll with throttle for performance
+        let ticking = false;
+        window.addEventListener("scroll", function () {
+            if (!ticking) {
+                requestAnimationFrame(function () {
+                    updateActive();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+
+        // Initial run
+        updateActive();
+
+        // Also update on resize to ensure Magic Line stays aligned if text wraps differently
+        window.addEventListener("resize", function () {
+            if (!ticking) {
+                requestAnimationFrame(function () {
+                    updateActive();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+
+        // Add title tooltips for navigation text so hovered items show full text
+        // Use a function to apply to elements
+        function applyTooltips() {
+            const navElements = document.querySelectorAll('.sidebar-item-text, #TOC .nav-link, .nav-page-text');
+            navElements.forEach(el => {
+                if (!el.hasAttribute('title') && el.textContent.trim()) {
+                    el.setAttribute('title', el.textContent.trim());
+                }
+            });
+        }
+
+        // Apply immediately
+        applyTooltips();
+
+        // Also observe the document for dynamically added elements (Quarto sometimes renders things late)
+        const observer = new MutationObserver((mutations) => {
+            let shouldApply = false;
+            for (let mutation of mutations) {
+                if (mutation.addedNodes.length > 0) {
+                    shouldApply = true;
+                    break;
+                }
+            }
+            if (shouldApply) applyTooltips();
+        });
+
+        observer.observe(document.body, { childList: true, subtree: true });
+    });
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/ianchen0313\.github\.io\/website\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../posts/台股動能策略實證 — 框架設定/index.html" class="pagination-link" aria-label="台股動能策略實證 — 框架設定">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">台股動能策略實證 — 框架設定</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
