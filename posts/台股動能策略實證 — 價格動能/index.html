@@ -74,7 +74,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-862890c363ac206592faaea3555ffe9d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-419e1e3decac3724e2b95a8015b25bfa.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-2dfeba5a7123aa76f61760fc88b86beb.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -239,6 +239,7 @@ window.Quarto = {
   <li><a href="#jk-參數分析" id="toc-jk-參數分析" class="nav-link" data-scroll-target="#jk-參數分析">JK 參數分析</a></li>
   <li><a href="#報酬單調性分析" id="toc-報酬單調性分析" class="nav-link" data-scroll-target="#報酬單調性分析">報酬單調性分析</a></li>
   <li><a href="#條件排序分析" id="toc-條件排序分析" class="nav-link" data-scroll-target="#條件排序分析">條件排序分析</a></li>
+  <li><a href="#策略績效分析" id="toc-策略績效分析" class="nav-link" data-scroll-target="#策略績效分析">策略績效分析</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -1615,14 +1616,14 @@ MOM_{t,J} = \dfrac{P_t}{P_{t-J}} - 1
 <p>一種可能的說法是：動能贏家之所以表現好，只是因為小型股在贏家組合中的比例偏高。由於小型股的股價波動大，通常不是大漲就是大跌，更容易被選入動能策略中的贏家組合和輸家組合，又因為小型股存在所謂的<strong>小型股溢酬</strong>，所以本質上動能策略只是一種選擇小型股的手段，而非動能訊號本身具有預測能力。</p>
 </section>
 <section id="高-beta-股-vs-動能贏家" class="level4">
-<h4 class="anchored" data-anchor-id="高-beta-股-vs-動能贏家">高 Beta 股 vs 動能贏家</h4>
-<p>另一種可能的說法是：在多頭市場中，高 Beta 股本來就因為放大市場漲幅而持續表現好，動能策略在多頭環境下自然把這些股票挑為贏家，所以動能報酬可能只是<strong>系統性市場風險的報酬</strong>，而非動能本身。</p>
+<h4 class="anchored" data-anchor-id="高-beta-股-vs-動能贏家">高 <span class="math inline">\(\beta\)</span> 股 vs 動能贏家</h4>
+<p>另一種可能的說法是：在多頭市場中，高 <span class="math inline">\(\beta\)</span> 股本來就因為放大市場漲幅而持續表現好，動能策略在多頭環境下自然把這些股票挑為贏家，所以動能報酬可能只是<strong>系統性市場風險的報酬</strong>，而非動能本身。</p>
 </section>
 <section id="建構條件排序" class="level4">
 <h4 class="anchored" data-anchor-id="建構條件排序">建構條件排序</h4>
 <p>我們採用 5x5 的分組方式進行條件排序，步驟如下：</p>
 <ul>
-<li>針對需控制的因子 (市值、Beta) 由小到大分成 5 組</li>
+<li>針對需控制的因子 (市值、<span class="math inline">\(\beta\)</span>) 由小到大分成 5 組</li>
 <li>再針對上述每組的股票池，依照動能由弱到強再分成 5 組</li>
 </ul>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -1641,21 +1642,176 @@ MOM_{t,J} = \dfrac{P_t}{P_{t-J}} - 1
 </section>
 <section id="解讀結果" class="level4">
 <h4 class="anchored" data-anchor-id="解讀結果">解讀結果</h4>
-<p>在控制因子的每一組內，動能最強的 M5 都要持續優於 M1，而且這個差距要在 5 組之間都成立，才能說動能訊號有獨立的預測力。如果 M5-M1 差距在某些控制組消失，則表示動能溢酬與該因子存在交互作用；如果M5-M1 差距在所有控制組都消失，則動能溢酬大部分被該因子解釋，訊號本身沒有獨立預測力。</p>
+<p>在控制因子的每一組內，動能最強的 M5 都要持續優於 M1，而且這個差距要在 5 組之間都成立，才能說動能訊號有獨立的預測力。如果 M5-M1 差距在某些控制組消失，則表示動能溢酬與該因子存在交互作用；如果 M5-M1 差距在所有控制組都消失，則動能溢酬大部分被該因子解釋，訊號本身沒有獨立預測力。</p>
 <p>此外我們也能近一步觀察各組的報酬單調性如何，檢視動能訊號的鑑別度，但這屬於輔助觀察，主要還是看 M5-M1 差距。</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true" href="">控制小型股</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false" href="">控制高 Beta 股</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true" href="">控制市值 (MV)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false" href="">控制 <span class="math inline">\(\beta\)</span></a></li></ul>
 <div class="tab-content">
 <div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
-
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;"></th>
+<th style="text-align: center;">M1</th>
+<th style="text-align: center;">M2</th>
+<th style="text-align: center;">M3</th>
+<th style="text-align: center;">M4</th>
+<th style="text-align: center;">M5</th>
+<th style="text-align: center;">M5-M1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><strong>MV1</strong></td>
+<td style="text-align: center;">0.1153</td>
+<td style="text-align: center;">0.0919</td>
+<td style="text-align: center;">0.1288</td>
+<td style="text-align: center;">0.1709</td>
+<td style="text-align: center;">0.2112</td>
+<td style="text-align: center;">0.0959</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>MV2</strong></td>
+<td style="text-align: center;">0.0295</td>
+<td style="text-align: center;">0.0643</td>
+<td style="text-align: center;">0.1099</td>
+<td style="text-align: center;">0.1277</td>
+<td style="text-align: center;">0.1880</td>
+<td style="text-align: center;">0.1585</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>MV3</strong></td>
+<td style="text-align: center;">0.0328</td>
+<td style="text-align: center;">0.0683</td>
+<td style="text-align: center;">0.0972</td>
+<td style="text-align: center;">0.1199</td>
+<td style="text-align: center;">0.1727</td>
+<td style="text-align: center;">0.1399</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>MV4</strong></td>
+<td style="text-align: center;">0.0228</td>
+<td style="text-align: center;">0.0476</td>
+<td style="text-align: center;">0.0931</td>
+<td style="text-align: center;">0.1163</td>
+<td style="text-align: center;">0.1521</td>
+<td style="text-align: center;">0.1293</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>MV5</strong></td>
+<td style="text-align: center;">0.0338</td>
+<td style="text-align: center;">0.0719</td>
+<td style="text-align: center;">0.0933</td>
+<td style="text-align: center;">0.1016</td>
+<td style="text-align: center;">0.1633</td>
+<td style="text-align: center;">0.1295</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>市值計算方式
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>這裡的市值為建構投資組合當下 (每月月底) 的股票市值，計算方式為當日收盤價 <span class="math inline">\(\times\)</span> 在外流通股數。</p>
+</div>
+</div>
+<p>可以發現，在控制市值後，每組的 M5-M1 均為正且差距明顯，表示動能訊號確實提供額外的預測能力。但同時也發現低市值組（MV1）的訊號鑑別度較差，M5-M1 差距明顯小於其他組，且報酬不具備單調性。</p>
+<p>值得注意的是，差距縮小並非因為 MV1 的贏家報酬偏低 (MV1 的 M5 反而是五組中最高的)，而是因為 MV1 的輸家報酬遠高於其他組，使得多空擴散被壓縮。這與小型股跌深容易反彈、形成報酬底部的特性有關，即使動能最弱的小型股也享有一定的報酬基準。</p>
+<p>此外，MV3 至 MV5 的 M5-M1 差距相對穩定，表示在控制為中型股以上後，動能的預測力並不隨規模大小有明顯差異。</p>
 </div>
 <div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
-
-
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;"></th>
+<th style="text-align: center;">M1</th>
+<th style="text-align: center;">M2</th>
+<th style="text-align: center;">M3</th>
+<th style="text-align: center;">M4</th>
+<th style="text-align: center;">M5</th>
+<th style="text-align: center;">M5-M1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><strong>β1</strong></td>
+<td style="text-align: center;">0.0018</td>
+<td style="text-align: center;">0.0466</td>
+<td style="text-align: center;">0.0931</td>
+<td style="text-align: center;">0.1596</td>
+<td style="text-align: center;">0.1648</td>
+<td style="text-align: center;">0.1630</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>β2</strong></td>
+<td style="text-align: center;">0.0290</td>
+<td style="text-align: center;">0.0692</td>
+<td style="text-align: center;">0.1112</td>
+<td style="text-align: center;">0.1448</td>
+<td style="text-align: center;">0.1921</td>
+<td style="text-align: center;">0.1630</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>β3</strong></td>
+<td style="text-align: center;">0.0543</td>
+<td style="text-align: center;">0.0687</td>
+<td style="text-align: center;">0.0949</td>
+<td style="text-align: center;">0.1291</td>
+<td style="text-align: center;">0.1940</td>
+<td style="text-align: center;">0.1397</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>β4</strong></td>
+<td style="text-align: center;">0.0434</td>
+<td style="text-align: center;">0.0683</td>
+<td style="text-align: center;">0.1014</td>
+<td style="text-align: center;">0.1310</td>
+<td style="text-align: center;">0.1689</td>
+<td style="text-align: center;">0.1255</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>β5</strong></td>
+<td style="text-align: center;">0.0629</td>
+<td style="text-align: center;">0.0590</td>
+<td style="text-align: center;">0.1215</td>
+<td style="text-align: center;">0.1319</td>
+<td style="text-align: center;">0.1533</td>
+<td style="text-align: center;">0.0904</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span><span class="math inline">\(\beta\)</span> 計算方式
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>這裡的 <span class="math inline">\(\beta\)</span> 以建構投資組合當下（每月月底）為基準，對過去 6 個月的個股與大盤日報酬率進行 OLS 迴歸所得的斜率係數。</p>
+</div>
+</div>
+<p>可以發現，在控制 <span class="math inline">\(\beta\)</span> 後，每組的 M5-M1 均為正且差距明顯，表示動能訊號確實提供額外的預測能力。</p>
+<p>值得注意的是，高 <span class="math inline">\(\beta\)</span> 組（β5）的訊號鑑別度相對較差，M5-M1 差距明顯小於低 <span class="math inline">\(\beta\)</span> 組。與 MV1 的單邊壓縮不同，β5 的擴散縮小來自雙邊：M1 被抬高，M5 也相對偏低。其背後的機制是，高 <span class="math inline">\(\beta\)</span> 股在多頭市場中會放大市場漲幅，即使動能最弱的高 <span class="math inline">\(\beta\)</span> 股也因此享有一定的報酬下限，同時動能最強的高 <span class="math inline">\(\beta\)</span> 股相對優勢被稀釋。</p>
+<p>整體而言，M5-M1 差距隨 <span class="math inline">\(\beta\)</span> 升高而單調縮小，但始終為正，表示動能訊號的預測力並未被系統性風險完全解釋。</p>
 </div>
 </div>
 </div>
 </section>
+</section>
+<section id="策略績效分析" class="level3">
+<h3 class="anchored" data-anchor-id="策略績效分析">策略績效分析</h3>
+<iframe class="finlab-report" src="price_momentum.html"></iframe>
+
+
 </section>
 </section>
 
@@ -2201,6 +2357,77 @@ MOM_{t,J} = \dfrac{P_t}{P_{t-J}} - 1
 
         observer.observe(document.body, { childList: true, subtree: true });
     });
+</script>
+<!--
+  FinLab Report Embed — auto-resize + scroll-lock + background sync
+  Applies to any <iframe class="finlab-report"> on the page.
+  Include via _quarto.yml → include-after-body
+-->
+<script>
+(function () {
+  const iframes = document.querySelectorAll('iframe.finlab-report');
+  if (!iframes.length) return;
+
+  // Sync iframe element background to match internal page background
+  // so the outer frame matches regardless of light/dark mode
+  function syncBackground(iframe) {
+    try {
+      const html = iframe.contentDocument?.documentElement;
+      if (!html) return;
+      const bg = getComputedStyle(html).backgroundColor;
+      if (bg && bg !== 'rgba(0, 0, 0, 0)' && bg !== 'transparent') {
+        iframe.style.backgroundColor = bg;
+      }
+    } catch (e) { /* cross-origin: skip */ }
+  }
+
+  function resizeIframe(iframe) {
+    try {
+      const body = iframe.contentDocument?.body;
+      const html = iframe.contentDocument?.documentElement;
+      if (body && html) {
+        const height = Math.max(
+          body.scrollHeight, body.offsetHeight,
+          html.scrollHeight, html.offsetHeight
+        );
+        if (height > 0) {
+          iframe.style.height = height + 'px';
+        }
+      }
+    } catch (e) {
+      /* cross-origin: keep CSS min-height */
+    }
+  }
+
+  function initIframe(iframe) {
+    syncBackground(iframe);
+    resizeIframe(iframe);
+    setInterval(function () {
+      syncBackground(iframe);
+      resizeIframe(iframe);
+    }, 300);
+  }
+
+  iframes.forEach(function (iframe) {
+    iframe.addEventListener('load', function () {
+      initIframe(iframe);
+    });
+
+    // If already loaded (e.g. cached)
+    if (iframe.contentDocument?.readyState === 'complete') {
+      initIframe(iframe);
+    }
+  });
+
+  // Scroll-lock: prevent parent page jump when iframe steals focus
+  window.addEventListener('blur', function () {
+    const active = document.activeElement;
+    if (active && active.classList.contains('finlab-report')) {
+      const scrollY = window.scrollY;
+      setTimeout(function () { window.scrollTo(0, scrollY); }, 0);
+    }
+  });
+})();
 </script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {

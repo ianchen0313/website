@@ -74,7 +74,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-862890c363ac206592faaea3555ffe9d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-419e1e3decac3724e2b95a8015b25bfa.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-2dfeba5a7123aa76f61760fc88b86beb.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -1128,6 +1128,77 @@ s = \sqrt{\frac{1}{N-1} \sum_{i=1}^N (x_i - \overline{x})^2}
 
         observer.observe(document.body, { childList: true, subtree: true });
     });
+</script>
+<!--
+  FinLab Report Embed — auto-resize + scroll-lock + background sync
+  Applies to any <iframe class="finlab-report"> on the page.
+  Include via _quarto.yml → include-after-body
+-->
+<script>
+(function () {
+  const iframes = document.querySelectorAll('iframe.finlab-report');
+  if (!iframes.length) return;
+
+  // Sync iframe element background to match internal page background
+  // so the outer frame matches regardless of light/dark mode
+  function syncBackground(iframe) {
+    try {
+      const html = iframe.contentDocument?.documentElement;
+      if (!html) return;
+      const bg = getComputedStyle(html).backgroundColor;
+      if (bg && bg !== 'rgba(0, 0, 0, 0)' && bg !== 'transparent') {
+        iframe.style.backgroundColor = bg;
+      }
+    } catch (e) { /* cross-origin: skip */ }
+  }
+
+  function resizeIframe(iframe) {
+    try {
+      const body = iframe.contentDocument?.body;
+      const html = iframe.contentDocument?.documentElement;
+      if (body && html) {
+        const height = Math.max(
+          body.scrollHeight, body.offsetHeight,
+          html.scrollHeight, html.offsetHeight
+        );
+        if (height > 0) {
+          iframe.style.height = height + 'px';
+        }
+      }
+    } catch (e) {
+      /* cross-origin: keep CSS min-height */
+    }
+  }
+
+  function initIframe(iframe) {
+    syncBackground(iframe);
+    resizeIframe(iframe);
+    setInterval(function () {
+      syncBackground(iframe);
+      resizeIframe(iframe);
+    }, 300);
+  }
+
+  iframes.forEach(function (iframe) {
+    iframe.addEventListener('load', function () {
+      initIframe(iframe);
+    });
+
+    // If already loaded (e.g. cached)
+    if (iframe.contentDocument?.readyState === 'complete') {
+      initIframe(iframe);
+    }
+  });
+
+  // Scroll-lock: prevent parent page jump when iframe steals focus
+  window.addEventListener('blur', function () {
+    const active = document.activeElement;
+    if (active && active.classList.contains('finlab-report')) {
+      const scrollY = window.scrollY;
+      setTimeout(function () { window.scrollTo(0, scrollY); }, 0);
+    }
+  });
+})();
 </script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
