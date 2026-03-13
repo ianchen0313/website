@@ -6,10 +6,11 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Ian Chen">
-<meta name="dcterms.date" content="2026-02-25">
+<meta name="author" content="Quartile">
+<meta name="dcterms.date" content="2026-02-21">
+<meta name="description" content="TL;DR 的含意是 Too Long; Didn’t Read. 也就是文章摘要的意思，我希望透過這個區塊訓練自己先講結論，以不超過三行的文字，將文章內容濃縮。而本文將會說明三件事：網站建置過程、設計核心考量、以及最終的實作成果。">
 
-<title>Quarto 第二頁測試 – Ian Chen</title>
+<title>網站理念與設計風格 – Ian Chen</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,11 +23,45 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
-<link href="../../posts/quarto-syntax-test/index.html" rel="prev">
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -38,7 +73,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-862890c363ac206592faaea3555ffe9d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-2dfeba5a7123aa76f61760fc88b86beb.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-281caf2c8d5be94be6a010a9c18471b3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -82,7 +117,7 @@ ul.task-list li input[type="checkbox"] {
 
 </head>
 
-<body class="nav-sidebar docked nav-fixed quarto-light">
+<body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -100,15 +135,7 @@ ul.task-list li input[type="checkbox"] {
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
     <a class="nav-link" href="../../blog.html"> 
-<span class="menu-text">文章</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../../projects.html"> 
-<span class="menu-text">專案</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../../data.html"> 
-<span class="menu-text">資料</span></a>
+<span class="menu-text">文章列表</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
@@ -123,49 +150,34 @@ ul.task-list li input[type="checkbox"] {
 </div>
       </div> <!-- /container-fluid -->
     </nav>
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-        <i class="bi bi-layout-text-sidebar-reverse"></i>
-      </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/quarto-syntax-test/page2.html">Quarto 第二頁測試</a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
-    </div>
-  </nav>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
-    <div class="sidebar-menu-container"> 
-    <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../posts/quarto-syntax-test/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Quarto Markdown 語法全集測試</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../posts/quarto-syntax-test/page2.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Quarto 第二頁測試</span></a>
-  </div>
-</li>
-    </ul>
-    </div>
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#這是第二頁" id="toc-這是第二頁" class="nav-link active" data-scroll-target="#這是第二頁">這是第二頁</a>
+  <li><a href="#網站建置過程" id="toc-網站建置過程" class="nav-link active" data-scroll-target="#網站建置過程">網站建置過程</a></li>
+  <li><a href="#設計核心考量" id="toc-設計核心考量" class="nav-link" data-scroll-target="#設計核心考量">設計核心考量</a>
   <ul class="collapse">
-  <li><a href="#第二頁的子標題" id="toc-第二頁的子標題" class="nav-link" data-scroll-target="#第二頁的子標題">第二頁的子標題</a></li>
+  <li><a href="#版面配置與閱讀體驗" id="toc-版面配置與閱讀體驗" class="nav-link" data-scroll-target="#版面配置與閱讀體驗">版面配置與閱讀體驗</a></li>
+  <li><a href="#copy-page-功能" id="toc-copy-page-功能" class="nav-link" data-scroll-target="#copy-page-功能">Copy Page 功能</a></li>
+  <li><a href="#低彩度與高對比的色彩" id="toc-低彩度與高對比的色彩" class="nav-link" data-scroll-target="#低彩度與高對比的色彩">低彩度與高對比的色彩</a></li>
+  <li><a href="#字體排版設計" id="toc-字體排版設計" class="nav-link" data-scroll-target="#字體排版設計">字體排版設計</a></li>
+  <li><a href="#字體大小與行高設定" id="toc-字體大小與行高設定" class="nav-link" data-scroll-target="#字體大小與行高設定">字體大小與行高設定</a></li>
+  <li><a href="#最大閱讀寬度" id="toc-最大閱讀寬度" class="nav-link" data-scroll-target="#最大閱讀寬度">最大閱讀寬度</a></li>
   </ul></li>
+  <li><a href="#實作成果" id="toc-實作成果" class="nav-link" data-scroll-target="#實作成果">實作成果</a>
+  <ul class="collapse">
+  <li><a href="#訊息提示區塊" id="toc-訊息提示區塊" class="nav-link" data-scroll-target="#訊息提示區塊">訊息提示區塊</a></li>
+  <li><a href="#頁籤切換" id="toc-頁籤切換" class="nav-link" data-scroll-target="#頁籤切換">頁籤切換</a></li>
+  <li><a href="#faq-折疊選單" id="toc-faq-折疊選單" class="nav-link" data-scroll-target="#faq-折疊選單">FAQ 折疊選單</a></li>
+  <li><a href="#三線表" id="toc-三線表" class="nav-link" data-scroll-target="#三線表">三線表</a></li>
+  </ul></li>
+  <li><a href="#總結" id="toc-總結" class="nav-link" data-scroll-target="#總結">總結</a></li>
   </ul>
 </nav>
     </div>
@@ -174,12 +186,17 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Quarto 第二頁測試</h1>
+<h1 class="title">網站理念與設計風格</h1>
   <div class="quarto-categories">
-    <div class="quarto-category">Test</div>
+    <div class="quarto-category">單篇文章</div>
   </div>
   </div>
 
+<div>
+  <div class="description">
+    TL;DR 的含意是 <strong>Too Long; Didn’t Read.</strong> 也就是文章摘要的意思，我希望透過這個區塊訓練自己<strong>先講結論</strong>，以不超過三行的文字，將文章內容濃縮。而本文將會說明三件事：網站建置過程、設計核心考量、以及最終的實作成果。
+  </div>
+</div>
 
 
 <div class="quarto-title-meta">
@@ -187,14 +204,14 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Ian Chen </p>
+             <p>Quartile </p>
           </div>
   </div>
     
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">February 25, 2026</p>
+      <p class="date">February 21, 2026</p>
     </div>
   </div>
   
@@ -206,15 +223,265 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="這是第二頁" class="level1">
-<h1>這是第二頁</h1>
-<p>這是一篇用來測試 Quarto 左側系列導覽列 (Sidebar) 功能的假文章。</p>
-<section id="第二頁的子標題" class="level2">
-<h2 class="anchored" data-anchor-id="第二頁的子標題">第二頁的子標題</h2>
-<p>如果您能從第一頁點擊左側導覽來到這裡，代表系列文章功能的設定已經成功。</p>
-
-
+<section id="網站建置過程" class="level2">
+<h2 class="anchored" data-anchor-id="網站建置過程">網站建置過程</h2>
+<p>本網站整體架構是基於 <a href="https://quarto.org/">Quarto</a> 框架建構而成。Quarto 可以透過 Markdown 語法，快速生成網站，避免了 JavaScript、HTML、CSS 等前端語法的額外學習成本，我希望將重點放在文章內容的呈現，而非網站技術細節。因此先求有再求好，未來若 Quarto 框架因為網站功能需求而無法滿足，我會再透過其他前端技術進行網站改寫。</p>
+<p>在開發的過程中，由於我是商管背景的學生，僅熟悉 Python、SQL 等程式語言，對於前端技術略有涉略但不夠熟悉，因此整個網站是透過 <strong>Vibe Coding</strong> 的方式，由我和 Claude、Gemini 共同完成，風格則參考了 OpenAI 和 Google 的設計邏輯。在過程中，我體會到 AI Agent 在程式開發上的驚人進展，若沒有 AI Agent 的協助，我可能需要花費數倍的時間才能完成網站的建置。</p>
+<p>同時我也深刻意識到，在 AI 的時代 <strong>Know-Why</strong> 或許比 <strong>Know-How</strong> 更加重要。下一章節我想進一步分享我對於網站設計的核心考量，以及為何我想把網站設計成現在所看到的樣子。</p>
 </section>
+<section id="設計核心考量" class="level2">
+<h2 class="anchored" data-anchor-id="設計核心考量">設計核心考量</h2>
+<section id="版面配置與閱讀體驗" class="level3">
+<h3 class="anchored" data-anchor-id="版面配置與閱讀體驗">版面配置與閱讀體驗</h3>
+<p>在螢幕版面設計上，最基本的原則是：「<strong>網站內容必須絕對置中</strong>」，以維持視覺的和諧。</p>
+<p>我時常閱讀技術部落格或是官方文件，其中最讓我受不了的就是網站內容因為側邊欄 (Sidebar) 或是目錄 (TOC) 的存在，被迫偏向螢幕的左側或右側。</p>
+<p>因此本網站的設計排除了常見但會改變頁面重心的干擾。只有在螢幕寬度足夠大的情況下，才會在兩側展開 Sidebar 與 TOC；當螢幕寬度不足以完美置中主內容時，這兩個元件會被隱藏，減少視覺干擾，並確保文章內容始終維持在瀏覽器的正中央。</p>
+</section>
+<section id="copy-page-功能" class="level3">
+<h3 class="anchored" data-anchor-id="copy-page-功能">Copy Page 功能</h3>
+<p>文章標題右下方的 <code>Copy Page</code> 按鈕可一鍵將全文複製至剪貼簿。這個功能是參考自許多官方技術文件的設計，方便讀者將網站內容丟給 AI 進行摘要總結或是依內容回答相關問題。這對我來說非常實用，因此我也將這個功能加到我的網站中。</p>
+</section>
+<section id="低彩度與高對比的色彩" class="level3">
+<h3 class="anchored" data-anchor-id="低彩度與高對比的色彩">低彩度與高對比的色彩</h3>
+<p>在顏色的選擇上，為了降低長時間閱讀文字、數據所帶來的視覺疲勞感，整體避免使用純黑色。標題與內文選用不同深淺的深灰色來建立文字層次。背景部分維持純白，並利用微灰色來特別標示程式碼或特定視窗區塊。</p>
+<div style="display: flex; gap: 15px; margin-bottom: 2rem; flex-wrap: wrap;">
+  <div style="flex: 1; min-width: 120px; text-align: center;">
+    <div style="height: 80px; background-color: #111827; border-radius: 12px; margin-bottom: 10px;"></div>
+    <strong>標題文字</strong><br><small>#111827<br>($gray-900)</small>
+  </div>
+  <div style="flex: 1; min-width: 120px; text-align: center;">
+    <div style="height: 80px; background-color: #374151; border-radius: 12px; margin-bottom: 10px;"></div>
+    <strong>內文文字</strong><br><small>#374151<br>($gray-700)</small>
+  </div>
+  <div style="flex: 1; min-width: 120px; text-align: center;">
+    <div style="height: 80px; background-color: #6B7280; border-radius: 12px; margin-bottom: 10px;"></div>
+    <strong>次要資訊</strong><br><small>#6B7280<br>($gray-500)</small>
+  </div>
+  <div style="flex: 1; min-width: 120px; text-align: center;">
+    <div style="height: 80px; background-color: #F3F4F6; border-radius: 12px; margin-bottom: 10px;"></div>
+    <strong>程式碼背景色</strong><br><small>#F3F4F6<br>($gray-100)</small>
+  </div>
+</div>
+</section>
+<section id="字體排版設計" class="level3">
+<h3 class="anchored" data-anchor-id="字體排版設計">字體排版設計</h3>
+<p>技術文章中經常包含大量的中英文混排與程式碼。因此網站建立了一個四類的字體系統：</p>
+<ol type="1">
+<li><strong>英文與數字</strong>：<br>
+選用 <code>DM Sans</code>，此字體具備現代感且閱讀上較為平穩。</li>
+<li><strong>繁體中文</strong>：<br>
+採用 <code>Noto Sans TC</code> (思源黑體)，具備閱讀舒適性，且在風格上能與 DM Sans 搭配。</li>
+<li><strong>程式碼</strong>：<br>
+使用 <code>JetBrains Mono</code>，具備字體連字功能 (Font Ligatures)，例如能讓 &lt;= 變成 <code>&lt;=</code>，提升程式碼可讀性。</li>
+<li><strong>數據與表格</strong>：<br>
+使用 <code>Roboto Mono</code>。每個數字字元寬度完全相同，能確保表格內的數據精準對齊，避免視覺錯位。</li>
+</ol>
+</section>
+<section id="字體大小與行高設定" class="level3">
+<h3 class="anchored" data-anchor-id="字體大小與行高設定">字體大小與行高設定</h3>
+<p>內文基準字體大小設定為 <code>16px</code>，符合標準設定。另外行高方面，相較於常規的 <code>1.5</code> 會造成中文內容閱讀上過去擁擠，我將網站行高設定為 <code>1.8</code>，減少長文閱讀時的視覺壓迫感。</p>
+</section>
+<section id="最大閱讀寬度" class="level3">
+<h3 class="anchored" data-anchor-id="最大閱讀寬度">最大閱讀寬度</h3>
+<p>為了維持最佳的閱讀節奏，我將文章內文的最大寬度限制在 <code>672px</code>。相較於讓內容在寬螢幕下無限制延伸，適度的橫向空間限制能縮短視線來回掃描的距離，有效降低長文閱讀時的疲勞感。</p>
+</section>
+</section>
+<section id="實作成果" class="level2">
+<h2 class="anchored" data-anchor-id="實作成果">實作成果</h2>
+<p>為了後續寫作與維護的效率，在此記錄本站常用的 Quarto 語法與自定義組件範例作為 Syntax Cheat Sheet。讓我之後在撰寫新文章時，可以直接參考或複製此處的語法。</p>
+<section id="訊息提示區塊" class="level3">
+<h3 class="anchored" data-anchor-id="訊息提示區塊">訊息提示區塊</h3>
+<p>原生的 Quarto Callout 帶有比較沈重的底色，因此我透過 SCSS 將其改成類似 GitHub Alerts 的輕量化風格：只有左邊一條裝飾線。寫作時，只需修改大括號內的標籤 (<code>note</code>, <code>tip</code>, <code>warning</code>, <code>important</code>) 就能切換。</p>
+<section id="語法範例" class="level4">
+<h4 class="anchored" data-anchor-id="語法範例">語法範例</h4>
+<p>程式碼區塊設計參考 GitHub 標準配色與功能，當程式碼區塊過長時，會有捲軸功能。</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">## 閱讀筆記</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>這是一個一般的筆記區塊，適合用來放一些補充資訊或延伸閱讀。</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">## 實用技巧</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>這是一個提示區塊，適合放置建議或是 Best Practice。</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning collapse="true"}</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">## 注意事項 (可折疊)</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>這是一個警告區塊。如果加上 <span class="in">`collapse="true"`</span> 屬性，預設會收起內容，點擊標題才能展開。</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>::: {.callout-important collapse="false"}</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">## 重要事項 (可折疊)</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>這是一個重要區塊。如果加上 <span class="in">`collapse="false"`</span> 屬性，預設會展開內容，點擊標題才能收起。</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="實際渲染效果" class="level4">
+<h4 class="anchored" data-anchor-id="實際渲染效果">實際渲染效果</h4>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>閱讀筆記
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>這是一個一般的筆記區塊，適合用來放一些補充資訊或延伸閱讀。</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>實用技巧
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>這是一個提示區塊，適合放置建議或是 Best Practice。</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>注意事項 (可折疊)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>這是一個警告區塊。如果加上 <code>collapse="true"</code> 屬性，預設會收起內容，點擊標題才能展開。</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>重要事項 (可折疊)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>這是一個重要區塊。如果加上 <code>collapse="false"</code> 屬性，預設會展開內容，點擊標題才能收起。</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="頁籤切換" class="level3">
+<h3 class="anchored" data-anchor-id="頁籤切換">頁籤切換</h3>
+<p>當我需要呈現多組平行的資料（例如兩組對照表），卻又不想讓網頁拉得太長時，我會使用 Tabsets，設計風格參考 OpenAI 的 Pill Tabs。</p>
+<section id="語法範例-1" class="level4">
+<h4 class="anchored" data-anchor-id="語法範例-1">語法範例</h4>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>::: {.panel-tabset}</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">## 方案 A</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>這是方案 A 的詳細說明與表格配置。在頁籤下方可以自由放入文字、資料或程式碼。</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">## 方案 B</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>這是方案 B 的獨立內容，點擊上方的「方案 B」就可以無縫切換，不會重新載入網頁。</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="實際渲染效果-1" class="level4">
+<h4 class="anchored" data-anchor-id="實際渲染效果-1">實際渲染效果</h4>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">方案 A</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">方案 B</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<p>這是方案 A 的詳細說明與表格配置。在頁籤下方可以自由放入文字、資料或程式碼。</p>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<p>這是方案 B 的獨立內容，點擊上方的「方案 B」就可以無縫切換，不會重新載入網頁。</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="faq-折疊選單" class="level3">
+<h3 class="anchored" data-anchor-id="faq-折疊選單">FAQ 折疊選單</h3>
+<p>我有時會希望在文章的中間，穿插一些較為輕巧的問答，但又不希望像 Callout 那樣具有強烈的視覺強調感，為此我手刻了這組 <code>&lt;details&gt;</code> 與 <code>&lt;summary&gt;</code> 的折疊外觀。</p>
+<section id="語法範例-2" class="level4">
+<h4 class="anchored" data-anchor-id="語法範例-2">語法範例</h4>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="ot"> class</span><span class="op">=</span><span class="st">"faq-toggle"</span><span class="dt">&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>這個網站是用什麼技術架設的？<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"faq-answer"</span><span class="dt">&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>主要使用 Quarto 作為基礎的靜態網站生成器，並客製化了大量的 SCSS 與 HTML 模板來達到目前的設計效果。</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="實際渲染效果-2" class="level4">
+<h4 class="anchored" data-anchor-id="實際渲染效果-2">實際渲染效果</h4>
+<details class="faq-toggle">
+<summary>
+這個網站是用什麼技術架設的？
+</summary>
+<div class="faq-answer">
+<p>主要使用 Quarto 作為基礎的靜態網站生成器，並客製化了大量的 SCSS 與 HTML 模板來達到目前的設計效果。</p>
+</div>
+</details>
+</section>
+</section>
+<section id="三線表" class="level3">
+<h3 class="anchored" data-anchor-id="三線表">三線表</h3>
+<p>學術界經常使用的「三線表」，我也把它作為網站表格的設計風格。在撰寫 Markdown 表格時不需要額外的 class，它會自動去掉多餘的網格線，只保留最俐落的三條水平線。同時為了方便進行同列比較，當滑鼠 hover 到不同資料列時，會呈現淡灰色的背景。</p>
+<section id="語法範例-3" class="level4">
+<h4 class="anchored" data-anchor-id="語法範例-3">語法範例</h4>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 年度 <span class="pp">|</span> 專案數量 <span class="pp">|</span> 平均完成時間 <span class="pp">|</span> 客戶滿意度 <span class="pp">|</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="pp">|:---:|:---:|:---:|:---:|</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 2021 <span class="pp">|</span> 12 <span class="pp">|</span> 45 天 <span class="pp">|</span> 4.8/5.0 <span class="pp">|</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 2022 <span class="pp">|</span> 18 <span class="pp">|</span> 38 天 <span class="pp">|</span> 4.9/5.0 <span class="pp">|</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 2023 <span class="pp">|</span> 25 <span class="pp">|</span> 30 天 <span class="pp">|</span> 4.9/5.0 <span class="pp">|</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="實際渲染效果-3" class="level4">
+<h4 class="anchored" data-anchor-id="實際渲染效果-3">實際渲染效果</h4>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">年度</th>
+<th style="text-align: center;">專案數量</th>
+<th style="text-align: center;">平均完成時間</th>
+<th style="text-align: center;">客戶滿意度</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">2021</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">45 天</td>
+<td style="text-align: center;">4.8/5.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2022</td>
+<td style="text-align: center;">18</td>
+<td style="text-align: center;">38 天</td>
+<td style="text-align: center;">4.9/5.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">2023</td>
+<td style="text-align: center;">25</td>
+<td style="text-align: center;">30 天</td>
+<td style="text-align: center;">4.9/5.0</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="總結" class="level2">
+<h2 class="anchored" data-anchor-id="總結">總結</h2>
+<p>這篇文章記錄了網站建置的過程與核心設計考量，並將常用的 Quarto 語法與自訂元件整理成速查表 (Cheat Sheet)。這份紀錄不僅能確保未來產出的文章在版面與視覺風格上保持一致，也能大幅節省每次尋找排版語法的時間，讓我能將更多精力集中在內容本身的撰寫上。</p>
+
+
 </section>
 
 </main> <!-- /main -->
@@ -1227,15 +1494,6 @@ ul.task-list li input[type="checkbox"] {
     }
   });
   </script>
-<nav class="page-navigation">
-  <div class="nav-page nav-page-previous">
-      <a href="../../posts/quarto-syntax-test/index.html" class="pagination-link" aria-label="Quarto Markdown 語法全集測試">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Quarto Markdown 語法全集測試</span>
-      </a>          
-  </div>
-  <div class="nav-page nav-page-next">
-  </div>
-</nav>
 </div> <!-- /content -->
 
 

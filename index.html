@@ -35,7 +35,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-862890c363ac206592faaea3555ffe9d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-06207ff7d0674f9448d80d9a26c432bc.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-621da552450d8f858960c215de99394b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -97,15 +97,7 @@ ul.task-list li input[type="checkbox"] {
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
     <a class="nav-link" href="./blog.html"> 
-<span class="menu-text">文章</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./projects.html"> 
-<span class="menu-text">專案</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./data.html"> 
-<span class="menu-text">資料</span></a>
+<span class="menu-text">文章列表</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
@@ -143,53 +135,56 @@ Ian Chen
 </div>
 </div>
 <div class="landing-tabs">
-    <button class="tab-btn active" onclick="showTab('articles', event)">文章精選</button>
+    <button class="tab-btn active" onclick="showTab('articles', event)">近期文章</button>
+    <!-- 
     <button class="tab-btn" onclick="showTab('projects', event)">近期專案</button>
     <button class="tab-btn" onclick="showTab('data', event)">開源資料</button>
+    -->
 </div>
 
 <div id="tab-articles" class="tab-pane active">
     <div class="tab-cards">
-        <a href="blog.html" class="tab-card">
-            <div class="tab-card-meta">量化研究</div>
-            <div class="tab-card-title">台股動能策略實證回測</div>
-            <div class="tab-card-desc">以 Jegadeesh-Titman 框架，回測台股近十年的動能策略表現。</div>
+        <a href="posts/台股動能策略實證 — 近高點動能/index.html" class="tab-card">
+            <div class="tab-card-meta">2026-03-10</div>
+            <div class="tab-card-title">台股動能策略實證 — 近高點動能</div>
+            <div class="tab-card-desc">近高點動能：形成期 = 12、持有期 = 1 表現最佳，CAGR 約 21%，績效較穩、回撤較小，整體優於價格動能。</div>
             <svg class="tab-card-arrow" width="16" height="16" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
         </a>
-        <a href="blog.html" class="tab-card">
-            <div class="tab-card-meta">程式教學</div>
-            <div class="tab-card-title">Python 多因子選股模型</div>
-            <div class="tab-card-desc">結合價值、動能、品質因子，從零建構可回測的選股框架。</div>
+        <a href="posts/台股動能策略實證 — 價格動能/index.html" class="tab-card">
+            <div class="tab-card-meta">2026-03-05</div>
+            <div class="tab-card-title">台股動能策略實證 — 價格動能</div>
+            <div class="tab-card-desc">價格動能：形成期 = 6、持有期 = 1 最佳，CAGR 約 15.5%。績效不穩且回撤偏大，具明顯侷限。</div>
             <svg class="tab-card-arrow" width="16" height="16" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
         </a>
-        <a href="blog.html" class="tab-card">
-            <div class="tab-card-meta">市場分析</div>
-            <div class="tab-card-title">財報空窗期的策略探討</div>
-            <div class="tab-card-desc">探討財報公布前後的市場異常行為與對應的投資策略。</div>
+        <a href="posts/台股動能策略實證 — 框架設定/index.html" class="tab-card">
+            <div class="tab-card-meta">2026-02-25</div>
+            <div class="tab-card-title">台股動能策略實證 — 框架設定</div>
+            <div class="tab-card-desc">建構動能策略並設定回測框架。實證顯示近高點與價格動能皆能擊敗大盤，又以近高點動能的表現較佳。</div>
             <svg class="tab-card-arrow" width="16" height="16" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
         </a>
     </div>
 </div>
 
+<!-- 後續擴充保留區：近期專案與開源資料
 <div id="tab-projects" class="tab-pane">
     <div class="tab-cards">
         <a href="projects.html" class="tab-card">
             <div class="tab-card-meta">React + FastAPI</div>
             <div class="tab-card-title">QuantTracker</div>
             <div class="tab-card-desc">投資組合追蹤與績效歸因分析的全端應用。</div>
-            <svg class="tab-card-arrow" width="16" height="16" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+            <svg class="tab-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
         </a>
         <a href="projects.html" class="tab-card">
             <div class="tab-card-meta">Python + GitHub Actions</div>
             <div class="tab-card-title">AutoCrawler</div>
             <div class="tab-card-desc">自動化抓取上市櫃公司財報與營收數據的排程爬蟲。</div>
-            <svg class="tab-card-arrow" width="16" height="16" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+            <svg class="tab-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
         </a>
         <a href="projects.html" class="tab-card">
             <div class="tab-card-meta">Quarto + SCSS</div>
             <div class="tab-card-title">個人網站</div>
             <div class="tab-card-desc">使用 Quarto 打造的靜態研究筆記與作品集網站。</div>
-            <svg class="tab-card-arrow" width="16" height="16" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+            <svg class="tab-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
         </a>
     </div>
 </div>
@@ -200,22 +195,23 @@ Ian Chen
             <div class="tab-card-meta">CSV · 250MB</div>
             <div class="tab-card-title">台股日頻交易數據</div>
             <div class="tab-card-desc">涵蓋近十年上市櫃個股的 OHLCV 與籌碼資料。</div>
-            <svg class="tab-card-arrow" width="16" height="16" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+            <svg class="tab-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
         </a>
         <a href="data.html" class="tab-card">
             <div class="tab-card-meta">Parquet · 更新至 2025 Q3</div>
             <div class="tab-card-title">基本面財務季報</div>
             <div class="tab-card-desc">上市櫃公司季度財務指標彙整，含 ROE、EPS 等關鍵欄位。</div>
-            <svg class="tab-card-arrow" width="16" height="16" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+            <svg class="tab-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
         </a>
         <a href="data.html" class="tab-card">
             <div class="tab-card-meta">CSV · 每日更新</div>
             <div class="tab-card-title">法人買賣超統計</div>
             <div class="tab-card-desc">三大法人每日買賣超金額與張數，支援歷史回溯查詢。</div>
-            <svg class="tab-card-arrow" width="16" height="16" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+            <svg class="tab-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
         </a>
     </div>
 </div>
+-->
 
 <script>
 function showTab(tabId, event) {

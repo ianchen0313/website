@@ -7,10 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Quartile">
-<meta name="dcterms.date" content="2026-03-05">
-<meta name="description" content="價格動能在台股以 J=6、K=1 表現最佳，2011-2025 年考慮交易費用後 CAGR 約 15.5%（大盤 12.6%），年度勝率約 50%、最大回撤 36%。整體來說，績效不穩且回撤偏大，單獨使用有明顯侷限。">
+<meta name="dcterms.date" content="2026-03-10">
+<meta name="description" content="近高點動能在台股以 J=12、K=1 表現最佳，2011-2025 年考慮交易費用後 CAGR 約 21%（大盤 12.6%），年度勝率 80%、最大回撤 24.6%，整體優於價格動能，惟近兩年連續落後大盤，具體原因需後續研究。">
 
-<title>台股動能策略實證 — 價格動能 – Ian Chen</title>
+<title>台股動能策略實證 — 近高點動能 – Ian Chen</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -62,8 +62,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
-<link href="../../posts/台股動能策略實證 — 近高點動能/index.html" rel="next">
-<link href="../../posts/台股動能策略實證 — 框架設定/index.html" rel="prev">
+<link href="../../posts/台股動能策略實證 — 價格動能/index.html" rel="prev">
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -186,7 +185,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/台股動能策略實證 — 價格動能/index.html">台股動能策略實證 — 價格動能</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/台股動能策略實證 — 近高點動能/index.html">台股動能策略實證 — 近高點動能</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -206,13 +205,13 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../posts/台股動能策略實證 — 價格動能/index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../posts/台股動能策略實證 — 價格動能/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">台股動能策略實證 — 價格動能</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../posts/台股動能策略實證 — 近高點動能/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../../posts/台股動能策略實證 — 近高點動能/index.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">台股動能策略實證 — 近高點動能</span></a>
   </div>
 </li>
@@ -226,13 +225,13 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#何謂價格動能" id="toc-何謂價格動能" class="nav-link active" data-scroll-target="#何謂價格動能">何謂價格動能</a>
+  <li><a href="#何謂近高點動能" id="toc-何謂近高點動能" class="nav-link active" data-scroll-target="#何謂近高點動能">何謂近高點動能</a>
   <ul class="collapse">
-  <li><a href="#短期反轉" id="toc-短期反轉" class="nav-link" data-scroll-target="#短期反轉">短期反轉</a></li>
-  <li><a href="#中期動能" id="toc-中期動能" class="nav-link" data-scroll-target="#中期動能">中期動能</a></li>
-  <li><a href="#長期反轉" id="toc-長期反轉" class="nav-link" data-scroll-target="#長期反轉">長期反轉</a></li>
+  <li><a href="#為何是-52-週高點" id="toc-為何是-52-週高點" class="nav-link" data-scroll-target="#為何是-52-週高點">為何是 52 週高點</a></li>
+  <li><a href="#價格水準比價格變化重要" id="toc-價格水準比價格變化重要" class="nav-link" data-scroll-target="#價格水準比價格變化重要">價格「水準」比價格「變化」重要</a></li>
+  <li><a href="#對於投資人行為偏誤的捕捉" id="toc-對於投資人行為偏誤的捕捉" class="nav-link" data-scroll-target="#對於投資人行為偏誤的捕捉">對於投資人行為偏誤的捕捉</a></li>
   </ul></li>
-  <li><a href="#價格動能的計算方式" id="toc-價格動能的計算方式" class="nav-link" data-scroll-target="#價格動能的計算方式">價格動能的計算方式</a></li>
+  <li><a href="#近高點動能的計算方式" id="toc-近高點動能的計算方式" class="nav-link" data-scroll-target="#近高點動能的計算方式">近高點動能的計算方式</a></li>
   <li><a href="#台股實證結果" id="toc-台股實證結果" class="nav-link" data-scroll-target="#台股實證結果">台股實證結果</a>
   <ul class="collapse">
   <li><a href="#jk-參數分析" id="toc-jk-參數分析" class="nav-link" data-scroll-target="#jk-參數分析">JK 參數分析</a></li>
@@ -249,7 +248,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">台股動能策略實證 — 價格動能</h1>
+<h1 class="title">台股動能策略實證 — 近高點動能</h1>
   <div class="quarto-categories">
     <div class="quarto-category">系列文章</div>
   </div>
@@ -257,7 +256,7 @@ window.Quarto = {
 
 <div>
   <div class="description">
-    價格動能在台股以 J=6、K=1 表現最佳，2011-2025 年考慮交易費用後 CAGR 約 15.5%（大盤 12.6%），年度勝率約 50%、最大回撤 36%。整體來說，績效不穩且回撤偏大，單獨使用有明顯侷限。
+    近高點動能在台股以 J=12、K=1 表現最佳，2011-2025 年考慮交易費用後 CAGR 約 21%（大盤 12.6%），年度勝率 80%、最大回撤 24.6%，整體優於價格動能，惟近兩年連續落後大盤，具體原因需後續研究。
   </div>
 </div>
 
@@ -274,7 +273,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">March 5, 2026</p>
+      <p class="date">March 10, 2026</p>
     </div>
   </div>
   
@@ -296,81 +295,123 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>本文以分析實證結果為主，完整回測程式碼詳見：<a href="https://github.com/ianchen0313/quant-strategies/blob/main/%E5%83%B9%E6%A0%BC%E5%8B%95%E8%83%BD%E7%AD%96%E7%95%A5/price_momentum_prod.ipynb">連結</a>。</p>
+<p>本文以分析實證結果為主，完整回測程式碼詳見：<a href="https://github.com/ianchen0313/quant-strategies/blob/main/%E8%BF%91%E9%AB%98%E9%BB%9E%E5%8B%95%E8%83%BD%E7%AD%96%E7%95%A5/near_high_momentum_prod.ipynb">連結</a>。</p>
 </div>
 </div>
-<section id="何謂價格動能" class="level2">
-<h2 class="anchored" data-anchor-id="何謂價格動能">何謂價格動能</h2>
-<p>價格動能策略源自於 Jegadeesh 與 Titman (1993) 的研究<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>，他們針對 1965 至 1989 年的<strong>美股市場</strong>進行動能策略的實證研究。</p>
-<p>作者利用過去 <span class="math inline">\(J\)</span> 個月的歷史資料計算每隻股票的報酬率作為價格動能訊號，據此買進動能贏家 (動能最強的 10%) 賣出動能輸家 (動能最弱的 10%) 建構多空投資組合，持有 <span class="math inline">\(K\)</span> 個月。</p>
-<p><strong>論文的主要論點在於：短期反轉、中期動能、長期反轉</strong></p>
-<section id="短期反轉" class="level3">
-<h3 class="anchored" data-anchor-id="短期反轉">短期反轉</h3>
-<p>當包含最近的股價資料時，會有短期反轉的現象。也就是近期的強勢股反而接下來短期走弱。因此作者在計算動能訊號時分為兩種版本，分別是跳過最近一周的股價資料與包含最新的股價資料，結果顯示跳過版本的表現較佳。</p>
+<section id="何謂近高點動能" class="level2">
+<h2 class="anchored" data-anchor-id="何謂近高點動能">何謂近高點動能</h2>
+<p>近高點動能策略源自於 George 與 Hwang (2004) 的研究<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>，他們針對 1963 至 2001 年的<strong>美股市場</strong>進行動能策略的實證研究。</p>
+<p>作者利用過去 1 年的歷史資料找出每支股票的最高收盤價做為分母，並且以最新的收盤價做為分子，計算出近高點動能訊號。訊號會介於 0 到 1 之間，而數值越高代表股價越接近過去一年的最高價。</p>
+<p>作者據此買進動能贏家 (動能最強的 30%) 賣出動能輸家 (動能最弱的 30%) 建構多空投資組合，持有 <span class="math inline">\(K\)</span> 個月。</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>補充說明
+<span class="screen-reader-only">Note</span>多空比例的定義差異
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>儘管 Jegadeesh 與 Titman (1993) 是跳過最近一周來排除短期反轉，後續的文獻為了避免短期反轉則都是以跳過最近一個月的資料為主，如 Gong et al.&nbsp;(2015)<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> 。</p>
+<p>Jegadeesh 與 Titman (JT) 的價格動能所定義的贏家為動能最強的 10%，而輸家為動能最弱的 10%。</p>
 </div>
 </div>
+<p><strong>論文的主要論點在於：</strong><br>
+投資人將過去一年的最高股價（52 週新高）視為心理定錨，當利多消息推動股價逼近此高點時，投資人不願輕易突破這道心理關卡，使股價對利多消息的反應不足，形成潛在獲利空間，且透過近高點動能構建的投資組合在長期不存在動能反轉的現象。</p>
+<section id="為何是-52-週高點" class="level3">
+<h3 class="anchored" data-anchor-id="為何是-52-週高點">為何是 52 週高點</h3>
+<p>作者選擇 52 週高點的原因在於<strong>資訊容易取得且無須計算</strong>。報章雜誌和股票報價平台上皆會直接列出股票的 52 週高低點，投資人無需自行運算即可取得，這與 JT 的價格動能需要計算報酬率不同。正因為它隨手可得、具體可見，更容易在投資人心中形成心理定錨，進而影響其買賣決策。</p>
 </section>
-<section id="中期動能" class="level3">
-<h3 class="anchored" data-anchor-id="中期動能">中期動能</h3>
-<p>作者發現多空投資組合持有期介於 3 到 12 個月時，具有正的超額報酬。也就是說持有期為一年內時，過去的贏家也會是接下來的贏家、過去的輸家則會繼續是輸家。</p>
-<p>作者認為這樣的報酬差異可以用反應不足來解釋，也就是說投資人對於股票基本面變化的反應不足，當前價格並未完全反映價值。</p>
-<p>同時文章也提到動能策略最佳的參數組合為：<span class="math inline">\(J=12, K=3\)</span> 並且跳過最近一周；而最差的參數組合為：<span class="math inline">\(J=3, K=3\)</span> 並且不跳過最近一周。</p>
-<p>也就是說價格動能策略在<strong>較長的形成期 + 較短的持有期 + 避免短期反轉</strong>的狀況下表現最好。</p>
-<div class="callout callout-style-default callout-note callout-titled">
+<section id="價格水準比價格變化重要" class="level3">
+<h3 class="anchored" data-anchor-id="價格水準比價格變化重要">價格「水準」比價格「變化」重要</h3>
+<p>JT 使用價格變化（過去報酬率）作為動能訊號，贏家是過去漲最多的股票。George 和 Hwang 則認為，關鍵不在於股票過去漲了多少，而在於目前股價距離 52 週高點有多近。無論一支股票過去的漲跌幅如何，只要股價接近 52 週高點，它就具備較強的未來報酬預測力，且在同時納入兩種訊號的聯合測試中，近高點訊號的預測力壓過了傳統的價格動能。</p>
+</section>
+<section id="對於投資人行為偏誤的捕捉" class="level3">
+<h3 class="anchored" data-anchor-id="對於投資人行為偏誤的捕捉">對於投資人行為偏誤的捕捉</h3>
+<p>價格動能與近高點動能本質上都是去捕捉動能效應下，因投資人反應不足而存在的潛在獲利空間，但本質上兩者捕捉的行為偏誤是不同的。</p>
+<section id="保守性偏差" class="level4">
+<h4 class="anchored" data-anchor-id="保守性偏差">保守性偏差</h4>
+<p>當公司發布利多消息時，投資人對原有預期的更新速度不足，股價無法一步到位，即使過去股價已漲了不少但仍漲不夠。隨著資訊逐漸被市場完全消化，股價才持續往同一方向移動，這就形成了 JT 價格動能策略所捕捉的動能。</p>
+</section>
+<section id="定錨效應" class="level4">
+<h4 class="anchored" data-anchor-id="定錨效應">定錨效應</h4>
+<p>當股價因基本面改善而逐漸逼近 52 週高點時，投資人以這個歷史高點作為心理參考，不願以超過錨點的價格買進，即使基本面已足以支撐更高的股價。因此股價被心理關卡壓住、無法完全反映新資訊，隨著更多投資人意識到股票被低估，股價才緩慢突破並繼續上漲，形成近高點動能策略所捕捉的動能。</p>
+<p>兩者選到的股票並不完全相同，因為過去一段時間漲幅最高的股票不一定已經接近高點；同樣的道理，目前最接近高點的股票，過去一段時間漲幅也不一定最高。</p>
+<div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>補充說明
+<span class="screen-reader-only">Tip</span>誰的動能策略在台股表現更好？
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>由於論文的參數選擇僅包含 <span class="math inline">\(\{3,6,9,12\}\)</span>，因此後續台股實證分析時，我會將參數選擇擴大為 <span class="math inline">\(\{1, 3,6,9,12, 18, 24\}\)</span>。</p>
-<p>目的是為了確認在其他條件不變下，超過一年的形成期對於報酬率有何影響，以及更短的持有期是否能進一步提高報酬率。</p>
+<p>先說結論：<strong>近高點動能在台股表現比價格動能更好</strong>。價格動能的台股實證結果可以參見<a href="../../posts/台股動能策略實證 — 價格動能/index.html">台股動能策略實證 — 價格動能</a>，而近高點動能的實證結果則於本文最後一章節。</p>
 </div>
 </div>
 </section>
-<section id="長期反轉" class="level3">
-<h3 class="anchored" data-anchor-id="長期反轉">長期反轉</h3>
-<p>與中期動能不同，作者觀察到當多空投資組合的持有期超過 12 個月時，報酬率反而由正轉負，過去的贏家反而是接下來的輸家、過去的輸家則變成贏家。</p>
 </section>
 </section>
-<section id="價格動能的計算方式" class="level2">
-<h2 class="anchored" data-anchor-id="價格動能的計算方式">價格動能的計算方式</h2>
-<p>價格動能本質上就是去計算每隻股票過去 <span class="math inline">\(J\)</span> 個月的總報酬，報酬率越高表示訊號越強。由於有配股配息的問題，因此不能使用一般的原始收盤價計算價格動能，而是要使用<strong>調整後收盤價</strong>計算，計算方式也非常簡單：</p>
+<section id="近高點動能的計算方式" class="level2">
+<h2 class="anchored" data-anchor-id="近高點動能的計算方式">近高點動能的計算方式</h2>
+<p>近高點動能的計算方式非常直觀，分子 <span class="math inline">\(P_t\)</span> 表示最新的收盤價，而分母 <span class="math inline">\(\text{High}_{J,t}\)</span> 表示過去 <span class="math inline">\(J\)</span> 個月內的最高日收盤價，計算公式如下：</p>
 <p><span class="math display">\[
-MOM_{t,J} = \dfrac{P_t}{P_{t-J}} - 1
+MOM_{t,J} = \frac{P_t}{\text{High}_{J,t}}
 \]</span></p>
-<p>這裡的 <span class="math inline">\(P_t\)</span> 表示的是第 <span class="math inline">\(t\)</span> 月底的調整後收盤價，同理 <span class="math inline">\(P_{t-J}\)</span> 是 <span class="math inline">\(J\)</span> 個月前的月底調整後收盤價。若在計算上要忽略最近一個月的資料也非常容易，只要取上個月的動能訊號 <span class="math inline">\(MOM_{t-1,J}\)</span> 即可。</p>
-<p>實際回測時的價格動能函數如下：</p>
+<details class="faq-toggle">
+<summary>
+分母為何採用最高日收盤價，而非最高月底收盤價
+</summary>
+<div class="faq-answer">
+<p>分母取過去 <span class="math inline">\(J\)</span> 個月內所有交易日收盤價的最大值，而非月底收盤價，避免遺漏月中出現的真實高點。此外，採用收盤價而非日內最高價，一方面保持分子分母的資料一致性，另一方面也因為大多數看盤軟體以收盤價繪製線圖，收盤價最大值更貼近投資人實際看到的心理高點。</p>
+</div>
+</details>
+<details class="faq-toggle">
+<summary>
+原始收盤價 vs 調整後收盤價
+</summary>
+<div class="faq-answer">
+<p>論文中並未明確說明使用原始或調整後收盤價。台股除權息幅度較大，若使用原始收盤價，除息後股價下跌會使比值降低，導致策略傾向選擇低殖利率股；使用調整後收盤價則可避免這個系統性偏誤。</p>
+<p>然而近高點策略本質上是為了捕捉定錨效應，而投資人在看盤軟體中所見的 52 週高點與歷史走勢，均以原始收盤價呈現。</p>
+<p>兩種算法各有理論依據，因此接下來的回測中將同時進行實證研究，並比較兩者的表現差異。</p>
+</div>
+</details>
+<details class="faq-toggle">
+<summary>
+是否跳過最近一個月的股價資料
+</summary>
+<div class="faq-answer">
+<p>論文中，作者在敘述性統計時使用 no-skip 版本以便與其他研究比較；在迴歸分析時則跳過最近一個月（skip），以避免買賣價差造成的短期反轉效應干擾訊號。</p>
+<p>以台股實證結果來說，skip 版本表現較差，與價格動能在台股的情況相同，因此接下來的回測統一採用 no-skip 版本。</p>
+</div>
+</details>
+<p><br> 實際回測時的近高點動能函數如下：</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_factor(j: <span class="bu">int</span>, </span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                   skip_current_month: <span class="bu">bool</span>) <span class="op">-&gt;</span> pd.DataFrame:</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">    價格動能因子：過去 j 個月的總報酬率</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">    skip_current_month=True 時跳過最近一個月</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> skip_current_month:</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> 調整後收盤價.pct_change(j).shift(<span class="dv">1</span>).where(股票池濾網)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> 調整後收盤價.pct_change(j).where(股票池濾網)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                   skip_current_month: <span class="bu">bool</span> <span class="op">=</span> <span class="va">False</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                   use_adj: <span class="bu">bool</span> <span class="op">=</span> <span class="va">False</span>) <span class="op">-&gt;</span> pd.DataFrame:</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">    近高點動能因子（月頻）</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">    j = 形成期（月）</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">    因子 = 月底收盤價 / 過去 j 個月（j×21 個交易日）的日收盤最高點</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">    值越接近 1 代表越接近歷史新高，動能越強</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">    skip_current_month=True 時整個因子 shift(1)，用上個月底的分數決定本月持倉</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">    use_adj=True 時使用調整後收盤價，排除除權息與拆股造成的價格斷裂</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    日價 <span class="op">=</span> 日調整後收盤價 <span class="cf">if</span> use_adj <span class="cf">else</span> 日收盤價</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    月價 <span class="op">=</span> 調整後收盤價 <span class="cf">if</span> use_adj <span class="cf">else</span> 收盤價</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    trading_days <span class="op">=</span> j <span class="op">*</span> <span class="dv">21</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    當月最高價 <span class="op">=</span> 日價.rolling(trading_days).<span class="bu">max</span>().resample(<span class="st">'ME'</span>).last()</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    factor <span class="op">=</span> (月價 <span class="op">/</span> 當月最高價).where(股票池濾網)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> skip_current_month:</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> factor.shift(<span class="dv">1</span>)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> factor</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="台股實證結果" class="level2">
 <h2 class="anchored" data-anchor-id="台股實證結果">台股實證結果</h2>
 <p>由於考量放空在實務中的難度與成本，因此以投資來說我們更加在意的是做多動能投資組合能否擊敗大盤，而非論文中的多空投資組合是否可以帶來超額報酬。</p>
 <p>在我們設定的回測樣本期間內 (2011-2025)，大盤 (含息) 的年化月均報酬率為 <strong>0.1257</strong>，也就是說動能策略的年化月均報酬率至少要大於 0.1257 ，才能在後續考慮手續費與報酬波動度下，和大盤有一拚的機會，否則長期買進並持有大盤會是更好的選擇。</p>
-<p>因此在接下來的分析中，我主要會以價格動能策略中的多頭部位為主，也就是做多動能最強的 10% 贏家股票，並且進行以下分析：</p>
+<p>因此在接下來的分析中，我主要會以近高點動能策略中的多頭部位為主，也就是做多動能最強的 10% 贏家股票，並且進行以下分析：</p>
 <ul>
 <li>JK 參數分析</li>
 <li>報酬單調性分析</li>
@@ -388,6 +429,7 @@ MOM_{t,J} = \dfrac{P_t}{P_{t-J}} - 1
 </div>
 <div class="callout-body-container callout-body">
 <p>所有的分析框架都與 <a href="../../posts/台股動能策略實證 — 框架設定/index.html">框架設定</a> 這篇文章相同，故這裡不再複述。</p>
+<p>由於回測規則一致，因此以下分析結果也可與價格動能進行對比，參見：<a href="../../posts/台股動能策略實證 — 價格動能/index.html">台股動能策略實證 — 價格動能</a>。</p>
 </div>
 </div>
 <section id="jk-參數分析" class="level3">
@@ -396,7 +438,7 @@ MOM_{t,J} = \dfrac{P_t}{P_{t-J}} - 1
 <p>此外，一個穩定的策略不應該出現孤立的報酬率峰值，也就是說最佳參數附近的表現也應該都還不錯，而不是只有單一組合特別好、其他都很差，避免過度擬合的疑慮。</p>
 <p>本章節會分成三個部分：</p>
 <p><strong>第一部分：全樣本分析</strong><br>
-在全樣本下，檢視三種投資組合在不同參數的報酬表現，分別是贏家組合、輸家組合、以及多空組合，同時也會比較是否忽略最近一個月資料的差異，因此總共會有 6 張表。</p>
+在全樣本下，檢視三種投資組合在不同參數的報酬表現，分別是贏家組合、輸家組合、以及多空組合，同時也會比較使用原始收盤價與調整後收盤價的差異，因此總共會有 6 張表。</p>
 <p><strong>第二部分：滾動性參數分析</strong><br>
 將樣本期間 2011-2025 以 5 年為一個單位建構滾動樣本區間，查看每個區間的最佳參數為何，因此一共有 11 個滾動樣本區間 (2011-2015, 2012-2016, …, 2021-2025)。</p>
 <p><strong>第三部分：考慮交易成本後的贏家組合</strong><br>
@@ -404,7 +446,7 @@ MOM_{t,J} = \dfrac{P_t}{P_{t-J}} - 1
 <section id="全樣本分析" class="level4">
 <h4 class="anchored" data-anchor-id="全樣本分析">全樣本分析</h4>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">贏家組合 (no-skip)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">贏家組合 (skip)</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">贏家組合 (原始收盤價)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">贏家組合 (調整後收盤價)</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <table class="caption-top table">
@@ -423,73 +465,73 @@ MOM_{t,J} = \dfrac{P_t}{P_{t-J}} - 1
 <tbody>
 <tr class="odd">
 <td style="text-align: center;"><strong>1</strong></td>
-<td style="text-align: center;">0.1275</td>
-<td style="text-align: center;">0.1331</td>
-<td style="text-align: center;">0.1269</td>
-<td style="text-align: center;">0.1203</td>
-<td style="text-align: center;">0.1140</td>
-<td style="text-align: center;">0.1023</td>
-<td style="text-align: center;">0.1024</td>
+<td style="text-align: center;">0.1368</td>
+<td style="text-align: center;">0.1214</td>
+<td style="text-align: center;">0.1236</td>
+<td style="text-align: center;">0.1196</td>
+<td style="text-align: center;">0.1146</td>
+<td style="text-align: center;">0.1103</td>
+<td style="text-align: center;">0.1096</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;"><strong>3</strong></td>
-<td style="text-align: center;">0.1732</td>
-<td style="text-align: center;">0.1577</td>
-<td style="text-align: center;">0.1513</td>
-<td style="text-align: center;">0.1394</td>
-<td style="text-align: center;">0.1231</td>
-<td style="text-align: center;">0.1049</td>
-<td style="text-align: center;">0.1044</td>
+<td style="text-align: center;">0.1724</td>
+<td style="text-align: center;">0.1495</td>
+<td style="text-align: center;">0.1426</td>
+<td style="text-align: center;">0.1373</td>
+<td style="text-align: center;">0.1295</td>
+<td style="text-align: center;">0.1161</td>
+<td style="text-align: center;">0.1129</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;"><strong>6</strong></td>
-<td style="text-align: center;">0.1897</td>
-<td style="text-align: center;">0.1733</td>
-<td style="text-align: center;">0.1597</td>
-<td style="text-align: center;">0.1339</td>
-<td style="text-align: center;">0.1163</td>
-<td style="text-align: center;">0.0975</td>
-<td style="text-align: center;">0.1001</td>
+<td style="text-align: center;">0.1967</td>
+<td style="text-align: center;">0.1741</td>
+<td style="text-align: center;">0.1627</td>
+<td style="text-align: center;">0.1516</td>
+<td style="text-align: center;">0.1385</td>
+<td style="text-align: center;">0.1195</td>
+<td style="text-align: center;">0.1159</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;"><strong>9</strong></td>
-<td style="text-align: center;">0.1850</td>
-<td style="text-align: center;">0.1656</td>
-<td style="text-align: center;">0.1362</td>
-<td style="text-align: center;">0.1133</td>
-<td style="text-align: center;">0.0976</td>
-<td style="text-align: center;">0.0860</td>
-<td style="text-align: center;">0.0884</td>
+<td style="text-align: center;">0.2155</td>
+<td style="text-align: center;">0.1861</td>
+<td style="text-align: center;">0.1694</td>
+<td style="text-align: center;">0.1542</td>
+<td style="text-align: center;">0.1388</td>
+<td style="text-align: center;">0.1192</td>
+<td style="text-align: center;">0.1150</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;"><strong>12</strong></td>
-<td style="text-align: center;">0.1333</td>
-<td style="text-align: center;">0.1131</td>
-<td style="text-align: center;">0.0986</td>
-<td style="text-align: center;">0.0840</td>
-<td style="text-align: center;">0.0764</td>
-<td style="text-align: center;">0.0750</td>
-<td style="text-align: center;">0.0796</td>
+<td style="text-align: center;">0.2340</td>
+<td style="text-align: center;">0.1913</td>
+<td style="text-align: center;">0.1709</td>
+<td style="text-align: center;">0.1533</td>
+<td style="text-align: center;">0.1359</td>
+<td style="text-align: center;">0.1171</td>
+<td style="text-align: center;">0.1130</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;"><strong>18</strong></td>
-<td style="text-align: center;">0.1028</td>
-<td style="text-align: center;">0.0912</td>
-<td style="text-align: center;">0.0788</td>
-<td style="text-align: center;">0.0726</td>
-<td style="text-align: center;">0.0677</td>
-<td style="text-align: center;">0.0680</td>
-<td style="text-align: center;">0.0771</td>
+<td style="text-align: center;">0.2334</td>
+<td style="text-align: center;">0.1937</td>
+<td style="text-align: center;">0.1694</td>
+<td style="text-align: center;">0.1515</td>
+<td style="text-align: center;">0.1353</td>
+<td style="text-align: center;">0.1163</td>
+<td style="text-align: center;">0.1112</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;"><strong>24</strong></td>
-<td style="text-align: center;">0.0851</td>
-<td style="text-align: center;">0.0802</td>
-<td style="text-align: center;">0.0733</td>
-<td style="text-align: center;">0.0661</td>
-<td style="text-align: center;">0.0649</td>
-<td style="text-align: center;">0.0676</td>
-<td style="text-align: center;">0.0770</td>
+<td style="text-align: center;">0.2295</td>
+<td style="text-align: center;">0.1918</td>
+<td style="text-align: center;">0.1686</td>
+<td style="text-align: center;">0.1518</td>
+<td style="text-align: center;">0.1350</td>
+<td style="text-align: center;">0.1174</td>
+<td style="text-align: center;">0.1133</td>
 </tr>
 </tbody>
 </table>
@@ -511,73 +553,73 @@ MOM_{t,J} = \dfrac{P_t}{P_{t-J}} - 1
 <tbody>
 <tr class="odd">
 <td style="text-align: center;"><strong>1</strong></td>
-<td style="text-align: center;">0.1476</td>
-<td style="text-align: center;">0.1332</td>
-<td style="text-align: center;">0.1235</td>
-<td style="text-align: center;">0.1177</td>
-<td style="text-align: center;">0.1089</td>
-<td style="text-align: center;">0.0993</td>
-<td style="text-align: center;">0.1008</td>
+<td style="text-align: center;">0.1345</td>
+<td style="text-align: center;">0.1194</td>
+<td style="text-align: center;">0.1228</td>
+<td style="text-align: center;">0.1198</td>
+<td style="text-align: center;">0.1148</td>
+<td style="text-align: center;">0.1102</td>
+<td style="text-align: center;">0.1100</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;"><strong>3</strong></td>
-<td style="text-align: center;">0.1604</td>
-<td style="text-align: center;">0.1485</td>
-<td style="text-align: center;">0.1420</td>
-<td style="text-align: center;">0.1267</td>
-<td style="text-align: center;">0.1137</td>
-<td style="text-align: center;">0.0983</td>
-<td style="text-align: center;">0.1009</td>
+<td style="text-align: center;">0.1677</td>
+<td style="text-align: center;">0.1458</td>
+<td style="text-align: center;">0.1410</td>
+<td style="text-align: center;">0.1372</td>
+<td style="text-align: center;">0.1290</td>
+<td style="text-align: center;">0.1154</td>
+<td style="text-align: center;">0.1126</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;"><strong>6</strong></td>
-<td style="text-align: center;">0.1648</td>
-<td style="text-align: center;">0.1594</td>
-<td style="text-align: center;">0.1411</td>
-<td style="text-align: center;">0.1153</td>
-<td style="text-align: center;">0.1014</td>
-<td style="text-align: center;">0.0892</td>
-<td style="text-align: center;">0.0935</td>
+<td style="text-align: center;">0.1897</td>
+<td style="text-align: center;">0.1669</td>
+<td style="text-align: center;">0.1578</td>
+<td style="text-align: center;">0.1497</td>
+<td style="text-align: center;">0.1375</td>
+<td style="text-align: center;">0.1188</td>
+<td style="text-align: center;">0.1156</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;"><strong>9</strong></td>
-<td style="text-align: center;">0.1641</td>
-<td style="text-align: center;">0.1422</td>
-<td style="text-align: center;">0.1121</td>
-<td style="text-align: center;">0.0934</td>
-<td style="text-align: center;">0.0812</td>
-<td style="text-align: center;">0.0767</td>
-<td style="text-align: center;">0.0812</td>
+<td style="text-align: center;">0.2044</td>
+<td style="text-align: center;">0.1796</td>
+<td style="text-align: center;">0.1630</td>
+<td style="text-align: center;">0.1526</td>
+<td style="text-align: center;">0.1384</td>
+<td style="text-align: center;">0.1192</td>
+<td style="text-align: center;">0.1152</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;"><strong>12</strong></td>
-<td style="text-align: center;">0.1075</td>
-<td style="text-align: center;">0.0966</td>
-<td style="text-align: center;">0.0819</td>
-<td style="text-align: center;">0.0698</td>
-<td style="text-align: center;">0.0667</td>
-<td style="text-align: center;">0.0689</td>
-<td style="text-align: center;">0.0762</td>
+<td style="text-align: center;">0.2115</td>
+<td style="text-align: center;">0.1823</td>
+<td style="text-align: center;">0.1656</td>
+<td style="text-align: center;">0.1527</td>
+<td style="text-align: center;">0.1372</td>
+<td style="text-align: center;">0.1185</td>
+<td style="text-align: center;">0.1143</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;"><strong>18</strong></td>
-<td style="text-align: center;">0.0845</td>
-<td style="text-align: center;">0.0735</td>
-<td style="text-align: center;">0.0675</td>
-<td style="text-align: center;">0.0628</td>
-<td style="text-align: center;">0.0608</td>
-<td style="text-align: center;">0.0638</td>
-<td style="text-align: center;">0.0749</td>
+<td style="text-align: center;">0.2147</td>
+<td style="text-align: center;">0.1816</td>
+<td style="text-align: center;">0.1661</td>
+<td style="text-align: center;">0.1528</td>
+<td style="text-align: center;">0.1376</td>
+<td style="text-align: center;">0.1195</td>
+<td style="text-align: center;">0.1146</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;"><strong>24</strong></td>
-<td style="text-align: center;">0.0774</td>
-<td style="text-align: center;">0.0730</td>
-<td style="text-align: center;">0.0660</td>
-<td style="text-align: center;">0.0610</td>
-<td style="text-align: center;">0.0617</td>
-<td style="text-align: center;">0.0666</td>
-<td style="text-align: center;">0.0764</td>
+<td style="text-align: center;">0.2126</td>
+<td style="text-align: center;">0.1821</td>
+<td style="text-align: center;">0.1643</td>
+<td style="text-align: center;">0.1516</td>
+<td style="text-align: center;">0.1364</td>
+<td style="text-align: center;">0.1197</td>
+<td style="text-align: center;">0.1154</td>
 </tr>
 </tbody>
 </table>
@@ -586,28 +628,28 @@ MOM_{t,J} = \dfrac{P_t}{P_{t-J}} - 1
 </div>
 <p><br> 從贏家組合的兩張參數表可以獲得以下發現：</p>
 <ul>
-<li><strong>持有期越長，報酬率越低</strong><br>
-除了 <span class="math inline">\(J,K = 1,1\)</span> 外，觀察同一個 J 值可以發現，隨著持有期的增加，報酬率大致上逐漸降低，符合動能策略的假設。</li>
-<li><strong>形成期並非越長越好</strong><br>
-隨者形成期逐漸增加，報酬率也逐漸提高，在 6 個月、9 個月時達到相對高峰，隨後下降。Jegadeesh 與 Titman (1993) 針對美股的研究發現最佳的形成期為 12 個月，而在台股反而是更短的形成期 (6 或 9 個月) 策略表現更佳。</li>
-<li><strong>排除最近一個月有好有壞</strong><br>
-若排除最近一個月的資料，可以觀察到 <span class="math inline">\(J,K = 1,1\)</span> 的投資組合報酬率明顯提升 (0.1275 vs 0.1476)，但其他投資組合的報酬率卻都一致性的下降，顯示排除最近一個月的資料確實可以避免短期反轉效應，但也使動能訊號的時效性減少，降低整體報酬。</li>
+<li><p><strong>持有期越長，報酬率越低，但降幅不大</strong><br>
+觀察同一個 J 值可以發現，隨著持有期的增加，報酬率大致上逐漸降低，符合動能策略的假設。但是和價格動能不同的是：報酬率下降的趨勢並不明顯，即使持有期為 24 個月，年化月平均報酬仍有約 11%。</p></li>
+<li><p><strong>形成期越長，報酬率越高，在 J=12 左右達到相對峰值</strong><br>
+隨著形成期的增加，報酬率逐漸升高，在 <span class="math inline">\(J=12\)</span> 時達到峰值，之後略為下降但仍維持高位。這與價格動能在 <span class="math inline">\(J=6, 9\)</span> 的表現較佳不同，顯示 52 週高點策略需要更長的形成期才能充分捕捉定錨效應。而文獻中使用的過去 12 個月高點確實在台股也相當有效。</p></li>
+<li><p><strong>使用調整後收盤價的表現較差</strong><br>
+仔細觀察當持有期為 1 至 3 個月時，使用調整後收盤價的報酬率普遍比原始收盤價低，隨持有期拉長則差異逐漸消失。顯示原始收盤價更能捕捉到投資人的定錨效應。</p></li>
 </ul>
-<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>以濾網取代排除近期資料
+<span class="screen-reader-only">Tip</span>參數穩健性
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Jegadeesh 與 Titman (2001) <a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> 針對價格動能策略的樣本外研究時，放棄使用跳過最近資料的方式，改採選股池濾網來處理短期反轉效應。他們發現實際上造成反轉效應的原因絕大部分是因為<strong>低價股</strong>造成的，因此建構投資組合時剔除 5 美元以下低價股。</p>
+<p>訊號品質的重要指標之一，是它在不同參數下表現是否都維持穩定，而非只有特定幾組參數才有效。從贏家組合的參數表可以看出，近高點動能在各種 J、K 組合下的報酬率分布均勻且有規律，相鄰參數之間沒有突兀落差，顯示訊號本身的穩健性較高，過度擬合的疑慮也相對較低。</p>
 </div>
 </div>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">輸家組合 (no-skip)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">輸家組合 (skip)</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">輸家組合 (原始收盤價)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">輸家組合 (調整後收盤價)</a></li></ul>
 <div class="tab-content">
 <div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
 <table class="caption-top table">
@@ -626,73 +668,73 @@ MOM_{t,J} = \dfrac{P_t}{P_{t-J}} - 1
 <tbody>
 <tr class="odd">
 <td style="text-align: center;"><strong>1</strong></td>
-<td style="text-align: center;">0.0750</td>
-<td style="text-align: center;">0.0674</td>
-<td style="text-align: center;">0.0640</td>
-<td style="text-align: center;">0.0614</td>
-<td style="text-align: center;">0.0664</td>
-<td style="text-align: center;">0.0787</td>
-<td style="text-align: center;">0.0836</td>
+<td style="text-align: center;">0.0703</td>
+<td style="text-align: center;">0.0687</td>
+<td style="text-align: center;">0.0636</td>
+<td style="text-align: center;">0.0629</td>
+<td style="text-align: center;">0.0679</td>
+<td style="text-align: center;">0.0783</td>
+<td style="text-align: center;">0.0846</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;"><strong>3</strong></td>
-<td style="text-align: center;">0.0703</td>
-<td style="text-align: center;">0.0467</td>
-<td style="text-align: center;">0.0496</td>
-<td style="text-align: center;">0.0489</td>
-<td style="text-align: center;">0.0595</td>
-<td style="text-align: center;">0.0746</td>
-<td style="text-align: center;">0.0799</td>
+<td style="text-align: center;">0.0565</td>
+<td style="text-align: center;">0.0391</td>
+<td style="text-align: center;">0.0405</td>
+<td style="text-align: center;">0.0401</td>
+<td style="text-align: center;">0.0510</td>
+<td style="text-align: center;">0.0670</td>
+<td style="text-align: center;">0.0755</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;"><strong>6</strong></td>
-<td style="text-align: center;">0.0558</td>
-<td style="text-align: center;">0.0348</td>
-<td style="text-align: center;">0.0369</td>
-<td style="text-align: center;">0.0497</td>
-<td style="text-align: center;">0.0634</td>
-<td style="text-align: center;">0.0826</td>
-<td style="text-align: center;">0.0842</td>
+<td style="text-align: center;">0.0388</td>
+<td style="text-align: center;">0.0203</td>
+<td style="text-align: center;">0.0238</td>
+<td style="text-align: center;">0.0325</td>
+<td style="text-align: center;">0.0464</td>
+<td style="text-align: center;">0.0656</td>
+<td style="text-align: center;">0.0721</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;"><strong>9</strong></td>
-<td style="text-align: center;">0.0467</td>
-<td style="text-align: center;">0.0272</td>
-<td style="text-align: center;">0.0471</td>
-<td style="text-align: center;">0.0621</td>
-<td style="text-align: center;">0.0758</td>
-<td style="text-align: center;">0.0888</td>
-<td style="text-align: center;">0.0908</td>
+<td style="text-align: center;">0.0222</td>
+<td style="text-align: center;">0.0206</td>
+<td style="text-align: center;">0.0298</td>
+<td style="text-align: center;">0.0415</td>
+<td style="text-align: center;">0.0559</td>
+<td style="text-align: center;">0.0729</td>
+<td style="text-align: center;">0.0770</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;"><strong>12</strong></td>
-<td style="text-align: center;">0.0412</td>
-<td style="text-align: center;">0.0469</td>
-<td style="text-align: center;">0.0673</td>
-<td style="text-align: center;">0.0826</td>
-<td style="text-align: center;">0.0929</td>
-<td style="text-align: center;">0.0965</td>
-<td style="text-align: center;">0.0971</td>
+<td style="text-align: center;">0.0200</td>
+<td style="text-align: center;">0.0211</td>
+<td style="text-align: center;">0.0379</td>
+<td style="text-align: center;">0.0516</td>
+<td style="text-align: center;">0.0649</td>
+<td style="text-align: center;">0.0765</td>
+<td style="text-align: center;">0.0790</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;"><strong>18</strong></td>
-<td style="text-align: center;">0.0853</td>
-<td style="text-align: center;">0.0852</td>
-<td style="text-align: center;">0.0988</td>
-<td style="text-align: center;">0.1001</td>
-<td style="text-align: center;">0.1031</td>
-<td style="text-align: center;">0.1066</td>
-<td style="text-align: center;">0.1030</td>
+<td style="text-align: center;">0.0550</td>
+<td style="text-align: center;">0.0500</td>
+<td style="text-align: center;">0.0623</td>
+<td style="text-align: center;">0.0736</td>
+<td style="text-align: center;">0.0804</td>
+<td style="text-align: center;">0.0875</td>
+<td style="text-align: center;">0.0887</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;"><strong>24</strong></td>
-<td style="text-align: center;">0.0907</td>
-<td style="text-align: center;">0.0896</td>
-<td style="text-align: center;">0.1005</td>
-<td style="text-align: center;">0.1038</td>
-<td style="text-align: center;">0.1067</td>
-<td style="text-align: center;">0.1063</td>
-<td style="text-align: center;">0.1031</td>
+<td style="text-align: center;">0.0777</td>
+<td style="text-align: center;">0.0717</td>
+<td style="text-align: center;">0.0768</td>
+<td style="text-align: center;">0.0805</td>
+<td style="text-align: center;">0.0860</td>
+<td style="text-align: center;">0.0931</td>
+<td style="text-align: center;">0.0955</td>
 </tr>
 </tbody>
 </table>
@@ -714,83 +756,83 @@ MOM_{t,J} = \dfrac{P_t}{P_{t-J}} - 1
 <tbody>
 <tr class="odd">
 <td style="text-align: center;"><strong>1</strong></td>
-<td style="text-align: center;">0.0585</td>
-<td style="text-align: center;">0.0562</td>
-<td style="text-align: center;">0.0621</td>
-<td style="text-align: center;">0.0609</td>
-<td style="text-align: center;">0.0656</td>
-<td style="text-align: center;">0.0767</td>
-<td style="text-align: center;">0.0813</td>
+<td style="text-align: center;">0.0768</td>
+<td style="text-align: center;">0.0745</td>
+<td style="text-align: center;">0.0678</td>
+<td style="text-align: center;">0.0655</td>
+<td style="text-align: center;">0.0688</td>
+<td style="text-align: center;">0.0785</td>
+<td style="text-align: center;">0.0846</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;"><strong>3</strong></td>
-<td style="text-align: center;">0.0281</td>
-<td style="text-align: center;">0.0388</td>
-<td style="text-align: center;">0.0458</td>
-<td style="text-align: center;">0.0493</td>
-<td style="text-align: center;">0.0616</td>
-<td style="text-align: center;">0.0773</td>
-<td style="text-align: center;">0.0812</td>
+<td style="text-align: center;">0.0623</td>
+<td style="text-align: center;">0.0435</td>
+<td style="text-align: center;">0.0426</td>
+<td style="text-align: center;">0.0407</td>
+<td style="text-align: center;">0.0502</td>
+<td style="text-align: center;">0.0673</td>
+<td style="text-align: center;">0.0748</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;"><strong>6</strong></td>
-<td style="text-align: center;">0.0321</td>
-<td style="text-align: center;">0.0280</td>
-<td style="text-align: center;">0.0393</td>
-<td style="text-align: center;">0.0562</td>
-<td style="text-align: center;">0.0710</td>
-<td style="text-align: center;">0.0853</td>
-<td style="text-align: center;">0.0871</td>
+<td style="text-align: center;">0.0479</td>
+<td style="text-align: center;">0.0245</td>
+<td style="text-align: center;">0.0264</td>
+<td style="text-align: center;">0.0341</td>
+<td style="text-align: center;">0.0484</td>
+<td style="text-align: center;">0.0667</td>
+<td style="text-align: center;">0.0728</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;"><strong>9</strong></td>
-<td style="text-align: center;">0.0248</td>
-<td style="text-align: center;">0.0260</td>
-<td style="text-align: center;">0.0538</td>
-<td style="text-align: center;">0.0698</td>
-<td style="text-align: center;">0.0830</td>
-<td style="text-align: center;">0.0910</td>
-<td style="text-align: center;">0.0923</td>
+<td style="text-align: center;">0.0313</td>
+<td style="text-align: center;">0.0217</td>
+<td style="text-align: center;">0.0305</td>
+<td style="text-align: center;">0.0430</td>
+<td style="text-align: center;">0.0571</td>
+<td style="text-align: center;">0.0729</td>
+<td style="text-align: center;">0.0766</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;"><strong>12</strong></td>
-<td style="text-align: center;">0.0442</td>
-<td style="text-align: center;">0.0576</td>
-<td style="text-align: center;">0.0793</td>
-<td style="text-align: center;">0.0932</td>
-<td style="text-align: center;">0.0995</td>
-<td style="text-align: center;">0.1012</td>
-<td style="text-align: center;">0.0996</td>
+<td style="text-align: center;">0.0266</td>
+<td style="text-align: center;">0.0226</td>
+<td style="text-align: center;">0.0354</td>
+<td style="text-align: center;">0.0518</td>
+<td style="text-align: center;">0.0641</td>
+<td style="text-align: center;">0.0758</td>
+<td style="text-align: center;">0.0784</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;"><strong>18</strong></td>
-<td style="text-align: center;">0.0800</td>
-<td style="text-align: center;">0.0897</td>
-<td style="text-align: center;">0.1011</td>
-<td style="text-align: center;">0.1045</td>
-<td style="text-align: center;">0.1066</td>
-<td style="text-align: center;">0.1086</td>
-<td style="text-align: center;">0.1045</td>
+<td style="text-align: center;">0.0590</td>
+<td style="text-align: center;">0.0497</td>
+<td style="text-align: center;">0.0616</td>
+<td style="text-align: center;">0.0722</td>
+<td style="text-align: center;">0.0781</td>
+<td style="text-align: center;">0.0846</td>
+<td style="text-align: center;">0.0863</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;"><strong>24</strong></td>
-<td style="text-align: center;">0.0887</td>
-<td style="text-align: center;">0.0945</td>
-<td style="text-align: center;">0.1026</td>
-<td style="text-align: center;">0.1082</td>
-<td style="text-align: center;">0.1091</td>
-<td style="text-align: center;">0.1074</td>
-<td style="text-align: center;">0.1030</td>
+<td style="text-align: center;">0.0722</td>
+<td style="text-align: center;">0.0698</td>
+<td style="text-align: center;">0.0756</td>
+<td style="text-align: center;">0.0799</td>
+<td style="text-align: center;">0.0841</td>
+<td style="text-align: center;">0.0904</td>
+<td style="text-align: center;">0.0931</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
 </div>
-<p><br> 輸家組合的報酬呈現的是動能策略的另一個視角，它的整體報酬分布呈現了一個驚人事實：</p>
+<p><br> 輸家組合的結論與價格動能一致：</p>
 <ul>
-<li><strong>不論任何 J、K 組合，有無排除最近資料，做多輸家組合的報酬率均無法超越大盤</strong><br>
-以形成期而言，即使短期 (1-3 個月)、長期輸家 (18-24 個月) 看起來較中期輸家 (6-12 個月) 更有反轉的現象，報酬率較高，但整體而言仍低於大盤。以持有期而言，即使較長的持有期也會有反轉的現象使輸家組合報酬提高，但仍低於大盤。</li>
+<li><strong>不論任何 J、K 組合，收盤價是否調整，做多輸家組合的報酬率均無法超越大盤</strong><br>
+</li>
 </ul>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -798,7 +840,7 @@ MOM_{t,J} = \dfrac{P_t}{P_{t-J}} - 1
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>順勢而為、不逆市操作
+<span class="screen-reader-only">Tip</span>順勢而為、不逆市操作 (再次強調)
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -806,20 +848,10 @@ MOM_{t,J} = \dfrac{P_t}{P_{t-J}} - 1
 </div>
 </div>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">多空組合 (no-skip)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">多空組合 (skip)</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">多空組合 (原始收盤價)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">多空組合 (調整後收盤價)</a></li></ul>
 <div class="tab-content">
 <div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
 <table class="caption-top table">
-<colgroup>
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: center;">J / K</th>
@@ -835,89 +867,79 @@ MOM_{t,J} = \dfrac{P_t}{P_{t-J}} - 1
 <tbody>
 <tr class="odd">
 <td style="text-align: center;"><strong>1</strong></td>
-<td style="text-align: center;">0.0525</td>
-<td style="text-align: center;">0.0657</td>
-<td style="text-align: center;">0.0629</td>
-<td style="text-align: center;">0.0590</td>
-<td style="text-align: center;">0.0477</td>
-<td style="text-align: center;">0.0236</td>
-<td style="text-align: center;">0.0188</td>
+<td style="text-align: center;">0.0666</td>
+<td style="text-align: center;">0.0527</td>
+<td style="text-align: center;">0.0600</td>
+<td style="text-align: center;">0.0567</td>
+<td style="text-align: center;">0.0466</td>
+<td style="text-align: center;">0.0320</td>
+<td style="text-align: center;">0.0250</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;"><strong>3</strong></td>
-<td style="text-align: center;">0.1029</td>
-<td style="text-align: center;">0.1110</td>
-<td style="text-align: center;">0.1017</td>
-<td style="text-align: center;">0.0905</td>
-<td style="text-align: center;">0.0637</td>
-<td style="text-align: center;">0.0303</td>
-<td style="text-align: center;">0.0245</td>
+<td style="text-align: center;">0.1159</td>
+<td style="text-align: center;">0.1104</td>
+<td style="text-align: center;">0.1021</td>
+<td style="text-align: center;">0.0972</td>
+<td style="text-align: center;">0.0785</td>
+<td style="text-align: center;">0.0491</td>
+<td style="text-align: center;">0.0374</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;"><strong>6</strong></td>
-<td style="text-align: center;">0.1339</td>
-<td style="text-align: center;">0.1385</td>
-<td style="text-align: center;">0.1228</td>
-<td style="text-align: center;">0.0842</td>
-<td style="text-align: center;">0.0529</td>
-<td style="text-align: center;">0.0149</td>
-<td style="text-align: center;">0.0159</td>
+<td style="text-align: center;">0.1578</td>
+<td style="text-align: center;">0.1538</td>
+<td style="text-align: center;">0.1390</td>
+<td style="text-align: center;">0.1191</td>
+<td style="text-align: center;">0.0921</td>
+<td style="text-align: center;">0.0539</td>
+<td style="text-align: center;">0.0438</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;"><strong>9</strong></td>
-<td style="text-align: center;">0.1383</td>
-<td style="text-align: center;">0.1384</td>
-<td style="text-align: center;">0.0891</td>
-<td style="text-align: center;">0.0513</td>
-<td style="text-align: center;">0.0217</td>
-<td style="text-align: center;">-0.0028</td>
-<td style="text-align: center;">-0.0024</td>
+<td style="text-align: center;">0.1933</td>
+<td style="text-align: center;">0.1655</td>
+<td style="text-align: center;">0.1396</td>
+<td style="text-align: center;">0.1127</td>
+<td style="text-align: center;">0.0829</td>
+<td style="text-align: center;">0.0464</td>
+<td style="text-align: center;">0.0380</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;"><strong>12</strong></td>
-<td style="text-align: center;">0.0921</td>
-<td style="text-align: center;">0.0662</td>
-<td style="text-align: center;">0.0313</td>
-<td style="text-align: center;">0.0015</td>
-<td style="text-align: center;">-0.0165</td>
-<td style="text-align: center;">-0.0215</td>
-<td style="text-align: center;">-0.0175</td>
+<td style="text-align: center;">0.2140</td>
+<td style="text-align: center;">0.1702</td>
+<td style="text-align: center;">0.1329</td>
+<td style="text-align: center;">0.1017</td>
+<td style="text-align: center;">0.0710</td>
+<td style="text-align: center;">0.0406</td>
+<td style="text-align: center;">0.0339</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;"><strong>18</strong></td>
-<td style="text-align: center;">0.0175</td>
-<td style="text-align: center;">0.0060</td>
-<td style="text-align: center;">-0.0200</td>
-<td style="text-align: center;">-0.0275</td>
-<td style="text-align: center;">-0.0354</td>
-<td style="text-align: center;">-0.0386</td>
-<td style="text-align: center;">-0.0259</td>
+<td style="text-align: center;">0.1784</td>
+<td style="text-align: center;">0.1437</td>
+<td style="text-align: center;">0.1071</td>
+<td style="text-align: center;">0.0778</td>
+<td style="text-align: center;">0.0549</td>
+<td style="text-align: center;">0.0288</td>
+<td style="text-align: center;">0.0225</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;"><strong>24</strong></td>
-<td style="text-align: center;">-0.0056</td>
-<td style="text-align: center;">-0.0094</td>
-<td style="text-align: center;">-0.0272</td>
-<td style="text-align: center;">-0.0377</td>
-<td style="text-align: center;">-0.0418</td>
-<td style="text-align: center;">-0.0387</td>
-<td style="text-align: center;">-0.0260</td>
+<td style="text-align: center;">0.1518</td>
+<td style="text-align: center;">0.1201</td>
+<td style="text-align: center;">0.0918</td>
+<td style="text-align: center;">0.0712</td>
+<td style="text-align: center;">0.0490</td>
+<td style="text-align: center;">0.0243</td>
+<td style="text-align: center;">0.0178</td>
 </tr>
 </tbody>
 </table>
 </div>
 <div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
 <table class="caption-top table">
-<colgroup>
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: center;">J / K</th>
@@ -933,81 +955,81 @@ MOM_{t,J} = \dfrac{P_t}{P_{t-J}} - 1
 <tbody>
 <tr class="odd">
 <td style="text-align: center;"><strong>1</strong></td>
-<td style="text-align: center;">0.0891</td>
-<td style="text-align: center;">0.0769</td>
-<td style="text-align: center;">0.0615</td>
-<td style="text-align: center;">0.0568</td>
-<td style="text-align: center;">0.0433</td>
-<td style="text-align: center;">0.0226</td>
-<td style="text-align: center;">0.0195</td>
+<td style="text-align: center;">0.0577</td>
+<td style="text-align: center;">0.0450</td>
+<td style="text-align: center;">0.0550</td>
+<td style="text-align: center;">0.0543</td>
+<td style="text-align: center;">0.0461</td>
+<td style="text-align: center;">0.0317</td>
+<td style="text-align: center;">0.0254</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;"><strong>3</strong></td>
-<td style="text-align: center;">0.1323</td>
-<td style="text-align: center;">0.1098</td>
-<td style="text-align: center;">0.0962</td>
-<td style="text-align: center;">0.0774</td>
-<td style="text-align: center;">0.0521</td>
-<td style="text-align: center;">0.0210</td>
-<td style="text-align: center;">0.0197</td>
+<td style="text-align: center;">0.1054</td>
+<td style="text-align: center;">0.1023</td>
+<td style="text-align: center;">0.0984</td>
+<td style="text-align: center;">0.0965</td>
+<td style="text-align: center;">0.0788</td>
+<td style="text-align: center;">0.0481</td>
+<td style="text-align: center;">0.0378</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;"><strong>6</strong></td>
-<td style="text-align: center;">0.1326</td>
-<td style="text-align: center;">0.1314</td>
-<td style="text-align: center;">0.1018</td>
-<td style="text-align: center;">0.0591</td>
-<td style="text-align: center;">0.0304</td>
-<td style="text-align: center;">0.0039</td>
-<td style="text-align: center;">0.0064</td>
+<td style="text-align: center;">0.1417</td>
+<td style="text-align: center;">0.1424</td>
+<td style="text-align: center;">0.1315</td>
+<td style="text-align: center;">0.1156</td>
+<td style="text-align: center;">0.0891</td>
+<td style="text-align: center;">0.0521</td>
+<td style="text-align: center;">0.0428</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;"><strong>9</strong></td>
-<td style="text-align: center;">0.1393</td>
-<td style="text-align: center;">0.1162</td>
-<td style="text-align: center;">0.0583</td>
-<td style="text-align: center;">0.0236</td>
-<td style="text-align: center;">-0.0018</td>
-<td style="text-align: center;">-0.0142</td>
-<td style="text-align: center;">-0.0111</td>
+<td style="text-align: center;">0.1731</td>
+<td style="text-align: center;">0.1579</td>
+<td style="text-align: center;">0.1326</td>
+<td style="text-align: center;">0.1095</td>
+<td style="text-align: center;">0.0813</td>
+<td style="text-align: center;">0.0463</td>
+<td style="text-align: center;">0.0386</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;"><strong>12</strong></td>
-<td style="text-align: center;">0.0633</td>
-<td style="text-align: center;">0.0389</td>
-<td style="text-align: center;">0.0026</td>
-<td style="text-align: center;">-0.0233</td>
-<td style="text-align: center;">-0.0327</td>
-<td style="text-align: center;">-0.0323</td>
-<td style="text-align: center;">-0.0235</td>
+<td style="text-align: center;">0.1849</td>
+<td style="text-align: center;">0.1597</td>
+<td style="text-align: center;">0.1302</td>
+<td style="text-align: center;">0.1010</td>
+<td style="text-align: center;">0.0731</td>
+<td style="text-align: center;">0.0428</td>
+<td style="text-align: center;">0.0359</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;"><strong>18</strong></td>
-<td style="text-align: center;">0.0046</td>
-<td style="text-align: center;">-0.0162</td>
-<td style="text-align: center;">-0.0336</td>
-<td style="text-align: center;">-0.0417</td>
-<td style="text-align: center;">-0.0458</td>
-<td style="text-align: center;">-0.0448</td>
-<td style="text-align: center;">-0.0296</td>
+<td style="text-align: center;">0.1557</td>
+<td style="text-align: center;">0.1319</td>
+<td style="text-align: center;">0.1045</td>
+<td style="text-align: center;">0.0806</td>
+<td style="text-align: center;">0.0595</td>
+<td style="text-align: center;">0.0349</td>
+<td style="text-align: center;">0.0283</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;"><strong>24</strong></td>
-<td style="text-align: center;">-0.0113</td>
-<td style="text-align: center;">-0.0215</td>
-<td style="text-align: center;">-0.0365</td>
-<td style="text-align: center;">-0.0473</td>
-<td style="text-align: center;">-0.0474</td>
-<td style="text-align: center;">-0.0408</td>
-<td style="text-align: center;">-0.0267</td>
+<td style="text-align: center;">0.1404</td>
+<td style="text-align: center;">0.1123</td>
+<td style="text-align: center;">0.0887</td>
+<td style="text-align: center;">0.0717</td>
+<td style="text-align: center;">0.0524</td>
+<td style="text-align: center;">0.0293</td>
+<td style="text-align: center;">0.0223</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
 </div>
-<p><br> 多空投資組合的報酬為<strong>贏家組合 - 輸家組合</strong>而得，符合文獻提到：<strong>短期反轉、中期動能、長期反轉</strong>的結論，但就像在贏家組合所討論的，跳過最近資料有好有壞。</p>
-<p>值得注意的是考慮最近資料的多空組合報酬僅在 <span class="math inline">\(J=6, 9\)</span> 且 <span class="math inline">\(K=1, 3\)</span> 時可以擊敗大盤，但差異也不明顯，這也是為何在學術文獻研究台股動能溢酬時，得出動能溢酬在台股較弱的原因。但就投資人來說，我們更加關心做多動能贏家股票能否帶來超越大盤的報酬。</p>
+<p><br> 多空投資組合的報酬為<strong>贏家組合 − 輸家組合</strong>，在所有測試的持有期 (最長 24 個月) 內均維持正值，符合文獻中近高點動能在長期不存在動能反轉的結論<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>。</p>
+<p>相較於價格動能，近高點動能的多空報酬差異更加明顯，顯示訊號的鑑別度更高。其中以 <span class="math inline">\(J=12, K=1\)</span> 時的差異最大，在此參數下，贏家組合的報酬率為 0.2340，而輸家組合為 0.0200<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>。</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1028,18 +1050,18 @@ MOM_{t,J} = \dfrac{P_t}{P_{t-J}} - 1
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>包含最新資料的 no-skip 版本
+<span class="screen-reader-only">Tip</span>原始收盤價
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>從全樣本的實證結果中，我們發現在形成期超過 1 個月後，跳過最新資料反而對整體報酬率有負向影響，因此接下來的分析都是<strong>包含最新資料的 no-skip 版本</strong>。</p>
+<p>從全樣本的實證結果中，我們發現使用原始收盤價的整體報酬率較高，也更符合定錨效應的底層邏輯，因此接下來的分析都將使用<strong>原始收盤價</strong>。</p>
 </div>
 </div>
 </section>
 <section id="滾動性參數分析" class="level4">
 <h4 class="anchored" data-anchor-id="滾動性參數分析">滾動性參數分析</h4>
 <p>滾動參數分析的目的在於分析不同時間窗口下的最佳參數 <span class="math inline">\(J, K\)</span> 是否存在不穩定的狀況，同時也比較不同時段的動能策略與大盤表現差異。</p>
-<p>滾動性參數分析 1 是比較所有的 <span class="math inline">\(J, K\)</span> 組合，一共有 49 種，並找出在每個區間的最佳 <span class="math inline">\(J, K\)</span> 組合，以及組合最佳報酬率與同期大盤報酬率。而滾動性參數分析 2 則是近一步比較 <span class="math inline">\(K = 1\)</span> 的狀況下，<span class="math inline">\(J=6, 9\)</span> 時的報酬率差異。</p>
+<p>滾動性參數分析 1 是比較所有的 <span class="math inline">\(J, K\)</span> 組合，一共有 49 種，並找出在每個區間的最佳 <span class="math inline">\(J, K\)</span> 組合，以及組合最佳報酬率與同期大盤報酬率。而滾動性參數分析 2 則是近一步比較 <span class="math inline">\(K = 1\)</span> 的狀況下，<span class="math inline">\(J=12, 18, 24\)</span> 時的報酬率差異。</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true" href="">滾動性參數分析 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false" href="">滾動性參數分析 2</a></li></ul>
 <div class="tab-content">
@@ -1048,8 +1070,8 @@ MOM_{t,J} = \dfrac{P_t}{P_{t-J}} - 1
 <thead>
 <tr class="header">
 <th style="text-align: center;">區間</th>
-<th style="text-align: center;">最佳 <span class="math inline">\(J\)</span></th>
-<th style="text-align: center;">最佳 <span class="math inline">\(K\)</span></th>
+<th style="text-align: center;">最佳 J</th>
+<th style="text-align: center;">最佳 K</th>
 <th style="text-align: center;">最佳報酬</th>
 <th style="text-align: center;">同期大盤</th>
 </tr>
@@ -1057,79 +1079,79 @@ MOM_{t,J} = \dfrac{P_t}{P_{t-J}} - 1
 <tbody>
 <tr class="odd">
 <td style="text-align: center;">2011-2015</td>
-<td style="text-align: center;">6</td>
+<td style="text-align: center;">12</td>
 <td style="text-align: center;">1</td>
-<td style="text-align: center;">0.1177</td>
+<td style="text-align: center;">0.1623</td>
 <td style="text-align: center;">0.0284</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">2012-2016</td>
-<td style="text-align: center;">6</td>
+<td style="text-align: center;">12</td>
 <td style="text-align: center;">1</td>
-<td style="text-align: center;">0.1942</td>
+<td style="text-align: center;">0.2279</td>
 <td style="text-align: center;">0.0947</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">2013-2017</td>
-<td style="text-align: center;">6</td>
+<td style="text-align: center;">12</td>
 <td style="text-align: center;">1</td>
-<td style="text-align: center;">0.2328</td>
+<td style="text-align: center;">0.2435</td>
 <td style="text-align: center;">0.1041</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">2014-2018</td>
-<td style="text-align: center;">6</td>
+<td style="text-align: center;">12</td>
 <td style="text-align: center;">1</td>
-<td style="text-align: center;">0.1239</td>
+<td style="text-align: center;">0.1676</td>
 <td style="text-align: center;">0.0675</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">2015-2019</td>
-<td style="text-align: center;">9</td>
+<td style="text-align: center;">12</td>
 <td style="text-align: center;">1</td>
-<td style="text-align: center;">0.1653</td>
+<td style="text-align: center;">0.1956</td>
 <td style="text-align: center;">0.0972</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">2016-2020</td>
-<td style="text-align: center;">9</td>
+<td style="text-align: center;">12</td>
 <td style="text-align: center;">1</td>
-<td style="text-align: center;">0.2273</td>
+<td style="text-align: center;">0.2686</td>
 <td style="text-align: center;">0.1652</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">2017-2021</td>
-<td style="text-align: center;">6</td>
+<td style="text-align: center;">24</td>
 <td style="text-align: center;">1</td>
-<td style="text-align: center;">0.2792</td>
+<td style="text-align: center;">0.3216</td>
 <td style="text-align: center;">0.1848</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">2018-2022</td>
-<td style="text-align: center;">6</td>
+<td style="text-align: center;">18</td>
 <td style="text-align: center;">1</td>
-<td style="text-align: center;">0.1982</td>
+<td style="text-align: center;">0.2547</td>
 <td style="text-align: center;">0.1125</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">2019-2023</td>
-<td style="text-align: center;">6</td>
+<td style="text-align: center;">18</td>
 <td style="text-align: center;">1</td>
-<td style="text-align: center;">0.2919</td>
+<td style="text-align: center;">0.3404</td>
 <td style="text-align: center;">0.1776</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">2020-2024</td>
-<td style="text-align: center;">6</td>
+<td style="text-align: center;">18</td>
 <td style="text-align: center;">1</td>
-<td style="text-align: center;">0.2839</td>
+<td style="text-align: center;">0.3431</td>
 <td style="text-align: center;">0.1827</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">2021-2025</td>
-<td style="text-align: center;">6</td>
+<td style="text-align: center;">18</td>
 <td style="text-align: center;">1</td>
-<td style="text-align: center;">0.2379</td>
+<td style="text-align: center;">0.2909</td>
 <td style="text-align: center;">0.1834</td>
 </tr>
 </tbody>
@@ -1140,82 +1162,95 @@ MOM_{t,J} = \dfrac{P_t}{P_{t-J}} - 1
 <thead>
 <tr class="header">
 <th style="text-align: center;">區間</th>
-<th style="text-align: center;"><span class="math inline">\(J=6\)</span></th>
-<th style="text-align: center;"><span class="math inline">\(J=9\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(J=12\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(J=18\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(J=24\)</span></th>
 <th style="text-align: center;">同期大盤</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: center;">2011-2015</td>
-<td style="text-align: center;">0.1177</td>
-<td style="text-align: center;">0.1025</td>
+<td style="text-align: center;">0.1623</td>
+<td style="text-align: center;">0.1587</td>
+<td style="text-align: center;">0.1538</td>
 <td style="text-align: center;">0.0284</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">2012-2016</td>
-<td style="text-align: center;">0.1942</td>
-<td style="text-align: center;">0.1856</td>
+<td style="text-align: center;">0.2279</td>
+<td style="text-align: center;">0.2150</td>
+<td style="text-align: center;">0.2107</td>
 <td style="text-align: center;">0.0947</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">2013-2017</td>
-<td style="text-align: center;">0.2328</td>
-<td style="text-align: center;">0.2203</td>
+<td style="text-align: center;">0.2435</td>
+<td style="text-align: center;">0.2357</td>
+<td style="text-align: center;">0.2347</td>
 <td style="text-align: center;">0.1041</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">2014-2018</td>
-<td style="text-align: center;">0.1239</td>
-<td style="text-align: center;">0.1086</td>
+<td style="text-align: center;">0.1676</td>
+<td style="text-align: center;">0.1453</td>
+<td style="text-align: center;">0.1468</td>
 <td style="text-align: center;">0.0675</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">2015-2019</td>
-<td style="text-align: center;">0.1581</td>
-<td style="text-align: center;">0.1653</td>
+<td style="text-align: center;">0.1956</td>
+<td style="text-align: center;">0.1771</td>
+<td style="text-align: center;">0.1774</td>
 <td style="text-align: center;">0.0972</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">2016-2020</td>
-<td style="text-align: center;">0.2136</td>
-<td style="text-align: center;">0.2273</td>
+<td style="text-align: center;">0.2686</td>
+<td style="text-align: center;">0.2506</td>
+<td style="text-align: center;">0.2519</td>
 <td style="text-align: center;">0.1652</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">2017-2021</td>
-<td style="text-align: center;">0.2792</td>
-<td style="text-align: center;">0.2744</td>
+<td style="text-align: center;">0.3166</td>
+<td style="text-align: center;">0.3180</td>
+<td style="text-align: center;">0.3216</td>
 <td style="text-align: center;">0.1848</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">2018-2022</td>
-<td style="text-align: center;">0.1982</td>
-<td style="text-align: center;">0.1865</td>
+<td style="text-align: center;">0.2533</td>
+<td style="text-align: center;">0.2547</td>
+<td style="text-align: center;">0.2491</td>
 <td style="text-align: center;">0.1125</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">2019-2023</td>
-<td style="text-align: center;">0.2919</td>
-<td style="text-align: center;">0.2913</td>
+<td style="text-align: center;">0.3163</td>
+<td style="text-align: center;">0.3404</td>
+<td style="text-align: center;">0.3294</td>
 <td style="text-align: center;">0.1776</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">2020-2024</td>
-<td style="text-align: center;">0.2839</td>
-<td style="text-align: center;">0.2701</td>
+<td style="text-align: center;">0.3190</td>
+<td style="text-align: center;">0.3431</td>
+<td style="text-align: center;">0.3331</td>
 <td style="text-align: center;">0.1827</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">2021-2025</td>
-<td style="text-align: center;">0.2379</td>
-<td style="text-align: center;">0.2251</td>
+<td style="text-align: center;">0.2709</td>
+<td style="text-align: center;">0.2909</td>
+<td style="text-align: center;">0.2829</td>
 <td style="text-align: center;">0.1834</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">平均</td>
-<td style="text-align: center;">0.2120</td>
-<td style="text-align: center;">0.2052</td>
+<td style="text-align: center;">0.2492</td>
+<td style="text-align: center;">0.2481</td>
+<td style="text-align: center;">0.2447</td>
 <td style="text-align: center;">0.1271</td>
 </tr>
 </tbody>
@@ -1226,11 +1261,11 @@ MOM_{t,J} = \dfrac{P_t}{P_{t-J}} - 1
 <p><br> 從上述兩張分析表我們可以獲得以下觀察：</p>
 <ul>
 <li><strong>最佳形成期參數略有差異</strong><br>
-從分析 1 可以發現，不同區間下的最佳形成期不同，但不是 6 個月 (獲勝 9 次) 就是 9 個月 (獲勝 2 次)，因此整體來說仍比文獻上提到的美股最佳形成期 (12 個月) 還要短。</li>
+從分析 1 可以發現，不同區間下的最佳形成期不同，12 個月勝出 6 次，18 個月勝出 4 次，24 個月勝出 1 次。但近年的樣本區間似乎更偏好 18 個月的形成期。</li>
 <li><strong>持有期最佳為 1 個月</strong><br>
 從分析 1 可以發現，不論在任何區間下最佳持有期為 1 個月，這與文獻當中提到的短持有期報酬較高相符。</li>
-<li><strong>形成期 6 或 9 個月，報酬率接近</strong><br>
-從分析 2 可以發現，兩者的報酬率在不同區間下儘管互有領先，但整體接近，且以平均而言年化差異不到 1%。這也表示價格動能策略在台股是較具穩定性的策略，因為不存在報酬率峰值，最佳參數附近的其他參數表現也都不錯。</li>
+<li><strong>形成期 12、18、24 個月，報酬率接近</strong><br>
+從分析 2 可以發現，三者的報酬率在不同區間下儘管互有領先，但整體接近。這也表示近高點動能策略在台股是較具穩定性的策略，因為不存在報酬率峰值，最佳參數附近的其他參數表現也都不錯。</li>
 </ul>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1242,7 +1277,7 @@ MOM_{t,J} = \dfrac{P_t}{P_{t-J}} - 1
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><span class="math inline">\(K=1\)</span> 的設定較無異議，而 <span class="math inline">\(J\)</span> 的選擇由於平均來說 6 個月的報酬率較高，且在不同區間的獲勝次數較多。後續分析除非另有說明，否則會以 <span class="math inline">\(J=6\)</span>、<span class="math inline">\(K=1\)</span> 進行探討。</p>
+<p><span class="math inline">\(K=1\)</span> 的設定較無異議，而 <span class="math inline">\(J\)</span> 的選擇由於平均來說 12 個月的報酬率較高，在不同區間的獲勝次數較多，且該參數具學術理論支持，儘管近年的樣本區間以 18 個月報酬更好，但也不排除過擬合的可能。因此後續分析除非另有說明，否則會以 <span class="math inline">\(J=12\)</span>、<span class="math inline">\(K=1\)</span> 進行探討。</p>
 </div>
 </div>
 </section>
@@ -1279,73 +1314,73 @@ MOM_{t,J} = \dfrac{P_t}{P_{t-J}} - 1
 <tbody>
 <tr class="odd">
 <td style="text-align: center;"><strong>1</strong></td>
-<td style="text-align: center;">0.0655</td>
-<td style="text-align: center;">0.1115</td>
-<td style="text-align: center;">0.1153</td>
-<td style="text-align: center;">0.1121</td>
-<td style="text-align: center;">0.1075</td>
-<td style="text-align: center;">0.0975</td>
-<td style="text-align: center;">0.0984</td>
+<td style="text-align: center;">0.0738</td>
+<td style="text-align: center;">0.0994</td>
+<td style="text-align: center;">0.1119</td>
+<td style="text-align: center;">0.1113</td>
+<td style="text-align: center;">0.1080</td>
+<td style="text-align: center;">0.1054</td>
+<td style="text-align: center;">0.1055</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;"><strong>3</strong></td>
-<td style="text-align: center;"><strong>0.1318</strong></td>
-<td style="text-align: center;"><strong>0.1365</strong></td>
-<td style="text-align: center;"><strong>0.1396</strong></td>
-<td style="text-align: center;"><strong>0.1310</strong></td>
-<td style="text-align: center;">0.1163</td>
-<td style="text-align: center;">0.0997</td>
-<td style="text-align: center;">0.1001</td>
+<td style="text-align: center;">0.1175</td>
+<td style="text-align: center;"><strong>0.1279</strong></td>
+<td style="text-align: center;"><strong>0.1312</strong></td>
+<td style="text-align: center;"><strong>0.1292</strong></td>
+<td style="text-align: center;">0.1232</td>
+<td style="text-align: center;">0.1114</td>
+<td style="text-align: center;">0.1090</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;"><strong>6</strong></td>
-<td style="text-align: center;"><strong>0.1576</strong></td>
-<td style="text-align: center;"><strong>0.1561</strong></td>
-<td style="text-align: center;"><strong>0.1484</strong></td>
-<td style="text-align: center;">0.1257</td>
-<td style="text-align: center;">0.1095</td>
-<td style="text-align: center;">0.0923</td>
-<td style="text-align: center;">0.0957</td>
+<td style="text-align: center;"><strong>0.1499</strong></td>
+<td style="text-align: center;"><strong>0.1544</strong></td>
+<td style="text-align: center;"><strong>0.1515</strong></td>
+<td style="text-align: center;"><strong>0.1438</strong></td>
+<td style="text-align: center;"><strong>0.1323</strong></td>
+<td style="text-align: center;">0.1149</td>
+<td style="text-align: center;">0.1121</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;"><strong>9</strong></td>
-<td style="text-align: center;"><strong>0.1580</strong></td>
-<td style="text-align: center;"><strong>0.1505</strong></td>
-<td style="text-align: center;"><strong>0.1259</strong></td>
-<td style="text-align: center;">0.1052</td>
-<td style="text-align: center;">0.0909</td>
-<td style="text-align: center;">0.0809</td>
-<td style="text-align: center;">0.0840</td>
+<td style="text-align: center;"><strong>0.1740</strong></td>
+<td style="text-align: center;"><strong>0.1679</strong></td>
+<td style="text-align: center;"><strong>0.1588</strong></td>
+<td style="text-align: center;"><strong>0.1465</strong></td>
+<td style="text-align: center;"><strong>0.1327</strong></td>
+<td style="text-align: center;">0.1147</td>
+<td style="text-align: center;">0.1113</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;"><strong>12</strong></td>
-<td style="text-align: center;">0.1087</td>
-<td style="text-align: center;">0.0993</td>
-<td style="text-align: center;">0.0891</td>
-<td style="text-align: center;">0.0764</td>
-<td style="text-align: center;">0.0698</td>
-<td style="text-align: center;">0.0699</td>
-<td style="text-align: center;">0.0753</td>
+<td style="text-align: center;"><strong>0.1959</strong></td>
+<td style="text-align: center;"><strong>0.1742</strong></td>
+<td style="text-align: center;"><strong>0.1608</strong></td>
+<td style="text-align: center;"><strong>0.1459</strong></td>
+<td style="text-align: center;"><strong>0.1299</strong></td>
+<td style="text-align: center;">0.1126</td>
+<td style="text-align: center;">0.1093</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;"><strong>18</strong></td>
-<td style="text-align: center;">0.0816</td>
-<td style="text-align: center;">0.0793</td>
-<td style="text-align: center;">0.0704</td>
-<td style="text-align: center;">0.0657</td>
-<td style="text-align: center;">0.0617</td>
-<td style="text-align: center;">0.0631</td>
-<td style="text-align: center;">0.0729</td>
+<td style="text-align: center;"><strong>0.1994</strong></td>
+<td style="text-align: center;"><strong>0.1780</strong></td>
+<td style="text-align: center;"><strong>0.1599</strong></td>
+<td style="text-align: center;"><strong>0.1444</strong></td>
+<td style="text-align: center;"><strong>0.1296</strong></td>
+<td style="text-align: center;">0.1118</td>
+<td style="text-align: center;">0.1076</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;"><strong>24</strong></td>
-<td style="text-align: center;">0.0659</td>
-<td style="text-align: center;">0.0694</td>
-<td style="text-align: center;">0.0656</td>
-<td style="text-align: center;">0.0598</td>
-<td style="text-align: center;">0.0594</td>
-<td style="text-align: center;">0.0629</td>
-<td style="text-align: center;">0.0729</td>
+<td style="text-align: center;"><strong>0.1987</strong></td>
+<td style="text-align: center;"><strong>0.1771</strong></td>
+<td style="text-align: center;"><strong>0.1596</strong></td>
+<td style="text-align: center;"><strong>0.1450</strong></td>
+<td style="text-align: center;"><strong>0.1295</strong></td>
+<td style="text-align: center;">0.1131</td>
+<td style="text-align: center;">0.1097</td>
 </tr>
 </tbody>
 </table>
@@ -1377,94 +1412,81 @@ MOM_{t,J} = \dfrac{P_t}{P_{t-J}} - 1
 <tbody>
 <tr class="odd">
 <td style="text-align: center;"><strong>1</strong></td>
-<td style="text-align: center;">0.0620</td>
-<td style="text-align: center;">0.0217</td>
-<td style="text-align: center;">0.0116</td>
-<td style="text-align: center;">0.0082</td>
-<td style="text-align: center;">0.0065</td>
-<td style="text-align: center;">0.0048</td>
+<td style="text-align: center;">0.0630</td>
+<td style="text-align: center;">0.0219</td>
+<td style="text-align: center;">0.0117</td>
+<td style="text-align: center;">0.0083</td>
+<td style="text-align: center;">0.0066</td>
+<td style="text-align: center;">0.0049</td>
 <td style="text-align: center;">0.0040</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;"><strong>3</strong></td>
-<td style="text-align: center;"><strong>0.0414</strong></td>
-<td style="text-align: center;"><strong>0.0213</strong></td>
-<td style="text-align: center;"><strong>0.0117</strong></td>
-<td style="text-align: center;"><strong>0.0084</strong></td>
-<td style="text-align: center;">0.0068</td>
-<td style="text-align: center;">0.0051</td>
-<td style="text-align: center;">0.0043</td>
+<td style="text-align: center;">0.0549</td>
+<td style="text-align: center;"><strong>0.0216</strong></td>
+<td style="text-align: center;"><strong>0.0114</strong></td>
+<td style="text-align: center;"><strong>0.0080</strong></td>
+<td style="text-align: center;">0.0063</td>
+<td style="text-align: center;">0.0047</td>
+<td style="text-align: center;">0.0038</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;"><strong>6</strong></td>
-<td style="text-align: center;"><strong>0.0321</strong></td>
-<td style="text-align: center;"><strong>0.0173</strong></td>
-<td style="text-align: center;"><strong>0.0113</strong></td>
-<td style="text-align: center;">0.0083</td>
-<td style="text-align: center;">0.0068</td>
-<td style="text-align: center;">0.0052</td>
-<td style="text-align: center;">0.0044</td>
+<td style="text-align: center;"><strong>0.0468</strong></td>
+<td style="text-align: center;"><strong>0.0196</strong></td>
+<td style="text-align: center;"><strong>0.0112</strong></td>
+<td style="text-align: center;"><strong>0.0078</strong></td>
+<td style="text-align: center;"><strong>0.0062</strong></td>
+<td style="text-align: center;">0.0046</td>
+<td style="text-align: center;">0.0037</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;"><strong>9</strong></td>
-<td style="text-align: center;"><strong>0.0270</strong></td>
-<td style="text-align: center;"><strong>0.0151</strong></td>
-<td style="text-align: center;"><strong>0.0103</strong></td>
-<td style="text-align: center;">0.0081</td>
-<td style="text-align: center;">0.0066</td>
-<td style="text-align: center;">0.0051</td>
-<td style="text-align: center;">0.0044</td>
+<td style="text-align: center;"><strong>0.0416</strong></td>
+<td style="text-align: center;"><strong>0.0182</strong></td>
+<td style="text-align: center;"><strong>0.0106</strong></td>
+<td style="text-align: center;"><strong>0.0077</strong></td>
+<td style="text-align: center;"><strong>0.0061</strong></td>
+<td style="text-align: center;">0.0045</td>
+<td style="text-align: center;">0.0037</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;"><strong>12</strong></td>
-<td style="text-align: center;">0.0245</td>
-<td style="text-align: center;">0.0137</td>
-<td style="text-align: center;">0.0095</td>
-<td style="text-align: center;">0.0076</td>
-<td style="text-align: center;">0.0065</td>
-<td style="text-align: center;">0.0051</td>
-<td style="text-align: center;">0.0044</td>
+<td style="text-align: center;"><strong>0.0381</strong></td>
+<td style="text-align: center;"><strong>0.0171</strong></td>
+<td style="text-align: center;"><strong>0.0101</strong></td>
+<td style="text-align: center;"><strong>0.0074</strong></td>
+<td style="text-align: center;"><strong>0.0060</strong></td>
+<td style="text-align: center;">0.0045</td>
+<td style="text-align: center;">0.0037</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;"><strong>18</strong></td>
-<td style="text-align: center;">0.0212</td>
-<td style="text-align: center;">0.0119</td>
-<td style="text-align: center;">0.0084</td>
-<td style="text-align: center;">0.0069</td>
-<td style="text-align: center;">0.0060</td>
-<td style="text-align: center;">0.0049</td>
-<td style="text-align: center;">0.0043</td>
+<td style="text-align: center;"><strong>0.0340</strong></td>
+<td style="text-align: center;"><strong>0.0157</strong></td>
+<td style="text-align: center;"><strong>0.0095</strong></td>
+<td style="text-align: center;"><strong>0.0071</strong></td>
+<td style="text-align: center;"><strong>0.0057</strong></td>
+<td style="text-align: center;">0.0044</td>
+<td style="text-align: center;">0.0036</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;"><strong>24</strong></td>
-<td style="text-align: center;">0.0193</td>
-<td style="text-align: center;">0.0108</td>
-<td style="text-align: center;">0.0077</td>
-<td style="text-align: center;">0.0063</td>
-<td style="text-align: center;">0.0056</td>
-<td style="text-align: center;">0.0047</td>
-<td style="text-align: center;">0.0041</td>
+<td style="text-align: center;"><strong>0.0308</strong></td>
+<td style="text-align: center;"><strong>0.0147</strong></td>
+<td style="text-align: center;"><strong>0.0090</strong></td>
+<td style="text-align: center;"><strong>0.0067</strong></td>
+<td style="text-align: center;"><strong>0.0055</strong></td>
+<td style="text-align: center;">0.0043</td>
+<td style="text-align: center;">0.0036</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
 </div>
-<p><br> 比較有趣的結果是在持有期 1 個月的狀況下，形成期 9 個月的動能策略在考慮交易費用後和形成期 6 個月的策略報酬率相當，而原本不考慮交易費用時是 6 個月的策略領先 0.5%，而造成差異的原因就是交易成本。</p>
-<p>若觀察年化交易成本，可以發現價格動能策略的形成期越長，通常訊號越穩定，因此投資組合每次需要換倉的比例越低，使交易成本下降；而持有期越長也因為換倉的頻率降低使交易成本下降。</p>
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>訊號穩定 ≠ 訊號有效
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>即使形成期越長訊號越穩定，但我們也發現一年以上的形成期，動能策略並無法帶來勝過大盤的報酬。</p>
-</div>
-</div>
+<p><br> 可以觀察到，在考慮交易費用後，大多數的投資組合表現仍優於大盤，且持有期達 12 個月，報酬仍微幅優於大盤。這與價格動能的結果形成對比，價格動能的投資組合在持有期達 12 個月時，無一投資組合能優於大盤，顯示近高點動能策略不僅整體報酬較高，其衰退的程度也比價格動能小。</p>
+<p>若仔細觀察年化交易成本，近高點動能的交易成本十分驚人，以持有期 1 個月來說，年化交易成本介於 3% 至 6.3% 之間，形成期越短則訊號越不穩定，反映在更高的交易成本上，若與價格動能相比，近高點動能的交易成本也明顯較高。</p>
 </section>
 </section>
 <section id="報酬單調性分析" class="level3">
@@ -1506,120 +1528,119 @@ MOM_{t,J} = \dfrac{P_t}{P_{t-J}} - 1
 <tbody>
 <tr class="odd">
 <td style="text-align: center;"><strong>1</strong></td>
-<td style="text-align: center;">0.0750</td>
 <td style="text-align: center;">0.0703</td>
-<td style="text-align: center;">0.0558</td>
-<td style="text-align: center;">0.0467</td>
-<td style="text-align: center;">0.0412</td>
-<td style="text-align: center;">0.0853</td>
-<td style="text-align: center;">0.0907</td>
+<td style="text-align: center;">0.0565</td>
+<td style="text-align: center;">0.0388</td>
+<td style="text-align: center;">0.0222</td>
+<td style="text-align: center;">0.0200</td>
+<td style="text-align: center;">0.0550</td>
+<td style="text-align: center;">0.0777</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;"><strong>2</strong></td>
-<td style="text-align: center;">0.0813</td>
-<td style="text-align: center;"><strong>0.0406</strong></td>
-<td style="text-align: center;"><strong>0.0329</strong></td>
-<td style="text-align: center;"><strong>0.0410</strong></td>
-<td style="text-align: center;">0.0539</td>
-<td style="text-align: center;"><strong>0.0842</strong></td>
-<td style="text-align: center;"><strong>0.0883</strong></td>
+<td style="text-align: center;">0.0831</td>
+<td style="text-align: center;"><strong>0.0550</strong></td>
+<td style="text-align: center;">0.0444</td>
+<td style="text-align: center;">0.0429</td>
+<td style="text-align: center;">0.0450</td>
+<td style="text-align: center;">0.0592</td>
+<td style="text-align: center;"><strong>0.0617</strong></td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;"><strong>3</strong></td>
-<td style="text-align: center;">0.0968</td>
-<td style="text-align: center;">0.0720</td>
-<td style="text-align: center;">0.0761</td>
-<td style="text-align: center;">0.0587</td>
-<td style="text-align: center;">0.0650</td>
-<td style="text-align: center;">0.0962</td>
-<td style="text-align: center;">0.1000</td>
+<td style="text-align: center;">0.0833</td>
+<td style="text-align: center;">0.0670</td>
+<td style="text-align: center;">0.0454</td>
+<td style="text-align: center;">0.0599</td>
+<td style="text-align: center;">0.0538</td>
+<td style="text-align: center;">0.0623</td>
+<td style="text-align: center;">0.0696</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;"><strong>4</strong></td>
-<td style="text-align: center;">0.0977</td>
-<td style="text-align: center;">0.0735</td>
-<td style="text-align: center;"><strong>0.0749</strong></td>
-<td style="text-align: center;">0.0749</td>
-<td style="text-align: center;">0.0863</td>
-<td style="text-align: center;"><strong>0.0945</strong></td>
-<td style="text-align: center;">0.1000</td>
+<td style="text-align: center;">0.0988</td>
+<td style="text-align: center;">0.0891</td>
+<td style="text-align: center;">0.0829</td>
+<td style="text-align: center;">0.0732</td>
+<td style="text-align: center;">0.0652</td>
+<td style="text-align: center;"><strong>0.0547</strong></td>
+<td style="text-align: center;"><strong>0.0621</strong></td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;"><strong>5</strong></td>
-<td style="text-align: center;">0.1122</td>
-<td style="text-align: center;">0.0965</td>
-<td style="text-align: center;">0.0875</td>
-<td style="text-align: center;">0.0840</td>
-<td style="text-align: center;">0.1009</td>
-<td style="text-align: center;">0.1093</td>
-<td style="text-align: center;">0.1067</td>
+<td style="text-align: center;"><strong>0.0935</strong></td>
+<td style="text-align: center;"><strong>0.0842</strong></td>
+<td style="text-align: center;">0.0928</td>
+<td style="text-align: center;">0.0781</td>
+<td style="text-align: center;">0.0866</td>
+<td style="text-align: center;">0.0783</td>
+<td style="text-align: center;">0.0690</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;"><strong>6</strong></td>
-<td style="text-align: center;"><strong>0.1054</strong></td>
-<td style="text-align: center;">0.1229</td>
-<td style="text-align: center;">0.1187</td>
-<td style="text-align: center;">0.1164</td>
-<td style="text-align: center;">0.1272</td>
-<td style="text-align: center;"><strong>0.1059</strong></td>
-<td style="text-align: center;">0.1193</td>
+<td style="text-align: center;">0.1048</td>
+<td style="text-align: center;">0.1056</td>
+<td style="text-align: center;">0.1052</td>
+<td style="text-align: center;">0.0997</td>
+<td style="text-align: center;">0.1025</td>
+<td style="text-align: center;">0.1034</td>
+<td style="text-align: center;">0.0924</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;"><strong>7</strong></td>
-<td style="text-align: center;">0.1172</td>
-<td style="text-align: center;"><strong>0.1227</strong></td>
-<td style="text-align: center;">0.1254</td>
-<td style="text-align: center;">0.1417</td>
-<td style="text-align: center;">0.1338</td>
-<td style="text-align: center;">0.1171</td>
-<td style="text-align: center;">0.1209</td>
+<td style="text-align: center;">0.1232</td>
+<td style="text-align: center;">0.1143</td>
+<td style="text-align: center;">0.1177</td>
+<td style="text-align: center;">0.1167</td>
+<td style="text-align: center;">0.1031</td>
+<td style="text-align: center;"><strong>0.1005</strong></td>
+<td style="text-align: center;">0.1067</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;"><strong>8</strong></td>
-<td style="text-align: center;">0.1198</td>
-<td style="text-align: center;">0.1350</td>
-<td style="text-align: center;">0.1313</td>
-<td style="text-align: center;">0.1493</td>
-<td style="text-align: center;">0.1488</td>
-<td style="text-align: center;">0.1430</td>
-<td style="text-align: center;">0.1260</td>
+<td style="text-align: center;">0.1268</td>
+<td style="text-align: center;">0.1445</td>
+<td style="text-align: center;">0.1327</td>
+<td style="text-align: center;">0.1377</td>
+<td style="text-align: center;">0.1397</td>
+<td style="text-align: center;">0.1280</td>
+<td style="text-align: center;">0.1184</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;"><strong>9</strong></td>
-<td style="text-align: center;"><strong>0.1188</strong></td>
-<td style="text-align: center;">0.1441</td>
-<td style="text-align: center;">0.1595</td>
-<td style="text-align: center;">0.1532</td>
-<td style="text-align: center;">0.1605</td>
-<td style="text-align: center;"><strong>0.1208</strong></td>
-<td style="text-align: center;"><strong>0.1254</strong></td>
+<td style="text-align: center;">0.1299</td>
+<td style="text-align: center;">0.1589</td>
+<td style="text-align: center;">0.1848</td>
+<td style="text-align: center;">0.1816</td>
+<td style="text-align: center;">0.1737</td>
+<td style="text-align: center;">0.1563</td>
+<td style="text-align: center;">0.1486</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;"><strong>10</strong></td>
-<td style="text-align: center;">0.1275</td>
-<td style="text-align: center;">0.1732</td>
-<td style="text-align: center;">0.1897</td>
-<td style="text-align: center;">0.1850</td>
-<td style="text-align: center;"><strong>0.1333</strong></td>
-<td style="text-align: center;"><strong>0.1028</strong></td>
-<td style="text-align: center;"><strong>0.0851</strong></td>
+<td style="text-align: center;">0.1368</td>
+<td style="text-align: center;">0.1724</td>
+<td style="text-align: center;">0.1967</td>
+<td style="text-align: center;">0.2155</td>
+<td style="text-align: center;">0.2340</td>
+<td style="text-align: center;">0.2334</td>
+<td style="text-align: center;">0.2295</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;"><strong>M10-M1</strong></td>
-<td style="text-align: center;">0.0525</td>
-<td style="text-align: center;">0.1029</td>
-<td style="text-align: center;">0.1339</td>
-<td style="text-align: center;">0.1383</td>
-<td style="text-align: center;">0.0921</td>
-<td style="text-align: center;">0.0175</td>
-<td style="text-align: center;">-0.0056</td>
+<td style="text-align: center;">0.0666</td>
+<td style="text-align: center;">0.1159</td>
+<td style="text-align: center;">0.1578</td>
+<td style="text-align: center;">0.1933</td>
+<td style="text-align: center;">0.2140</td>
+<td style="text-align: center;">0.1784</td>
+<td style="text-align: center;">0.1518</td>
 </tr>
 </tbody>
 </table>
 <p><br> 上表中的 M10 就是上一節分析時的贏家投資組合，而 M1 就是輸家投資組合，在這節中我們把訊號維度展開，觀察所有組別 (M1 至 M10) 的報酬分布。為了方便觀察單調性，我將每組不符合單調性之處加粗。</p>
-<p>首先可以觀察到的是除了 <span class="math inline">\(J=1\)</span> 外，其他組別都存在 M1 &gt; M2 的狀況，這表示過去表現最差的輸家 M1 未來一個月會有報酬反轉，儘管不多但仍高於表現次差的輸家 M2。而這樣的跌深反彈或許也能解釋為何台股的多空組合報酬不如美股。</p>
-<p>以報酬單調性而言，在 <span class="math inline">\(J \leq 9\)</span> 個月時，可以觀察到報酬大致呈現單調性，儘管中間組別偶有例外但差距不大，表示策略確實捕捉到了投資人反應不足的潛在獲利。但當 <span class="math inline">\(J \geq 12\)</span> 時，可以發現最強的 M10 甚至 M9 會有報酬反轉且差異明顯，這表示當形成期超過一定程度時，策略訊號的預測力會下降，捕捉到更多長期大漲而開始均值回歸的標的。</p>
-<p>以多空擴散程度來說 (M10-M1)，<span class="math inline">\(J=6\)</span> 和 <span class="math inline">\(J=9\)</span> 的擴散程度最大，資訊鑑別度最好。</p>
+<p>可以觀察到報酬大致呈現單調性，儘管中間組別偶有例外但差距不大，表示策略確實捕捉到了投資人反應不足的潛在獲利。</p>
+<p>值得注意的有兩點：第一，近高點動能在 M1 &gt; M2（輸家反彈）的現象較少出現，僅在 J=3 和 J=24 時可見，而價格動能則在大多數形成期下都有此現象。第二，近高點動能的 M10 在較長形成期下報酬仍然維持高位，沒有出現如價格動能在 J=12 以上時 M10 報酬大幅下滑的現象，後者可能是因為價格動能在形成期過長時開始選到已大幅上漲、均值回歸壓力較大的股票。</p>
 </section>
 <section id="條件排序分析" class="level3">
 <h3 class="anchored" data-anchor-id="條件排序分析">條件排序分析</h3>
@@ -1676,48 +1697,48 @@ MOM_{t,J} = \dfrac{P_t}{P_{t-J}} - 1
 <tbody>
 <tr class="odd">
 <td style="text-align: center;"><strong>MV1</strong></td>
-<td style="text-align: center;">0.1140</td>
-<td style="text-align: center;">0.0922</td>
-<td style="text-align: center;">0.1300</td>
-<td style="text-align: center;">0.1711</td>
-<td style="text-align: center;">0.2147</td>
-<td style="text-align: center;">0.1007</td>
+<td style="text-align: center;">0.0669</td>
+<td style="text-align: center;">0.1162</td>
+<td style="text-align: center;">0.1017</td>
+<td style="text-align: center;">0.1665</td>
+<td style="text-align: center;">0.2579</td>
+<td style="text-align: center;">0.1910</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;"><strong>MV2</strong></td>
-<td style="text-align: center;">0.0292</td>
-<td style="text-align: center;">0.0655</td>
-<td style="text-align: center;">0.1076</td>
-<td style="text-align: center;">0.1264</td>
-<td style="text-align: center;">0.1866</td>
-<td style="text-align: center;">0.1575</td>
+<td style="text-align: center;">0.0081</td>
+<td style="text-align: center;">0.0567</td>
+<td style="text-align: center;">0.0841</td>
+<td style="text-align: center;">0.1226</td>
+<td style="text-align: center;">0.2259</td>
+<td style="text-align: center;">0.2178</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;"><strong>MV3</strong></td>
-<td style="text-align: center;">0.0342</td>
-<td style="text-align: center;">0.0672</td>
-<td style="text-align: center;">0.0976</td>
-<td style="text-align: center;">0.1209</td>
-<td style="text-align: center;">0.1706</td>
-<td style="text-align: center;">0.1364</td>
+<td style="text-align: center;">0.0124</td>
+<td style="text-align: center;">0.0632</td>
+<td style="text-align: center;">0.0871</td>
+<td style="text-align: center;">0.1244</td>
+<td style="text-align: center;">0.2017</td>
+<td style="text-align: center;">0.1893</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;"><strong>MV4</strong></td>
-<td style="text-align: center;">0.0249</td>
-<td style="text-align: center;">0.0473</td>
-<td style="text-align: center;">0.0914</td>
-<td style="text-align: center;">0.1205</td>
-<td style="text-align: center;">0.1480</td>
-<td style="text-align: center;">0.1230</td>
+<td style="text-align: center;">0.0045</td>
+<td style="text-align: center;">0.0516</td>
+<td style="text-align: center;">0.0547</td>
+<td style="text-align: center;">0.1259</td>
+<td style="text-align: center;">0.2022</td>
+<td style="text-align: center;">0.1977</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;"><strong>MV5</strong></td>
-<td style="text-align: center;">0.0328</td>
-<td style="text-align: center;">0.0712</td>
-<td style="text-align: center;">0.0931</td>
-<td style="text-align: center;">0.0993</td>
-<td style="text-align: center;">0.1659</td>
-<td style="text-align: center;">0.1331</td>
+<td style="text-align: center;">0.0375</td>
+<td style="text-align: center;">0.0545</td>
+<td style="text-align: center;">0.0634</td>
+<td style="text-align: center;">0.0986</td>
+<td style="text-align: center;">0.2073</td>
+<td style="text-align: center;">0.1698</td>
 </tr>
 </tbody>
 </table>
@@ -1734,9 +1755,6 @@ MOM_{t,J} = \dfrac{P_t}{P_{t-J}} - 1
 <p>這裡的市值為建構投資組合當下 (每月月底) 的股票市值，計算方式為當日收盤價 <span class="math inline">\(\times\)</span> 在外流通股數。</p>
 </div>
 </div>
-<p>可以發現，在控制市值後，每組的 M5-M1 均為正且差距明顯，表示動能訊號確實提供額外的預測能力。但同時也發現低市值組（MV1）的訊號鑑別度較差，M5-M1 差距明顯小於其他組，且報酬不具備單調性。</p>
-<p>值得注意的是，差距縮小並非因為 MV1 的贏家報酬偏低 (MV1 的 M5 反而是五組中最高的)，而是因為 MV1 的輸家報酬遠高於其他組，使得多空擴散被壓縮。這與小型股跌深容易反彈、形成報酬底部的特性有關，即使動能最弱的小型股也享有一定的報酬基準。</p>
-<p>此外，MV3 至 MV5 的 M5-M1 差距相對穩定，表示在控制為中型股以上後，動能的預測力並不隨規模大小有明顯差異。</p>
 </div>
 <div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
 <table class="caption-top table">
@@ -1754,48 +1772,48 @@ MOM_{t,J} = \dfrac{P_t}{P_{t-J}} - 1
 <tbody>
 <tr class="odd">
 <td style="text-align: center;"><strong>β1</strong></td>
-<td style="text-align: center;">0.0038</td>
-<td style="text-align: center;">0.0468</td>
-<td style="text-align: center;">0.0924</td>
-<td style="text-align: center;">0.1593</td>
-<td style="text-align: center;">0.1662</td>
-<td style="text-align: center;">0.1624</td>
+<td style="text-align: center;">0.0008</td>
+<td style="text-align: center;">0.0715</td>
+<td style="text-align: center;">0.0820</td>
+<td style="text-align: center;">0.1391</td>
+<td style="text-align: center;">0.2069</td>
+<td style="text-align: center;">0.2060</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;"><strong>β2</strong></td>
-<td style="text-align: center;">0.0277</td>
-<td style="text-align: center;">0.0684</td>
-<td style="text-align: center;">0.1121</td>
-<td style="text-align: center;">0.1455</td>
-<td style="text-align: center;">0.1900</td>
-<td style="text-align: center;">0.1623</td>
+<td style="text-align: center;">-0.0036</td>
+<td style="text-align: center;">0.0824</td>
+<td style="text-align: center;">0.0961</td>
+<td style="text-align: center;">0.1293</td>
+<td style="text-align: center;">0.2277</td>
+<td style="text-align: center;">0.2314</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;"><strong>β3</strong></td>
-<td style="text-align: center;">0.0552</td>
-<td style="text-align: center;">0.0698</td>
-<td style="text-align: center;">0.0959</td>
-<td style="text-align: center;">0.1313</td>
-<td style="text-align: center;">0.1931</td>
-<td style="text-align: center;">0.1380</td>
+<td style="text-align: center;">0.0262</td>
+<td style="text-align: center;">0.0580</td>
+<td style="text-align: center;">0.1014</td>
+<td style="text-align: center;">0.1393</td>
+<td style="text-align: center;">0.2181</td>
+<td style="text-align: center;">0.1920</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;"><strong>β4</strong></td>
-<td style="text-align: center;">0.0443</td>
-<td style="text-align: center;">0.0680</td>
-<td style="text-align: center;">0.0991</td>
-<td style="text-align: center;">0.1296</td>
-<td style="text-align: center;">0.1675</td>
-<td style="text-align: center;">0.1232</td>
+<td style="text-align: center;">0.0436</td>
+<td style="text-align: center;">0.0523</td>
+<td style="text-align: center;">0.0848</td>
+<td style="text-align: center;">0.1308</td>
+<td style="text-align: center;">0.1953</td>
+<td style="text-align: center;">0.1517</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;"><strong>β5</strong></td>
-<td style="text-align: center;">0.0647</td>
-<td style="text-align: center;">0.0576</td>
-<td style="text-align: center;">0.1212</td>
-<td style="text-align: center;">0.1332</td>
-<td style="text-align: center;">0.1502</td>
-<td style="text-align: center;">0.0856</td>
+<td style="text-align: center;">0.0351</td>
+<td style="text-align: center;">0.0607</td>
+<td style="text-align: center;">0.0914</td>
+<td style="text-align: center;">0.0908</td>
+<td style="text-align: center;">0.1902</td>
+<td style="text-align: center;">0.1551</td>
 </tr>
 </tbody>
 </table>
@@ -1809,20 +1827,18 @@ MOM_{t,J} = \dfrac{P_t}{P_{t-J}} - 1
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>這裡的 <span class="math inline">\(\beta\)</span> 以建構投資組合當下（每月月底）為基準，對過去 6 個月的個股與大盤日報酬率進行 OLS 迴歸所得的斜率係數。使用過去 6 個月是為了與形成期 <span class="math inline">\(J=6\)</span> 對齊。</p>
-</div>
-</div>
-<p>可以發現，在控制 <span class="math inline">\(\beta\)</span> 後，每組的 M5-M1 均為正且差距明顯，表示動能訊號確實提供額外的預測能力。</p>
-<p>值得注意的是，高 <span class="math inline">\(\beta\)</span> 組（β5）的訊號鑑別度相對較差，M5-M1 差距明顯小於低 <span class="math inline">\(\beta\)</span> 組。與 MV1 的單邊壓縮不同，β5 的擴散縮小來自雙邊：M1 被抬高，M5 也相對偏低。其背後的機制是，高 <span class="math inline">\(\beta\)</span> 股在多頭市場中會放大市場漲幅，即使動能最弱的高 <span class="math inline">\(\beta\)</span> 股也因此享有一定的報酬下限，同時動能最強的高 <span class="math inline">\(\beta\)</span> 股相對優勢被稀釋。</p>
-<p>整體而言，M5-M1 差距隨 <span class="math inline">\(\beta\)</span> 升高而單調縮小，但始終為正，表示動能訊號的預測力並未被系統性風險完全解釋。</p>
+<p>這裡的 <span class="math inline">\(\beta\)</span> 以建構投資組合當下（每月月底）為基準，對過去 12 個月的個股與大盤日報酬率進行 OLS 迴歸所得的斜率係數。使用過去 12 個月是為了與形成期 <span class="math inline">\(J=12\)</span> 對齊。</p>
 </div>
 </div>
 </div>
+</div>
+</div>
+<p><br> 在控制市值與 <span class="math inline">\(\beta\)</span> 後，每組的 M5-M1 均為正且差距明顯，表示近高點動能訊號具備獨立的預測能力，不受市值效應或系統性風險解釋。報酬單調性整體成立，僅在 MV1（最小市值組）與 <span class="math inline">\(\beta5\)</span>（最高 <span class="math inline">\(\beta\)</span> 組）出現例外。此外，與價格動能相比，近高點動能在不同市值與 <span class="math inline">\(\beta\)</span> 組的 M5-M1 差距均更大，顯示訊號的資訊鑑別度更高。</p>
 </section>
 </section>
 <section id="策略績效分析" class="level3">
 <h3 class="anchored" data-anchor-id="策略績效分析">策略績效分析</h3>
-<p>下方為價格動能策略的互動式回測報表，包含累積報酬、年度績效、最大回撤等維度，可透過點選深入檢視策略在各時期的表現。</p>
+<p>下方為近高點動能策略的互動式回測報表，包含累積報酬、年度績效、最大回撤等維度，可透過點選深入檢視策略在各時期的表現。</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1833,35 +1849,39 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>再次提醒，回測使用的參數為 <span class="math inline">\(J=6\)</span>, <span class="math inline">\(K=1\)</span> 並買進動能訊號最強的 10% 股票作為投資組合，回測結果已包含交易費用。</p>
+<p>再次提醒，回測使用的參數為 <span class="math inline">\(J=12\)</span>, <span class="math inline">\(K=1\)</span> 並買進動能訊號最強的 10% 股票作為投資組合，回測結果已包含交易費用。</p>
 </div>
 </div>
-<iframe class="finlab-report" src="price_momentum.html"></iframe>
-<p>儘管策略的累積報酬勝過大盤，但我認為實際執行上仍有許多問題，以下分別從報酬與風險的角度說明：</p>
-<p><strong>年度績效的不一致性</strong><br>
-從獲利能力中的「與大盤年報酬比較」觀察到，價格動能策略只有約 50% 的年份贏過大盤，甚至近兩年皆落後大盤，容易讓投資人對策略失去信心。</p>
-<div class="callout callout-style-default callout-note callout-titled">
+<iframe class="finlab-report" src="near_high_momentum.html"></iframe>
+<section id="從報酬的角度來看" class="level4">
+<h4 class="anchored" data-anchor-id="從報酬的角度來看">從報酬的角度來看</h4>
+<p>可以發現近高點動能在回測期間內的表現是非常優異的，不僅累積報酬超越大盤，在空頭市場的 2011, 2015, 2022 三年，儘管報酬率為負，但仍高於大盤同時期的表現，從「與大盤年報酬比較」可以觀察到策略在過去 15 年有 12 年擊敗大盤 (勝率 80%)，與價格動能策略相比，年度績效表現更加穩定。</p>
+<div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Note
+<span class="screen-reader-only">Warning</span>近兩年連續落後大盤
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>這是我認為最大的問題，我們希望策略整體績效能贏過大盤，但<strong>不僅是要贏得多，更重要的是要贏得穩</strong>，如果僅有少數年份大勝但多數時候都落後大盤，則實際上投資人很難抱得住策略。</p>
+<p>需要特別注意的是，近高點動能在近兩年 (2024, 2025) 的表現連續落後大盤，特別是 2025 年的落後幅度為回測期間內最大的，詳細原因需要進一步研究才能得出結論。</p>
 </div>
 </div>
-<p><strong>回撤深度</strong><br>
-從抗風險能力中的「虧損歷史」可以發現，價格動能策略的最大回檔為 36%，且樣本期間內最大的五次回檔皆超過 25%，較大的回撤也容易造成投資人放棄策略砍在低谷。</p>
+</section>
+<section id="從風險的角度來看" class="level4">
+<h4 class="anchored" data-anchor-id="從風險的角度來看">從風險的角度來看</h4>
+<p>在回測期間內，策略的最大回撤為 24.6%，優於價格動能策略。且期間內最大的五次回檔，大約介於 20% 至 25% 左右，與價格動能策略的前五大回檔皆大於 25% 的情況形成對比。</p>
+<p>儘管近高點動能與價格動能皆為捕捉動能潛在獲利的策略。但以台股而言，近高點動能的獲利能力與防禦能力皆優於價格動能。</p>
+</section>
 </section>
 <section id="總結" class="level3">
 <h3 class="anchored" data-anchor-id="總結">總結</h3>
-<p>從台股的實證結果，我們發現文獻上的價格動能策略確實有利可圖，但與美股的最佳參數稍有不同。</p>
-<p>就形成期來說，相較於美股的 12 個月，台股需要更短的形成期 (6 到 9 個月) 才能有效捕捉到投資人反應不足的潛在獲利，而持有期則為 1 個月，且參數在滾動樣本中具穩定性。</p>
-<p>透過條件排序，我們也發現價格動能策略在控制市值與 <span class="math inline">\(\beta\)</span> 後，仍具備預測能力。表示價格動能訊號並非這兩個因子的代理變數。</p>
-<p>最後透過回測，我們發現動能策略的累積報酬能夠擊敗大盤，但仍有績效不穩定且回撤過大的問題。以目前透過價格動能作為策略主訊號來說，我們平均持有 114 檔標的，或許在這個子集當中透過其他量化方法可以進一步篩選標的，以達到降低波動與提升報酬的目標。</p>
+<p>從台股的實證結果，我們發現近高點動能策略在各方面的表現均優於價格動能。</p>
+<p>就參數而言，最佳形成期為 <span class="math inline">\(J=12\)</span>，與文獻使用的 52 週高點設定吻合，且在 11 個滾動區間中有 6 次以 <span class="math inline">\(J=12\)</span> 最佳，<span class="math inline">\(J=12, 18, 24\)</span> 的報酬率皆相當接近，具備參數穩健性。最佳持有期同樣為 1 個月。此外，使用原始收盤價的表現優於調整後收盤價，符合定錨效應的底層邏輯。</p>
+<p>透過條件排序，在控制市值與 <span class="math inline">\(\beta\)</span> 後，每組的 M5-M1 差距均為正且顯著，且差距大於價格動能，表示近高點動能訊號具備獨立的預測能力，且資訊鑑別度更高。</p>
+<p>最後從回測結果來看，在考慮交易費用後的 CAGR 約 21%，勝率為 80%（15 年中有 12 年擊敗大盤），最大回撤 24.6%，相較價格動能有明顯改善。然而，策略在 2024、2025 年連續落後大盤，特別是 2025 年的落後幅度為回測期間最大，背後原因有待進一步研究。</p>
 
 
 </section>
@@ -1871,9 +1891,9 @@ Note
 <div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
 <ol>
-<li id="fn1"><p>Jegadeesh, N., &amp; Titman, S. (1993). Returns to buying winners and selling losers: Implications for stock market efficiency. The Journal of Finance, 48(1), 65-91.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>Gong, Q., Liu, M., &amp; Liu, Q. (2015). Momentum is really short-term momentum. Journal of Banking &amp; Finance, 50, 169-182.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>Jegadeesh, N., &amp; Titman, S. (2001). Profitability of momentum strategies: An evaluation of alternative explanations. The Journal of Finance, 56(2), 699-720.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>George, T. J., &amp; Hwang, C. Y. (2004). The 52-week high and momentum investing. The Journal of Finance, 59(5), 2145-2176.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>更長的持有期並非本文欲討論的範圍，有興趣的讀者可以自行修改回測參數驗證結果。<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>原始收盤價版本。<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4"><p>文章版面有限，詳見策略程式碼，裡面包含所有分析結果與實作細節。<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
@@ -2888,14 +2908,11 @@ Note
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../posts/台股動能策略實證 — 框架設定/index.html" class="pagination-link" aria-label="台股動能策略實證 — 框架設定">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">台股動能策略實證 — 框架設定</span>
+      <a href="../../posts/台股動能策略實證 — 價格動能/index.html" class="pagination-link" aria-label="台股動能策略實證 — 價格動能">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">台股動能策略實證 — 價格動能</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../posts/台股動能策略實證 — 近高點動能/index.html" class="pagination-link" aria-label="台股動能策略實證 — 近高點動能">
-        <span class="nav-page-text">台股動能策略實證 — 近高點動能</span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->
