@@ -845,7 +845,7 @@ body:has(.landing-page) {
 .tab-pane {
     display: none;
     width: 100%;
-    max-width: 900px;
+    max-width: 1050px;
     margin: 0 auto;
     border: none !important;
 
@@ -3411,6 +3411,6 @@ iframe.finlab-report {
     border: none;
     border-radius: 16px;
     overflow: hidden;
-    background: #f3f4f6;   // match DaisyUI bg-base-200
+    background: #f3f4f6; // match DaisyUI bg-base-200
     margin: 1.5rem 0;
 }

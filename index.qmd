@@ -18,34 +18,37 @@ body-classes: landing-page-body
 
 ```{=html}
 <div class="landing-tabs">
-    <button class="tab-btn active" onclick="showTab('articles', event)">文章精選</button>
+    <button class="tab-btn active" onclick="showTab('articles', event)">近期文章</button>
+    <!-- 
     <button class="tab-btn" onclick="showTab('projects', event)">近期專案</button>
     <button class="tab-btn" onclick="showTab('data', event)">開源資料</button>
+    -->
 </div>
 
 <div id="tab-articles" class="tab-pane active">
     <div class="tab-cards">
-        <a href="blog.html" class="tab-card">
-            <div class="tab-card-meta">量化研究</div>
-            <div class="tab-card-title">台股動能策略實證回測</div>
-            <div class="tab-card-desc">以 Jegadeesh-Titman 框架，回測台股近十年的動能策略表現。</div>
+        <a href="posts/台股動能策略實證 — 近高點動能/index.html" class="tab-card">
+            <div class="tab-card-meta">2026-03-10</div>
+            <div class="tab-card-title">台股動能策略實證 — 近高點動能</div>
+            <div class="tab-card-desc">近高點動能：形成期 = 12、持有期 = 1 表現最佳，CAGR 約 21%，績效較穩、回撤較小，整體優於價格動能。</div>
             <svg class="tab-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
         </a>
-        <a href="blog.html" class="tab-card">
-            <div class="tab-card-meta">程式教學</div>
-            <div class="tab-card-title">Python 多因子選股模型</div>
-            <div class="tab-card-desc">結合價值、動能、品質因子，從零建構可回測的選股框架。</div>
+        <a href="posts/台股動能策略實證 — 價格動能/index.html" class="tab-card">
+            <div class="tab-card-meta">2026-03-05</div>
+            <div class="tab-card-title">台股動能策略實證 — 價格動能</div>
+            <div class="tab-card-desc">價格動能：形成期 = 6、持有期 = 1 最佳，CAGR 約 15.5%。績效不穩且回撤偏大，具明顯侷限。</div>
             <svg class="tab-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
         </a>
-        <a href="blog.html" class="tab-card">
-            <div class="tab-card-meta">市場分析</div>
-            <div class="tab-card-title">財報空窗期的策略探討</div>
-            <div class="tab-card-desc">探討財報公布前後的市場異常行為與對應的投資策略。</div>
+        <a href="posts/台股動能策略實證 — 框架設定/index.html" class="tab-card">
+            <div class="tab-card-meta">2026-02-25</div>
+            <div class="tab-card-title">台股動能策略實證 — 框架設定</div>
+            <div class="tab-card-desc">建構動能策略並設定回測框架。實證顯示近高點與價格動能皆能擊敗大盤，又以近高點動能的表現較佳。</div>
             <svg class="tab-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
         </a>
     </div>
 </div>
 
+<!-- 後續擴充保留區：近期專案與開源資料
 <div id="tab-projects" class="tab-pane">
     <div class="tab-cards">
         <a href="projects.html" class="tab-card">
@@ -91,6 +94,7 @@ body-classes: landing-page-body
         </a>
     </div>
 </div>
+-->
 
 <script>
 function showTab(tabId, event) {

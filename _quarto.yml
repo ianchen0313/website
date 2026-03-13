@@ -1,22 +1,24 @@
 project:
   type: website
   output-dir: _site
-
+  render:
+    - "*.qmd"
+    - "posts/"
 website:
   title: "Ian Chen"
-  description: "量化研究與 AI 應用 — 個人作品集"
+  description: "個人網站"
   navbar:
     background: light
     foreground: dark
     pinned: true
     collapse-below: lg
     left:
-      - text: "文章"
+      - text: "文章列表"
         href: blog.qmd
-      - text: "專案"
-        href: projects.qmd
-      - text: "資料"
-        href: data.qmd
+#      - text: "專案"
+#        href: projects.qmd
+#      - text: "資料"
+#        href: data.qmd
     right:
       - icon: person
         href: about.qmd
@@ -24,16 +26,12 @@ website:
   page-navigation: true
   
   sidebar:
-    - title: "Quarto 測試系列"
-      style: "docked"
-      contents:
-        - posts/quarto-syntax-test/index.qmd
-        - posts/quarto-syntax-test/page2.qmd
     - title: "台股動能策略實證"
       style: "docked"
       contents:
         - posts/台股動能策略實證 — 框架設定/index.qmd
         - posts/台股動能策略實證 — 價格動能/index.qmd
+        - posts/台股動能策略實證 — 近高點動能/index.qmd
 
 format:
   html:
