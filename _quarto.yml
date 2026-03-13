@@ -15,10 +15,8 @@ website:
     left:
       - text: "文章列表"
         href: blog.qmd
-#      - text: "專案"
-#        href: projects.qmd
-#      - text: "資料"
-#        href: data.qmd
+      - text: "其他專案"
+        href: projects.qmd
     right:
       - icon: person
         href: about.qmd
